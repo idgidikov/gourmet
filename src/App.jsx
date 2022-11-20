@@ -3,7 +3,7 @@ import "./App.css";
 
 function App() {
 	const fun = () => {
-		return 6;
+		return 4;
 	};
 	return (
 		<div className="App">
