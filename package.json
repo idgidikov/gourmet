@@ -26,5 +26,9 @@
 		"prettier": "2.7.1",
 		"vite": "^3.2.3",
 		"husky": "^8.0.0"
+	},
+	"lint-staged": {
+		"*.js": "npm run lint",
+		"*.{js,css,md,html,json}": "npm run format"
 	}
 }
