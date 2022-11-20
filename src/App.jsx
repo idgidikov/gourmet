@@ -1,10 +1,6 @@
-import { useState } from "react";
 import "./App.css";
 
 function App() {
-	const fun = () => {
-		return 4;
-	};
 	return (
 		<div className="App">
 			<h1 className="main-header">Under production</h1>
