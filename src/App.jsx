@@ -2,14 +2,13 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-	const [count, setCount] = useState(0);
 
 	return (
 		<div className="App">
 			<h1 className="main-header">Under production</h1>
 			<p>
 				This website will be part of portfolio under construction of Ivan,
-				Plamen and Evgeni
+				Plamen and Evgeni.
 			</p>
 			<p>Every feature will be implemented by the following roles</p>
 			<ul>
