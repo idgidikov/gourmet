@@ -5,7 +5,8 @@ function App() {
 		<div className="App">
 			<h1 className="main-header">Under production</h1>
 			<p>
-				This website will be part of portfolio under construction of Ivan,
+				This website will be part of portfolio under 
+				construction of Ivan,
 				Plamen and Evgeni.
 			</p>
 			<p>Every feature will be implemented by the following roles</p>
