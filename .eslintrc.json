@@ -16,7 +16,7 @@
 		"react/self-closing-comp": ["error", { "component": true, "html": true }],
 		"require-jsdoc": 0,
 		"react/react-in-jsx-scope": "off",
-		"max-len": ["error", { "code": 80 }],
+		"max-len": ["error", { "code": 160 }],
 		"react/prop-types": 0
 	}
 }
