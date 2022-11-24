@@ -8,6 +8,8 @@ import { auth } from "./firebase/config";
 import { useLocation, useNavigate } from "react-router-dom";
 import Signup from "./views/users/Signup";
 import { getUserById } from "./services/users.services";
+import Navbar from "./components/Navbar";
+
 function App() {
 	const [user, loading, error] = useAuthState(auth);
 
@@ -57,6 +59,7 @@ function App() {
 	return (
 		<AppContext.Provider value={{ ...appState, setAppState, addToast }}>
 			<div className="App">
+				<Navbar />
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/sign-up" element={<Signup />} />
