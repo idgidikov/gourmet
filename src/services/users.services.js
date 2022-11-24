@@ -27,7 +27,7 @@ export const getUserById = async (uid) => {
 	if (value !== null) {
 		const key = Object.keys(value)[0];
 		const userData = value[key];
-		userData.likedPostsIds = Object.keys(userData.likedPosts || {});
+
 		return userData;
 	}
 	return value;
@@ -58,5 +58,5 @@ export const createUser = async (
 
 	await set(ref(db, `users/${username}`), userData);
 
-	return { ...userData, commentIds: [], postIds: [], likedPostIds: [] };
+	return { ...userData };
 };

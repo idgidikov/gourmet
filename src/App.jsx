@@ -7,7 +7,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase/config";
 import { useLocation, useNavigate } from "react-router-dom";
 import Signup from "./views/users/Signup";
-
+import { getUserById } from "./services/users.services";
 function App() {
 	const [user, loading, error] = useAuthState(auth);
 
