@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { AppContext } from "./context/app.context";
 import { Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
+import ContestForm from "./views/contests/ContestForm";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase/config";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -62,6 +63,7 @@ function App() {
 				<Navbar />
 				<Routes>
 					<Route path="/" element={<Home />} />
+					<Route path="/create-contest" element={<ContestForm />} />
 					<Route path="/sign-up" element={<Signup />} />
 				</Routes>
 				<div className="toast">
