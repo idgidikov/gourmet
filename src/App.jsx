@@ -3,6 +3,7 @@ import { useState } from "react";
 import { AppContext } from "./context/app.context";
 import { Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
+import SubmissionForm from "./views/submisions/SubmisionForm";
 
 function App() {
 	const [appState, setAppState] = useState();
@@ -27,6 +28,7 @@ function App() {
 			<div className="App">
 				<Routes>
 					<Route path="/" element={<Home />} />
+					<Route path="/sub" element={<SubmissionForm />} />
 				</Routes>
 				<div className="toast">
 					{toasts.map((t, i) => (
