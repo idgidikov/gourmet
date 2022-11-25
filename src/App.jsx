@@ -10,6 +10,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Signup from "./views/users/Signup";
 import { getUserById } from "./services/users.services";
 import Navbar from "./components/Navbar";
+import SubmissionForm from "./views/submisions/SubmisionForm";
 
 function App() {
 	const [user, loading, error] = useAuthState(auth);
@@ -65,6 +66,7 @@ function App() {
 					<Route path="/" element={<Home />} />
 					<Route path="/create-contest" element={<ContestForm />} />
 					<Route path="/sign-up" element={<Signup />} />
+					<Route path="/sub" element={<SubmissionForm />} />
 				</Routes>
 				<div className="toast">
 					{toasts.map((t, i) => (
