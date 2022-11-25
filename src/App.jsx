@@ -1,12 +1,47 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AppContext } from "./context/app.context";
 import { Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
 import ContestForm from "./views/contests/ContestForm";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "./firebase/config";
+import { useLocation, useNavigate } from "react-router-dom";
+import Signup from "./views/users/Signup";
+import { getUserById } from "./services/users.services";
+import Navbar from "./components/Navbar";
+
 function App() {
-	const [appState, setAppState] = useState();
+	const [user, loading, error] = useAuthState(auth);
+
+	const location = useLocation();
+	const navigate = useNavigate();
+	const [appState, setAppState] = useState({
+		user: user ? { email: user?.email, uid: user?.uid } : null,
+		userData: null,
+	});
 	const [toasts, setToasts] = useState([]);
+
+	useEffect(() => {
+		setAppState({
+			...appState,
+			user: user ? { email: user.email, uid: user.uid } : null,
+		});
+		if (location.state?.from?.pathname) {
+			navigate(location.state.from.pathname);
+		}
+	}, [user]);
+
+	useEffect(() => {
+		if (appState.user !== null) {
+			getUserById(appState.user?.uid)
+				.then(
+					(userData) =>
+						setAppState({ ...appState, userData }) || console.log(userData)
+				)
+				.catch((e) => addToast("error", e.message));
+		}
+	}, [appState.user]);
 
 	const addToast = (type, message) => {
 		const toast = {
@@ -25,9 +60,11 @@ function App() {
 	return (
 		<AppContext.Provider value={{ ...appState, setAppState, addToast }}>
 			<div className="App">
+				<Navbar />
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/create-contest" element={<ContestForm />} />
+					<Route path="/sign-up" element={<Signup />} />
 				</Routes>
 				<div className="toast">
 					{toasts.map((t, i) => (
