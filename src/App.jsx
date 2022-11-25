@@ -3,7 +3,7 @@ import { useState } from "react";
 import { AppContext } from "./context/app.context";
 import { Routes, Route } from "react-router-dom";
 import Home from "./views/Home";
-
+import ContestForm from "./views/contests/ContestForm";
 function App() {
 	const [appState, setAppState] = useState();
 	const [toasts, setToasts] = useState([]);
@@ -27,6 +27,7 @@ function App() {
 			<div className="App">
 				<Routes>
 					<Route path="/" element={<Home />} />
+					<Route path="/create-contest" element={<ContestForm />} />
 				</Routes>
 				<div className="toast">
 					{toasts.map((t, i) => (
