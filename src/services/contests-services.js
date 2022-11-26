@@ -35,3 +35,14 @@ export const createContest = async ({
 	const result = await push(ref(db, "contests"), contestObj);
 	return result;
 };
+
+export const getAllContests = async () => {
+	const result = await get(ref(db, "contests"));
+	if (!result.exists()) {
+		return [];
+	}
+	return Object.keys(result.val()).map((key) => ({
+		...result.val()[key],
+		id: key,
+	}));
+};

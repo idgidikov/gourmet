@@ -20,7 +20,7 @@ function CustomDate({ startDate, setStartDate, endDate, setEndDate }) {
 			endDate={endDate}
 			selectsRange
 			minDate={new Date()}
-			maxDate={addDays(startDate, 30)}
+			maxDate={addDays(startDate, 29)}
 			isClearable={true}
 			dateFormat="yyyy:mm:dd hh:mm:ss.msmsms"
 			placeholderText="Calendar"
