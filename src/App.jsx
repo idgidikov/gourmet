@@ -11,6 +11,8 @@ import Signup from "./views/users/Signup";
 import { getUserById } from "./services/users.services";
 import Navbar from "./components/Navbar";
 import SubmissionForm from "./views/submisions/SubmisionForm";
+import Login from "./views/users/Login";
+import Logout from "./views/users/Logout";
 
 function App() {
 	const [user, loading, error] = useAuthState(auth);
@@ -67,6 +69,8 @@ function App() {
 					<Route path="/create-contest" element={<ContestForm />} />
 					<Route path="/sign-up" element={<Signup />} />
 					<Route path="/sub" element={<SubmissionForm />} />
+					<Route path="/log-in" element={<Login />} />
+					<Route path="/log-out" element={<Logout/>} />
 				</Routes>
 				<div className="toast">
 					{toasts.map((t, i) => (

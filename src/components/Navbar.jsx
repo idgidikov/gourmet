@@ -23,20 +23,20 @@ const Navbar = function () {
 			<div className="flex-none">
 				<ul className="menu menu-horizontal p-0">
 					<li className="menu-item mr-5">
-						<NavLink to="/">Contests</NavLink>
+						<Link to="/">Contests</Link>
 					</li>
 					<li className="menu-item mr-5">
-						<NavLink to="/">Create Contest</NavLink>
+						<Link to="/">Create Contest</Link>
 					</li>
 					<li className="menu-item mr-5">
-						<NavLink to="/">Dashboard</NavLink>
+						<Link to="/">Dashboard</Link>
 					</li>
 				</ul>
 			</div>
 
 			<div className="flex-none gap-2">
 				{user === null ? (
-					<NavLink to="/login">Login</NavLink>
+					<Link to="/login">Login</Link>
 				) : (
 					<div className="dropdown dropdown-end">
 						<label tabIndex={0} className="btn btn-ghost btn-circle avatar">
