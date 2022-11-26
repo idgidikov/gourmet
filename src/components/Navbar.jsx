@@ -16,7 +16,7 @@ const Navbar = function () {
 		<div className="navbar bg-base-100 sticky">
 			<div className="flex-1">
 				<NavLink to="/">
-					<p className="btn btn-ghost normal-case text-xl">PhotoAppLogo</p>
+					<p className="btn btn-ghost normal-case text-xl">25thFrame</p>
 				</NavLink>
 			</div>
 

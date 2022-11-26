@@ -7,6 +7,8 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase/config.js";
 import { useContext } from "react";
 import { AppContext } from "../../context/app.context";
+import InputField from "../../components/submisions/SubmissionsInput";
+import Image from "../../components/submisions/SubmissionImage";
 
 export default function SubmissionForm() {
 	const { addToast } = useContext(AppContext);
@@ -16,12 +18,6 @@ export default function SubmissionForm() {
 	const [imageUrl, setImageUrl] = useState("");
 	const [description, setDescription] = useState("");
 	const [descriptionValidator, setDescriptionValidator] = useState(false);
-
-	const handleFileUpload = (e) => {
-		setCoverPhoto(e.target?.files[0]);
-		let value = URL.createObjectURL(e.target.files[0]);
-		setImageUrl(value);
-	};
 
 	useEffect(() => {
 		if (
@@ -65,15 +61,13 @@ export default function SubmissionForm() {
 		<div className="submission-form">
 			<div className="flex flex-wrap justify-around">
 				<div className="card lg:card-side bg-base-100 shadow-xl">
-					<figure>
-						<img
-							src={
-								imageUrl !== "" ? imageUrl : "https://placeimg.com/400/400/arch"
-							}
-							className="h-[350px]"
-							alt="Album"
+					{!coverPhoto && (
+						<InputField
+							setCoverPhoto={setCoverPhoto}
+							setImageUrl={setImageUrl}
 						/>
-					</figure>
+					)}
+					{coverPhoto && <Image imageUrl={imageUrl} />}
 					<div className="card-body">
 						<label className="label">Title</label>
 						<input
@@ -82,13 +76,6 @@ export default function SubmissionForm() {
 							value={title}
 							onChange={(e) => setTitle(e.target.value)}
 							type="text"
-						/>
-						<label className="label">Choose a photo to participate</label>
-						<input
-							type="file"
-							accept="image/*"
-							onChange={handleFileUpload}
-							className="file-input file-input-bordered file-input-info w-full max-w-full mb-6"
 						/>
 						<textarea
 							value={description}
