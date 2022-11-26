@@ -6,7 +6,7 @@ function Logout() {
 
 	const logOut = () => {
 		logoutUser();
-        navigate("/")
+		navigate("/");
 	};
 
 	const home = () => {

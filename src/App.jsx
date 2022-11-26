@@ -70,7 +70,7 @@ function App() {
 					<Route path="/sign-up" element={<Signup />} />
 					<Route path="/sub" element={<SubmissionForm />} />
 					<Route path="/log-in" element={<Login />} />
-					<Route path="/log-out" element={<Logout/>} />
+					<Route path="/log-out" element={<Logout />} />
 				</Routes>
 				<div className="toast">
 					{toasts.map((t, i) => (
