@@ -7,7 +7,10 @@ function AllContests() {
 
 	useEffect(() => {
 		getAllContests()
-			.then((result) => setContests(result))
+			.then((result) => {
+				setContests(result);
+				console.log(result);
+			})
 			.catch((e) => addToast("error", e.message));
 	}, []);
 

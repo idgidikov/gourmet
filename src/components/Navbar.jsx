@@ -36,7 +36,7 @@ const Navbar = function () {
 
 			<div className="flex-none gap-2">
 				{user === null ? (
-					<NavLink to="/login">Login</NavLink>
+					<NavLink to="/log-in">Login</NavLink>
 				) : (
 					<div className="dropdown dropdown-end">
 						<label tabIndex={0} className="btn btn-ghost btn-circle avatar">
