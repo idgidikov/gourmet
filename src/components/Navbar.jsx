@@ -16,27 +16,27 @@ const Navbar = function () {
 		<div className="navbar bg-base-100 sticky">
 			<div className="flex-1">
 				<NavLink to="/">
-					<p className="btn btn-ghost normal-case text-xl">PhotoAppLogo</p>
+					<p className="btn btn-ghost normal-case text-xl">25thFrame</p>
 				</NavLink>
 			</div>
 
 			<div className="flex-none">
 				<ul className="menu menu-horizontal p-0">
 					<li className="menu-item mr-5">
-						<NavLink to="/">Contests</NavLink>
+						<Link to="/">Contests</Link>
 					</li>
 					<li className="menu-item mr-5">
-						<NavLink to="/">Create Contest</NavLink>
+						<Link to="/">Create Contest</Link>
 					</li>
 					<li className="menu-item mr-5">
-						<NavLink to="/">Dashboard</NavLink>
+						<Link to="/">Dashboard</Link>
 					</li>
 				</ul>
 			</div>
 
 			<div className="flex-none gap-2">
 				{user === null ? (
-					<NavLink to="/log-in">Login</NavLink>
+					<Link to="/login">Login</Link>
 				) : (
 					<div className="dropdown dropdown-end">
 						<label tabIndex={0} className="btn btn-ghost btn-circle avatar">

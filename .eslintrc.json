@@ -10,6 +10,7 @@
 		"sourceType": "module"
 	},
 	"plugins": ["react"],
+	"ignorePatterns": ["/dist/"],
 	"rules": {
 		"quotes": ["error", "double"],
 		"arrow-body-style": ["error", "as-needed"],
