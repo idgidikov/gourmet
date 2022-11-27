@@ -23,6 +23,7 @@ export const createContest = async ({
 	startPhaseTwo,
 	startPhaseThree,
 	url,
+	username,
 }) => {
 	const contestObj = {
 		title,
@@ -31,11 +32,15 @@ export const createContest = async ({
 		startPhaseTwo: startPhaseTwo.getTime(),
 		startPhaseThree: startPhaseThree.getTime(),
 		url,
+		author: username,
 		addedOn: Date.now(),
 	};
 
-	const result = await push(ref(db, "contests"), contestObj);
-	return result;
+	const { key } = await push(ref(db, "contests"), contestObj);
+
+	return update(ref(db), {
+		[`users/${username}/created-contests/${key}`]: true,
+	});
 };
 
 export const getAllContests = async () => {
@@ -43,7 +48,6 @@ export const getAllContests = async () => {
 	if (!result.exists()) {
 		return [];
 	}
-	console.log(Object.entries(result.val()));
 
 	return Object.entries(result.val())
 		.map(([key, value]) => ({
