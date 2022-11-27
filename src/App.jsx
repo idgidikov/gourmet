@@ -14,6 +14,7 @@ import SubmissionForm from "./views/submissions/SubmisionForm";
 import AllContests from "./views/contests/AllContests";
 import Login from "./views/users/Login";
 import Logout from "./views/users/Logout";
+import Authenticate from "./hoc/Authenticate";
 
 function App() {
 	const [user, loading, error] = useAuthState(auth);
@@ -67,12 +68,40 @@ function App() {
 				<Navbar />
 				<Routes>
 					<Route path="/" element={<Home />} />
-					<Route path="/create-contest" element={<ContestForm />} />
+					<Route
+						path="/create-contest"
+						element={
+							<Authenticate user={appState.user}>
+								<ContestForm />
+							</Authenticate>
+						}
+					/>
 					<Route path="/sign-up" element={<Signup />} />
-					<Route path="/sub" element={<SubmissionForm />} />
-					<Route path="/all-contests" element={<AllContests />} />
-					<Route path="/log-in" element={<Login />} />
-					<Route path="/log-out" element={<Logout />} />
+					<Route
+						path="/sub"
+						element={
+							<Authenticate user={appState.user}>
+								<SubmissionForm />
+							</Authenticate>
+						}
+					/>
+					<Route
+						path="/all-contests"
+						element={
+							<Authenticate user={appState.user}>
+								<AllContests />
+							</Authenticate>
+						}
+					/>
+					<Route path="/login" element={<Login />} />
+					<Route
+						path="/logout"
+						element={
+							<Authenticate user={appState.user}>
+								<Logout />
+							</Authenticate>
+						}
+					/>
 				</Routes>
 				<div className="toast">
 					{toasts.map((t, i) => (

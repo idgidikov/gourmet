@@ -7,7 +7,7 @@ function ContestCard({ contest }) {
 	const hours = Math.floor(timeLeft / (1000 * 60 * 60)) % 24;
 	const minutes = Math.floor(timeLeft / 60000) % 60;
 	const seconds = Math.floor(timeLeft / 1000) % 60;
-	console.log(contest);
+
 	return (
 		<div>
 			<div className="card w-96 bg-base-100 shadow-xl">

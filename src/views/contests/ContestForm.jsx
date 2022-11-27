@@ -9,6 +9,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase/config.js";
 import { useContext } from "react";
 import { AppContext } from "../../context/app.context";
+import { useNavigate } from "react-router-dom";
 
 function ContestForm() {
 	const [title, setTitle] = useState("");
@@ -26,7 +27,14 @@ function ContestForm() {
 		setImageUrl(value);
 	};
 
-	const { addToast } = useContext(AppContext);
+	const navigate = useNavigate();
+
+	const showAllContests = () => {
+		navigate("/all-contests/");
+	};
+
+	const { user, addToast, userData } = useContext(AppContext);
+	const username = userData?.username;
 
 	useEffect(() => {
 		if (
@@ -65,7 +73,9 @@ function ContestForm() {
 					startPhaseTwo,
 					startPhaseThree,
 					url,
+					username,
 				});
+				showAllContests();
 			} catch (error) {
 				addToast("error", error.message);
 			}

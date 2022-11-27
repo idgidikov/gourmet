@@ -60,7 +60,7 @@ const Navbar = function () {
 								<Link to="/">Settings</Link>
 							</li>
 							<li>
-								<Link to="/">Logout</Link>
+								<Link to="/logout">Logout</Link>
 							</li>
 						</ul>
 					</div>
