@@ -30,7 +30,7 @@ function ContestForm() {
 	const navigate = useNavigate();
 
 	const showAllContests = () => {
-		navigate("/all-contests/");
+		navigate("/up-coming-contests/");
 	};
 
 	const { user, addToast, userData } = useContext(AppContext);

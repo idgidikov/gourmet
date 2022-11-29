@@ -23,13 +23,13 @@ const Navbar = function () {
 			<div className="flex-none">
 				<ul className="menu menu-horizontal p-0">
 					<li className="menu-item mr-5">
-						<Link to="/">Contests</Link>
+						<Link to="/up-coming-contests">Dashboard</Link>
 					</li>
 					<li className="menu-item mr-5">
-						<Link to="/">Create Contest</Link>
+						<Link to="/">Favorites</Link>
 					</li>
 					<li className="menu-item mr-5">
-						<Link to="/">Dashboard</Link>
+						<Link to="/">My photos</Link>
 					</li>
 				</ul>
 			</div>
