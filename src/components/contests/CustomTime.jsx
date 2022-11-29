@@ -5,13 +5,13 @@ import addDays from "date-fns/addDays";
 import "react-datepicker/dist/react-datepicker.css";
 
 // https://reactdatepicker.com/#example-date-range-for-one-datepicker-with-disabled-dates-highlighted
-function CustomTime({ endDate, setPhaseTwo }) {
-	const phaseTwoStart = endDate ? addDays(endDate, 1) : null;
+function CustomTime({ startPhaseTwo, setStartPhaseThree }) {
+	const transition = startPhaseTwo ? addDays(startPhaseTwo, 1) : null;
 
 	return (
 		<DatePicker
-			selected={phaseTwoStart}
-			onChange={(date) => setPhaseTwo(date)}
+			selected={transition}
+			onChange={(date) => setStartPhaseThree(date)}
 			minDate={new Date()}
 			maxDate={new Date()}
 			showTimeSelect

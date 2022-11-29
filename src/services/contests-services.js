@@ -13,25 +13,46 @@ import {
 	startAt,
 } from "firebase/database";
 import { db, storage } from "../firebase/config";
+import { getContestPhase } from "../helpers/contests-helpers";
 
 // https://codetheweb.blog/javascript-dates-and-times/
 export const createContest = async ({
 	title,
 	category,
-	startDate,
-	endDate,
-	phaseTwo,
+	startPhaseOne,
+	startPhaseTwo,
+	startPhaseThree,
 	url,
+	username,
 }) => {
 	const contestObj = {
 		title,
 		category,
-		startDate: startDate.getTime(),
-		endDate: endDate.getTime(),
-		phaseTwo: phaseTwo.getTime(),
+		startPhaseOne: startPhaseOne.getTime(),
+		startPhaseTwo: startPhaseTwo.getTime(),
+		startPhaseThree: startPhaseThree.getTime(),
 		url,
+		author: username,
 		addedOn: Date.now(),
 	};
-	const result = await push(ref(db, "contests"), contestObj);
-	return result;
+
+	const { key } = await push(ref(db, "contests"), contestObj);
+
+	return update(ref(db), {
+		[`users/${username}/created-contests/${key}`]: true,
+	});
+};
+
+export const getAllContests = async () => {
+	const result = await get(ref(db, "contests"));
+	if (!result.exists()) {
+		return [];
+	}
+
+	return Object.entries(result.val())
+		.map(([key, value]) => ({
+			...value,
+			id: key,
+		}))
+		.map(getContestPhase);
 };

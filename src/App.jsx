@@ -15,6 +15,10 @@ import Login from "./views/users/Login";
 import Logout from "./views/users/Logout";
 import SubmissionDetails from "./views/submisions/SubmissionDetails";
 import AllSubmissions from "./views/submisions/AllSubmissionsView";
+import AllContests from "./views/contests/AllContests";
+import Authenticate from "./hoc/Authenticate";
+import Profile from "./views/users/Profile";
+import EditProfile from "./views/users/EditProfile";
 
 function App() {
 	const [user, loading, error] = useAuthState(auth);
@@ -68,7 +72,14 @@ function App() {
 				<Navbar />
 				<Routes>
 					<Route path="/" element={<Home />} />
-					<Route path="/create-contest" element={<ContestForm />} />
+					<Route
+						path="/create-contest"
+						element={
+							<Authenticate user={appState.user}>
+								<ContestForm />
+							</Authenticate>
+						}
+					/>
 					<Route path="/sign-up" element={<Signup />} />
 					<Route path="/submission-form" element={<SubmissionForm />} />
 					<Route
@@ -76,8 +87,47 @@ function App() {
 						element={<SubmissionDetails />}
 					/>
 					<Route path="/allsubmissions" element={<AllSubmissions />} />
-					<Route path="/log-in" element={<Login />} />
-					<Route path="/log-out" element={<Logout />} />
+					<Route
+						path="/sub"
+						element={
+							<Authenticate user={appState.user}>
+								<SubmissionForm />
+							</Authenticate>
+						}
+					/>
+					<Route
+						path="/all-contests"
+						element={
+							<Authenticate user={appState.user}>
+								<AllContests />
+							</Authenticate>
+						}
+					/>
+					<Route
+						path="/profile"
+						element={
+							<Authenticate user={appState.user}>
+								<Profile />
+							</Authenticate>
+						}
+					/>
+					<Route
+						path="/edit-profile"
+						element={
+							<Authenticate user={appState.user}>
+								<EditProfile />
+							</Authenticate>
+						}
+					/>
+					<Route path="/login" element={<Login />} />
+					<Route
+						path="/logout"
+						element={
+							<Authenticate user={appState.user}>
+								<Logout />
+							</Authenticate>
+						}
+					/>
 				</Routes>
 				<div className="toast">
 					{toasts.map((t, i) => (

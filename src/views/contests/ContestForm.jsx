@@ -9,15 +9,16 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../firebase/config.js";
 import { useContext } from "react";
 import { AppContext } from "../../context/app.context";
+import { useNavigate } from "react-router-dom";
 
 function ContestForm() {
 	const [title, setTitle] = useState("");
 	const [titleValidator, setTitleValidator] = useState(false);
 	const [category, setCategory] = useState("");
 	const [coverPhoto, setCoverPhoto] = useState("");
-	const [startDate, setStartDate] = useState(null);
-	const [endDate, setEndDate] = useState(null);
-	const [phaseTwo, setPhaseTwo] = useState(null);
+	const [startPhaseOne, setStartPhaseOne] = useState(null);
+	const [startPhaseTwo, setStartPhaseTwo] = useState(null);
+	const [startPhaseThree, setStartPhaseThree] = useState(null);
 	const [imageUrl, setImageUrl] = useState("");
 
 	const handleFileUpload = (e) => {
@@ -26,7 +27,14 @@ function ContestForm() {
 		setImageUrl(value);
 	};
 
-	const { addToast } = useContext(AppContext);
+	const navigate = useNavigate();
+
+	const showAllContests = () => {
+		navigate("/all-contests/");
+	};
+
+	const { user, addToast, userData } = useContext(AppContext);
+	const username = userData?.username;
 
 	useEffect(() => {
 		if (
@@ -47,9 +55,11 @@ function ContestForm() {
 			addToast("error", "Title must between 1 - 64 characters");
 		if (category.length == 0) addToast("error", "Write category");
 		if (!file) addToast("error", "Choose cover photo");
-		if (startDate == null) addToast("error", "Choose start date");
-		if (endDate == null) addToast("error", "Choose end date");
-		if (phaseTwo == null) addToast("error", "Choose end hour for voting");
+		if (startPhaseOne == null) addToast("error", "Choose start date");
+		if (startPhaseTwo == null)
+			addToast("error", "Choose start for voting date");
+		if (startPhaseThree == null)
+			addToast("error", "Choose end hour for voting");
 		if (titleValidator) {
 			try {
 				const result = await uploadBytes(imageRef, file);
@@ -59,11 +69,13 @@ function ContestForm() {
 				await createContest({
 					title,
 					category,
-					startDate,
-					endDate,
-					phaseTwo,
+					startPhaseOne,
+					startPhaseTwo,
+					startPhaseThree,
 					url,
+					username,
 				});
+				showAllContests();
 			} catch (error) {
 				addToast("error", error.message);
 			}
@@ -80,7 +92,7 @@ function ContestForm() {
 							src={
 								imageUrl !== "" ? imageUrl : "https://placeimg.com/400/400/arch"
 							}
-							class="h-[350px]"
+							className="h-[350px]"
 							alt="Album"
 						/>
 					</figure>
@@ -110,32 +122,32 @@ function ContestForm() {
 							Choose start and end date for participants{" "}
 						</label>
 						<CustomDate
-							startDate={startDate}
-							setStartDate={setStartDate}
-							endDate={endDate}
-							setEndDate={setEndDate}
+							startPhaseOne={startPhaseOne}
+							setStartPhaseOne={setStartPhaseOne}
+							startPhaseTwo={startPhaseTwo}
+							setStartPhaseTwo={setStartPhaseTwo}
 						/>
 						<br />
-						{startDate !== null ? (
-							<p>Open at: {startDate.toLocaleString()}</p>
+						{startPhaseOne !== null ? (
+							<p>Open at: {startPhaseOne.toLocaleString()}</p>
 						) : (
 							<p>Open at: </p>
 						)}
-						{endDate !== null ? (
-							<p>Close at: {endDate.toLocaleString()}</p>
+						{startPhaseTwo !== null ? (
+							<p>Close at: {startPhaseTwo.toLocaleString()}</p>
 						) : (
 							<p>Close at: </p>
 						)}
 						<br />
 						<label className="label">Choose end time for jury voting</label>
 						<CustomTime
-							endDate={endDate}
-							phaseTwo={phaseTwo}
-							setPhaseTwo={setPhaseTwo}
+							startPhaseTwo={startPhaseTwo}
+							startPhaseThree={startPhaseThree}
+							setStartPhaseThree={setStartPhaseThree}
 						/>
 						<br />
-						{phaseTwo !== null ? (
-							<p>End voting at: {phaseTwo.toLocaleString()}</p>
+						{startPhaseThree !== null ? (
+							<p>End voting at: {startPhaseThree.toLocaleString()}</p>
 						) : (
 							<p>Choose period for voting</p>
 						)}
