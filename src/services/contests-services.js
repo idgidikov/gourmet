@@ -13,7 +13,7 @@ import {
 	startAt,
 } from "firebase/database";
 import { db, storage } from "../firebase/config";
-import { getContestPhase } from "../helpers/contests-helpers";
+import { setContestPhase } from "../helpers/contests-helpers";
 
 // https://codetheweb.blog/javascript-dates-and-times/
 export const createContest = async ({
@@ -54,5 +54,20 @@ export const getAllContests = async () => {
 			...value,
 			id: key,
 		}))
-		.map(getContestPhase);
+		.map(setContestPhase);
+};
+
+export const getContests = async (target) => {
+	const result = await get(ref(db, "contests"));
+	if (!result.exists()) {
+		return [];
+	}
+
+	return Object.entries(result.val())
+		.map(([key, value]) => ({
+			...value,
+			id: key,
+		}))
+		.map(setContestPhase)
+		.filter((el) => el.phaseStatus === target);
 };

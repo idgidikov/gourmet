@@ -10,15 +10,18 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Signup from "./views/users/Signup";
 import { getUserById } from "./services/users.services";
 import Navbar from "./components/Navbar";
-import SubmissionForm from "./views/submisions/SubmissionForm";
+import SubmissionForm from "./views/submissions/SubmisionForm";
 import Login from "./views/users/Login";
 import Logout from "./views/users/Logout";
 import SubmissionDetails from "./views/submisions/SubmissionDetails";
 import AllSubmissions from "./views/submisions/AllSubmissionsView";
-import AllContests from "./views/contests/AllContests";
 import Authenticate from "./hoc/Authenticate";
 import Profile from "./views/users/Profile";
 import EditProfile from "./views/users/EditProfile";
+import UpComingContests from "./views/contests/UpComingContests";
+import PhaseOneContests from "./views/contests/PhaseOneContests";
+import PhaseTwoContests from "./views/contests/PhaseTwoContests";
+import PhaseThreeContests from "./views/contests/PhaseThreeContests";
 
 function App() {
 	const [user, loading, error] = useAuthState(auth);
@@ -96,10 +99,34 @@ function App() {
 						}
 					/>
 					<Route
-						path="/all-contests"
+						path="/up-coming-contests"
 						element={
 							<Authenticate user={appState.user}>
-								<AllContests />
+								<UpComingContests />
+							</Authenticate>
+						}
+					/>
+					<Route
+						path="/open-contests"
+						element={
+							<Authenticate user={appState.user}>
+								<PhaseOneContests />
+							</Authenticate>
+						}
+					/>
+					<Route
+						path="/open-jury-contests"
+						element={
+							<Authenticate user={appState.user}>
+								<PhaseTwoContests />
+							</Authenticate>
+						}
+					/>
+					<Route
+						path="/closed-contests"
+						element={
+							<Authenticate user={appState.user}>
+								<PhaseThreeContests />
 							</Authenticate>
 						}
 					/>
