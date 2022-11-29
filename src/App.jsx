@@ -10,10 +10,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Signup from "./views/users/Signup";
 import { getUserById } from "./services/users.services";
 import Navbar from "./components/Navbar";
-import SubmissionForm from "./views/submissions/SubmisionForm";
-import AllContests from "./views/contests/AllContests";
+import SubmissionForm from "./views/submisions/SubmissionForm";
 import Login from "./views/users/Login";
 import Logout from "./views/users/Logout";
+import SubmissionDetails from "./views/submisions/SubmissionDetails";
+import AllSubmissions from "./views/submisions/AllSubmissionsView";
+import AllContests from "./views/contests/AllContests";
 import Authenticate from "./hoc/Authenticate";
 import Profile from "./views/users/Profile";
 import EditProfile from "./views/users/EditProfile";
@@ -79,6 +81,12 @@ function App() {
 						}
 					/>
 					<Route path="/sign-up" element={<Signup />} />
+					<Route path="/submission-form" element={<SubmissionForm />} />
+					<Route
+						path="/submission/:submissionId"
+						element={<SubmissionDetails />}
+					/>
+					<Route path="/allsubmissions" element={<AllSubmissions />} />
 					<Route
 						path="/sub"
 						element={
