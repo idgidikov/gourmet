@@ -1,12 +1,14 @@
-export const getContestPhase = (obj) => {
-	if (obj.startPhaseOne < Date.now()) {
-		obj.phaseStatus = 0;
-	} else if (obj.startPhaseOne >= Date.now()) {
-		obj.phaseStatus = 1;
+import { contestPhases } from "../common/enums/contest.enum";
+
+export const setContestPhase = (obj) => {
+	if (obj.startPhaseOne > Date.now()) {
+		obj.phaseStatus = contestPhases.UPCOMING;
+	} else if (obj.startPhaseOne <= Date.now()) {
+		obj.phaseStatus = contestPhases.PHASE_ONE;
 	} else if (obj.setStartPhaseTwo >= Date.now()) {
-		obj.phaseStatus = 2;
+		obj.phaseStatus = contestPhases.PHASE_TWO;
 	} else if (obj.setStartPhaseTwo >= Date.now()) {
-		obj.phaseStatus = 3;
+		obj.phaseStatus = contestPhases.PHASE_THREE;
 	}
 	return obj;
 };
