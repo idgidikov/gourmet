@@ -13,7 +13,7 @@ const Navbar = function () {
 	const location = useLocation();
 
 	return (
-		<div className="navbar bg-base-100 sticky">
+		<div className="navbar bg-base-100 ">
 			<div className="flex-1">
 				<NavLink to="/">
 					<p className="btn btn-ghost normal-case text-xl">25thFrame</p>
@@ -48,16 +48,16 @@ const Navbar = function () {
 						</label>
 						<ul
 							tabIndex={0}
-							className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+							className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52 z-10"
 						>
 							<li>
-								<Link to="/" className="justify-between">
+								<Link to="/profile" className="justify-between">
 									Profile
 									<span className="badge">New</span>
 								</Link>
 							</li>
 							<li>
-								<Link to="/">Settings</Link>
+								<Link to="/edit-profile">Settings</Link>
 							</li>
 							<li>
 								<Link to="/logout">Logout</Link>
