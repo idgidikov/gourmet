@@ -15,6 +15,8 @@ import AllContests from "./views/contests/AllContests";
 import Login from "./views/users/Login";
 import Logout from "./views/users/Logout";
 import Authenticate from "./hoc/Authenticate";
+import Profile from "./views/users/Profile";
+import EditProfile from "./views/users/EditProfile";
 
 function App() {
 	const [user, loading, error] = useAuthState(auth);
@@ -90,6 +92,22 @@ function App() {
 						element={
 							<Authenticate user={appState.user}>
 								<AllContests />
+							</Authenticate>
+						}
+					/>
+					<Route
+						path="/profile"
+						element={
+							<Authenticate user={appState.user}>
+								<Profile />
+							</Authenticate>
+						}
+					/>
+					<Route
+						path="/edit-profile"
+						element={
+							<Authenticate user={appState.user}>
+								<EditProfile />
 							</Authenticate>
 						}
 					/>
