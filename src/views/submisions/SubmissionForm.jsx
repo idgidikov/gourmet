@@ -9,15 +9,18 @@ import { useContext } from "react";
 import { AppContext } from "../../context/app.context";
 import InputField from "../../components/submisions/SubmissionsInput";
 import Image from "../../components/submisions/SubmissionImage";
+import { useNavigate } from "react-router-dom";
 
-export default function SubmissionForm() {
-	const { addToast } = useContext(AppContext);
+function SubmissionForm() {
+	const navigate = useNavigate();
+	const { addToast, userData, user } = useContext(AppContext);
 	const [title, setTitle] = useState("");
 	const [titleValidator, setTitleValidator] = useState(false);
 	const [coverPhoto, setCoverPhoto] = useState("");
 	const [imageUrl, setImageUrl] = useState("");
 	const [description, setDescription] = useState("");
 	const [descriptionValidator, setDescriptionValidator] = useState(false);
+	const username = userData?.username;
 
 	useEffect(() => {
 		if (
@@ -38,6 +41,10 @@ export default function SubmissionForm() {
 		}
 	}, [title]);
 
+	const showAllSubmissions = () => {
+		navigate("/allsubmissions");
+	};
+
 	const sendData = async (e) => {
 		e.preventDefault();
 		const imageRef = ref(storage, `submission/${v4()}`);
@@ -50,7 +57,8 @@ export default function SubmissionForm() {
 				const result = await uploadBytes(imageRef, file);
 				const url = await getDownloadURL(result.ref);
 				setCoverPhoto(url);
-				await createSubmission(title, description, url);
+				await createSubmission(title, description, url, username);
+				showAllSubmissions();
 			} catch (error) {
 				addToast("error", error.message);
 			}
@@ -93,3 +101,5 @@ export default function SubmissionForm() {
 		</div>
 	);
 }
+
+export default SubmissionForm;
