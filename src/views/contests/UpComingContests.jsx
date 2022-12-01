@@ -10,6 +10,7 @@ import SubMenuContests from "../../components/contests/SubMenuContests";
 function UpComingContests() {
 	const [contestsComing, setContestsComing] = useState([]);
 	const { user, addToast, userData } = useContext(AppContext);
+
 	useEffect(() => {
 		getContests(contestPhases.UPCOMING)
 			.then((result) => {

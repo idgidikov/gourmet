@@ -9,7 +9,8 @@ import SubMenuContests from "../../components/contests/SubMenuContests";
 
 function PhaseOneContests() {
 	const [contestsComing, setContestsComing] = useState([]);
-	const { user, addToast, userData } = useContext(AppContext);
+	const { addToast } = useContext(AppContext);
+
 	useEffect(() => {
 		getContests(contestPhases.PHASE_ONE)
 			.then((result) => {
