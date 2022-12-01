@@ -1,18 +1,26 @@
 import { ref, push, get, update } from "firebase/database";
 import { db } from "../firebase/config";
 
-export const createSubmission = async (title, description, url, username) => {
+export const createSubmission = async (
+	title,
+	description,
+	url,
+	contestId,
+	username
+) => {
 	const submissionObj = {
 		title,
 		description,
 		url,
+		contestId,
 		username,
 		addedOn: Date.now(),
 	};
 	const { key } = await push(ref(db, "submissions"), submissionObj);
 
 	return update(ref(db), {
-		[`users/${username}/createdSubmissions/${key}`]: true,
+		[`users/${username}/submissions/${key}`]: true,
+		[`contests/${contestId}/submissions/${key}`]: true,
 	});
 };
 
@@ -26,15 +34,13 @@ export const getSubmissionById = async (id) => {
 	};
 };
 
-export const getAllSubmissions = async () => {
-	const snapshot = await get(ref(db, "submissions"));
+export const getSubmissionsByContest = async (contestId) => {
+	const snapshot = await get(ref(db, `contests/${contestId}/submissions`));
 
 	if (!snapshot.exists()) {
 		return [];
 	}
 
-	return Object.keys(snapshot.val()).map((key) => ({
-		...snapshot.val()[key],
-		id: key,
-	}));
+	const submissions = Object.keys(snapshot.val()).map(getSubmissionById);
+	return Promise.all(submissions);
 };
