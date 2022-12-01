@@ -49,6 +49,7 @@ function ContestForm() {
 
 	const sendData = async (e) => {
 		e.preventDefault();
+
 		const imageRef = ref(storage, `covers/${v4()}`);
 		const file = coverPhoto;
 		if (!titleValidator)

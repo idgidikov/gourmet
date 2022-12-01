@@ -6,15 +6,6 @@ function ContestCard({ contest }) {
 		if (contest.phaseStatus == 1) return contest.startPhaseTwo;
 		if (contest.phaseStatus == 2) return contest.startPhaseThree;
 	});
-	// if(contest.phaseStatus == 0) {
-	// 	setEndTime(contest.startPhaseOne);
-	// }
-	// else if(contest.phaseStatus == 1) {
-	// 	setEndTime(contest.startPhaseTwo);
-	// }
-	// else if(contest.phaseStatus == 2) {
-	// 	setEndTime(contest.startPhaseTree);
-	// }
 
 	const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
 	const hours = Math.floor(timeLeft / (1000 * 60 * 60)) % 24;
