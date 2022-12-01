@@ -1,14 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import { AppContext } from "../../context/app.context";
-import UserValid from "../../common/enums/user-validation";
+import userValid from "../../common/enums/user-validation";
 import { useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { createUser, getUser } from "../../services/users.services";
 import { registerUser, loginUser } from "../../services/auth.services";
 
 function Signup() {
-	//const [formRole, setFormRole] = useState('login')
 	const { addToast, setAppState, ...appState } = useContext(AppContext);
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -38,13 +37,13 @@ function Signup() {
 			valid: false,
 			error: "",
 		},
-		name: {
+		firstName: {
 			value: "",
 			touched: false,
 			valid: false,
 			error: "",
 		},
-		last: {
+		lastName: {
 			value: "",
 			touched: false,
 			valid: false,
@@ -52,40 +51,36 @@ function Signup() {
 		},
 	});
 	const updateUsername = (value = "") => {
-		// username between 4 and 20
-
 		setForm({
 			...form,
 			username: {
 				value,
 				touched: true,
 				valid:
-					value.length >= UserValid.USER_MIN_LENGTH &&
-					value.length <= UserValid.USER_MAX_LENGTH,
+					value.length >= userValid.USERNAME_MIN_LENGTH &&
+					value.length <= userValid.USERNAME_MAX_LENGTH,
 				error:
-					value.length < UserValid.USER_MIN_LENGTH
+					value.length < userValid.USERNAME_MIN_LENGTH
 						? `Minimum username length:
-                 ${UserValid.USER_MIN_LENGTH}`
-						: `Maximum username length: ${UserValid.USER_MAX_LENGTH}`,
+                 ${userValid.USERNAME_MIN_LENGTH}`
+						: `Maximum username length: ${userValid.USERNAME_MAX_LENGTH}`,
 			},
 		});
 	};
 	const updateEmail = (value = "") => {
-		// username between 4 and 20
-
 		setForm({
 			...form,
 			email: {
 				value,
 				touched: true,
 				valid:
-					value.length >= UserValid.EMAIL_MIN_LENGTH &&
-					value.length <= UserValid.EMAIL_MAX_LENGTH,
+					value.length >= userValid.EMAIL_MIN_LENGTH &&
+					value.length <= userValid.EMAIL_MAX_LENGTH,
 				error:
-					value.length < UserValid.EMAIL_MIN_LENGTH
+					value.length < userValid.EMAIL_MIN_LENGTH
 						? `Minimum email length:
-                 ${UserValid.EMAIL_MIN_LENGTH}`
-						: `Maximum email length: ${UserValid.EMAIL_MAX_LENGTH}`,
+                 ${userValid.EMAIL_MIN_LENGTH}`
+						: `Maximum email length: ${userValid.EMAIL_MAX_LENGTH}`,
 			},
 		});
 	};
@@ -96,13 +91,13 @@ function Signup() {
 				value,
 				touched: true,
 				valid:
-					value.length >= UserValid.PASS_MIN_LENGTH &&
-					value.length <= UserValid.PASS_MAX_LENGTH,
+					value.length >= userValid.PASS_MIN_LENGTH &&
+					value.length <= userValid.PASS_MAX_LENGTH,
 				error:
-					value.length < UserValid.PASS_MIN_LENGTH
+					value.length < userValid.PASS_MIN_LENGTH
 						? `Minimum password length:
-                 ${UserValid.PASS_MIN_LENGTH}`
-						: `Maximum password length: ${UserValid.PASS_MAX_LENGTH}`,
+                 ${userValid.PASS_MIN_LENGTH}`
+						: `Maximum password length: ${userValid.PASS_MAX_LENGTH}`,
 			},
 		});
 	};
@@ -114,31 +109,31 @@ function Signup() {
 				value,
 				touched: true,
 				valid:
-					value.length >= UserValid.PASS_MIN_LENGTH &&
-					value.length <= value.length <= UserValid.PASS_MAX_LENGTH &&
+					value.length >= userValid.PASS_MIN_LENGTH &&
+					value.length <= value.length <= userValid.PASS_MAX_LENGTH &&
 					value === form.password.value,
 				error:
-					value.length < UserValid.PASS_MIN_LENGTH
+					value.length < userValid.PASS_MIN_LENGTH
 						? `Minimum password length:
-                 ${UserValid.PASS_MIN_LENGTH}`
-						: `Maximum password length: ${UserValid.PASS_MAX_LENGTH}`,
+                 ${userValid.PASS_MIN_LENGTH}`
+						: `Maximum password length: ${userValid.PASS_MAX_LENGTH}`,
 			},
 		});
 	};
-	const UpdateName = (value = "") => {
+	const UpdateFirstName = (value = "") => {
 		setForm({
 			...form,
-			name: {
+			firstName: {
 				value,
 				touched: true,
 				valid:
-					value.length >= UserValid.FIRST_NAME_MIN_LENGTH &&
-					value.length <= UserValid.FIRST_NAME_MAX_LENGTH,
+					value.length >= userValid.FIRST_NAME_MIN_LENGTH &&
+					value.length <= userValid.FIRST_NAME_MAX_LENGTH,
 				error:
-					value.length < UserValid.FIRST_NAME_MIN_LENGTH
+					value.length < userValid.FIRST_NAME_MIN_LENGTH
 						? `Minimum name length:
-                ${UserValid.FIRST_NAME_MIN_LENGTH} `
-						: `Maximum name length:${UserValid.FIRST_NAME_MAX_LENGTH} `,
+                ${userValid.FIRST_NAME_MIN_LENGTH} `
+						: `Maximum name length:${userValid.FIRST_NAME_MAX_LENGTH} `,
 			},
 		});
 	};
@@ -146,17 +141,17 @@ function Signup() {
 	const UpdateLastName = (value = "") => {
 		setForm({
 			...form,
-			last: {
+			lastName: {
 				value,
 				touched: true,
 				valid:
-					value.length >= UserValid.LAST_NAME_MIN_LENGTH &&
-					value.length <= UserValid.LAST_NAME_MAX_LENGTH,
+					value.length >= userValid.LAST_NAME_MIN_LENGTH &&
+					value.length <= userValid.LAST_NAME_MAX_LENGTH,
 				error:
-					value.length < UserValid.LAST_NAME_MIN_LENGTH
+					value.length < userValid.LAST_NAME_MIN_LENGTH
 						? `Minimum  last name length:
-                ${UserValid.FIRST_LAST_NAME_MIN_LENGTH} `
-						: `Maximum last name length:${UserValid.FIRST_LAST_NAME_MAX_LENGTH} `,
+                ${userValid.LAST_NAME_MIN_LENGTH} `
+						: `Maximum last name length:${userValid.LAST_NAME_MAX_LENGTH} `,
 			},
 		});
 	};
@@ -269,7 +264,7 @@ function Signup() {
 						<div className="mb-4">
 							<input
 								value={form.name.value}
-								onChange={(e) => UpdateName(e.target.value)}
+								onChange={(e) => UpdateFirstName(e.target.value)}
 								type="text"
 								className="form-control block w-full px-3 py-1.5 text-base font-normal
                                  text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300
@@ -347,14 +342,8 @@ function Signup() {
 							</button>
 						</div>
 					</form>
-					{/* </div>
-                                </div> */}
+
 					<div className="lg:w-6/12 flex items-center lg:rounded-r-lg rounded-b-lg lg:rounded-bl-none" />
-					{/* </div>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
 				</div>
 			</div>
 		</div>

@@ -14,7 +14,6 @@ import { userRole } from "../common/enums/user-role.enum";
 
 export const getUser = async (username) => {
 	const snapshot = await get(ref(db, `users/${username}`));
-	//console.log(snapshot.val())
 
 	return snapshot.val();
 };
