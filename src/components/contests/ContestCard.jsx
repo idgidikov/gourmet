@@ -1,20 +1,17 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import useCountdown from "./CountDown";
+
 function ContestCard({ contest }) {
+	const navigate = useNavigate();
+	const redirectToDetails = () => {
+		navigate(`/contest-details/${contest.id}`);
+	};
 	const [timeLeft, setEndTime] = useCountdown(() => {
 		if (contest.phaseStatus == 0) return contest.startPhaseOne;
 		if (contest.phaseStatus == 1) return contest.startPhaseTwo;
 		if (contest.phaseStatus == 2) return contest.startPhaseThree;
 	});
-	// if(contest.phaseStatus == 0) {
-	// 	setEndTime(contest.startPhaseOne);
-	// }
-	// else if(contest.phaseStatus == 1) {
-	// 	setEndTime(contest.startPhaseTwo);
-	// }
-	// else if(contest.phaseStatus == 2) {
-	// 	setEndTime(contest.startPhaseTree);
-	// }
 
 	const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
 	const hours = Math.floor(timeLeft / (1000 * 60 * 60)) % 24;
@@ -60,6 +57,11 @@ function ContestCard({ contest }) {
 								sec
 							</div>
 						</div>
+					</div>
+					<div className="card-actions">
+						<button className="btn btn-primary" onClick={redirectToDetails}>
+							View
+						</button>
 					</div>
 				</div>
 			</div>

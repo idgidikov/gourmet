@@ -11,7 +11,7 @@ import InputField from "../../components/submisions/SubmissionsInput";
 import Image from "../../components/submisions/SubmissionImage";
 import { useNavigate } from "react-router-dom";
 
-function SubmissionForm() {
+function SubmissionForm({ contestId }) {
 	const navigate = useNavigate();
 	const { addToast, userData, user } = useContext(AppContext);
 	const [title, setTitle] = useState("");
@@ -21,7 +21,7 @@ function SubmissionForm() {
 	const [description, setDescription] = useState("");
 	const [descriptionValidator, setDescriptionValidator] = useState(false);
 	const username = userData?.username;
-
+	console.log(contestId);
 	useEffect(() => {
 		if (
 			title.length > validation.MIN_LENGTH_TITLE &&
@@ -42,7 +42,7 @@ function SubmissionForm() {
 	}, [title]);
 
 	const showAllSubmissions = () => {
-		navigate("/allsubmissions");
+		navigate("/contest-submissions");
 	};
 
 	const sendData = async (e) => {
@@ -57,7 +57,7 @@ function SubmissionForm() {
 				const result = await uploadBytes(imageRef, file);
 				const url = await getDownloadURL(result.ref);
 				setCoverPhoto(url);
-				await createSubmission(title, description, url, username);
+				await createSubmission(title, description, url, contestId, username);
 				showAllSubmissions();
 			} catch (error) {
 				addToast("error", error.message);

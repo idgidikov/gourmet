@@ -10,18 +10,18 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Signup from "./views/users/Signup";
 import { getUserById } from "./services/users.services";
 import Navbar from "./components/Navbar";
-import SubmissionForm from "./views/submissions/SubmisionForm";
 import Login from "./views/users/Login";
 import Logout from "./views/users/Logout";
 import SubmissionDetails from "./views/submissions/SubmissionDetails";
-import AllSubmissions from "./views/submissions/AllSubmissionsView";
-import Authenticate from "./hoc/Authenticate";
+import SubmissionsByContest from "./views/submissions/SubmissionsByContest";
+import Authenticated from "./hoc/Authenticated";
 import Profile from "./views/users/Profile";
 import EditProfile from "./views/users/EditProfile";
 import UpComingContests from "./views/contests/UpComingContests";
 import PhaseOneContests from "./views/contests/PhaseOneContests";
 import PhaseTwoContests from "./views/contests/PhaseTwoContests";
 import PhaseThreeContests from "./views/contests/PhaseThreeContests";
+import DetailsContest from "./views/contests/DetailsContest";
 
 function App() {
 	const [user, loading, error] = useAuthState(auth);
@@ -78,81 +78,84 @@ function App() {
 					<Route
 						path="/create-contest"
 						element={
-							<Authenticate user={appState.user}>
+							<Authenticated user={appState.user}>
 								<ContestForm />
-							</Authenticate>
+							</Authenticated>
 						}
 					/>
 					<Route path="/sign-up" element={<Signup />} />
-					<Route path="/submission-form" element={<SubmissionForm />} />
 					<Route
 						path="/submission/:submissionId"
 						element={<SubmissionDetails />}
 					/>
-					<Route path="/allsubmissions" element={<AllSubmissions />} />
 					<Route
-						path="/sub"
+						path="/contest-submissions"
+						element={<SubmissionsByContest />}
+					/>
+
+					<Route
+						path="contest-details/:contestId"
 						element={
-							<Authenticate user={appState.user}>
-								<SubmissionForm />
-							</Authenticate>
+							<Authenticated user={appState.user}>
+								<DetailsContest />
+							</Authenticated>
 						}
 					/>
 					<Route
 						path="/up-coming-contests"
 						element={
-							<Authenticate user={appState.user}>
+							<Authenticated user={appState.user}>
 								<UpComingContests />
-							</Authenticate>
+							</Authenticated>
 						}
 					/>
 					<Route
 						path="/open-contests"
 						element={
-							<Authenticate user={appState.user}>
+							<Authenticated user={appState.user}>
 								<PhaseOneContests />
-							</Authenticate>
+							</Authenticated>
 						}
 					/>
 					<Route
 						path="/open-jury-contests"
 						element={
-							<Authenticate user={appState.user}>
+							<Authenticated user={appState.user}>
 								<PhaseTwoContests />
-							</Authenticate>
+							</Authenticated>
 						}
 					/>
 					<Route
 						path="/closed-contests"
 						element={
-							<Authenticate user={appState.user}>
+							<Authenticated user={appState.user}>
 								<PhaseThreeContests />
-							</Authenticate>
+							</Authenticated>
 						}
 					/>
 					<Route
 						path="/profile"
 						element={
-							<Authenticate user={appState.user}>
+							<Authenticated user={appState.user}>
 								<Profile />
-							</Authenticate>
+							</Authenticated>
 						}
 					/>
 					<Route
 						path="/edit-profile"
 						element={
-							<Authenticate user={appState.user}>
+							<Authenticated user={appState.user}>
 								<EditProfile />
-							</Authenticate>
+							</Authenticated>
 						}
 					/>
 					<Route path="/login" element={<Login />} />
 					<Route
 						path="/logout"
 						element={
-							<Authenticate user={appState.user}>
+							<Authenticated user={appState.user}>
 								<Logout />
-							</Authenticate>
+							</Authenticated>
 						}
 					/>
 				</Routes>
