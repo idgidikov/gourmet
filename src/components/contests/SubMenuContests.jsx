@@ -2,6 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import { AppContext } from "../../context/app.context";
 import { Link } from "react-router-dom";
+import { userRole } from "../../common/enums/user-role.enum";
 
 function SubMenuContests() {
 	const { addToast, setAppState, ...appState } = useContext(AppContext);
@@ -30,15 +31,21 @@ function SubMenuContests() {
 						tabIndex={0}
 						className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
 					>
-						<Link to="/up-coming-contests" className="btn">
-							Upcoming
-						</Link>
-						<Link to="/open-contests" className="btn">
-							Open
-						</Link>
-						<Link to="/open-jury-contests" className="btn">
-							In review
-						</Link>
+						{userData?.role === userRole.PHOTO_JUNKIES && (
+							<Link to="/up-coming-contests" className="btn">
+								Upcoming
+							</Link>
+						)}
+						{userData?.role === userRole.PHOTO_JUNKIES && (
+							<Link to="/open-contests" className="btn">
+								Open
+							</Link>
+						)}
+						{userData?.role !== userRole.PHOTO_JUNKIES && (
+							<Link to="/open-jury-contests" className="btn">
+								In review
+							</Link>
+						)}
 						<Link to="/closed-contests" className="btn">
 							Finished
 						</Link>
@@ -48,14 +55,18 @@ function SubMenuContests() {
 			<div className="navbar-center hidden lg:flex">
 				<ul className="menu menu-horizontal p-0">
 					<li className="mr-5">
-						<Link to="/up-coming-contests" className="btn">
-							Upcoming
-						</Link>
+						{userData?.role === userRole.PHOTO_JUNKIES && (
+							<Link to="/up-coming-contests" className="btn">
+								Upcoming
+							</Link>
+						)}
 					</li>
 					<li className="mr-5">
-						<Link to="/open-contests" className="btn">
-							Open
-						</Link>
+						{userData?.role === userRole.PHOTO_JUNKIES && (
+							<Link to="/open-contests" className="btn">
+								Open
+							</Link>
+						)}
 					</li>
 					<li className="mr-5">
 						<Link to="/open-jury-contests" className="btn">
