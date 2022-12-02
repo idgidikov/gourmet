@@ -21,7 +21,6 @@ function SubmissionForm({ contestId }) {
 	const [description, setDescription] = useState("");
 	const [descriptionValidator, setDescriptionValidator] = useState(false);
 	const username = userData?.username;
-	console.log(contestId);
 	useEffect(() => {
 		if (
 			title.length > validation.MIN_LENGTH_TITLE &&
