@@ -34,12 +34,15 @@ function SubMenuContests() {
 						<Link to="/up-coming-contests" className="btn">
 							Upcoming
 						</Link>
+
 						<Link to="/open-contests" className="btn">
 							Open
 						</Link>
+
 						<Link to="/open-jury-contests" className="btn">
 							In review
 						</Link>
+
 						<Link to="/closed-contests" className="btn">
 							Finished
 						</Link>
@@ -71,12 +74,10 @@ function SubMenuContests() {
 				</ul>
 			</div>
 			<div className="navbar-end">
-				{userData?.role === userRole.ORGANIZER ? (
+				{userData?.role === userRole.ORGANIZER && (
 					<Link to="/create-contest/">
 						<p className="btn btn-primary">Create Contest</p>
 					</Link>
-				) : (
-					<p className="btn btn-primary">Create contest</p>
 				)}
 			</div>
 		</div>

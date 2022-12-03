@@ -71,3 +71,15 @@ export const getContesById = async (contestId) => {
 		contestId,
 	};
 };
+
+export const getContestByUsername = async (username) => {
+	const snapshot = await get(ref(db, `users/${username}/submissions`));
+
+	if (!snapshot.exists()) {
+		return [];
+	}
+
+	const mySubmissions = Object.keys(snapshot.val());
+
+	return Promise.all(mySubmissions.map(getContesById));
+};

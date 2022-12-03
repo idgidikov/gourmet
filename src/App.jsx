@@ -26,7 +26,6 @@ import MyPhotos from "./views/users/MyPhotos";
 
 function App() {
 	const [user, loading, error] = useAuthState(auth);
-
 	const location = useLocation();
 	const navigate = useNavigate();
 	const [appState, setAppState] = useState({
@@ -48,10 +47,7 @@ function App() {
 	useEffect(() => {
 		if (appState.user !== null) {
 			getUserById(appState.user?.uid)
-				.then(
-					(userData) =>
-						setAppState({ ...appState, userData }) || console.log(userData)
-				)
+				.then((userData) => setAppState({ ...appState, userData }))
 				.catch((e) => addToast("error", e.message));
 		}
 	}, [appState.user]);
@@ -87,11 +83,19 @@ function App() {
 					<Route path="/sign-up" element={<Signup />} />
 					<Route
 						path="/submission/:submissionId"
-						element={<SubmissionDetails />}
+						element={
+							<Authenticated user={appState.user}>
+								<SubmissionDetails />
+							</Authenticated>
+						}
 					/>
 					<Route
 						path="/contest-submissions"
-						element={<SubmissionsByContest />}
+						element={
+							<Authenticated user={appState.user}>
+								<SubmissionsByContest />
+							</Authenticated>
+						}
 					/>
 
 					<Route

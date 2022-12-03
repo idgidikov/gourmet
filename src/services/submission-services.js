@@ -20,7 +20,7 @@ export const createSubmission = async (
 	const { key } = await push(ref(db, "submissions"), submissionObj);
 
 	return update(ref(db), {
-		[`users/${username}/submissions/${key}`]: true,
+		[`users/${username}/submissions/${contestId}`]: `${key}`,
 		[`contests/${contestId}/submissions/${key}`]: true,
 		[`users/${username}/my-pictures/${key}`]: imagePath,
 	});

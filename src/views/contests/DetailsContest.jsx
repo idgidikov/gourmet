@@ -47,6 +47,8 @@ function DetailsContest() {
 			.catch((e) => addToast("error", e.message));
 	}, [contestId]);
 
+	console.log(userData);
+
 	return (
 		<div>
 			<div className="card lg:card-side bg-base-100 shadow-xl">
@@ -58,9 +60,18 @@ function DetailsContest() {
 					<p>{contest.category}</p>
 				</div>
 			</div>
+			{/* {userData?.submissions[contestId] ? (
+				<p>You have already participated</p>
+			) : (
+				<SubmissionForm contestId={contestId} />
+			)} */}
+			<SubmissionForm contestId={contestId} />
 			{contest.phaseStatus === contestPhases.PHASE_ONE &&
-				userData.role === userRole.PHOTO_JUNKIES && (
-					<SubmissionForm contestId={contestId} />
+				userData?.role === userRole.ORGANIZER && (
+					<SubmissionsByContest
+						photos={photos}
+						phaseStatus={contest.phaseStatus}
+					/>
 				)}
 			<SubmissionsByContest
 				photos={photos}
