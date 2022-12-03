@@ -1,6 +1,4 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { getSubmissionsByContest } from "../../services/submission-services";
 import SubmissionCard from "../../components/submisions/SubmissionCard";
 
 function SubmissionsByContest({ photos, phaseStatus }) {

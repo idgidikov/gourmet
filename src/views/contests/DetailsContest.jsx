@@ -60,11 +60,6 @@ function DetailsContest() {
 					<p>{contest.category}</p>
 				</div>
 			</div>
-			{/* {contest.phaseStatus === contestPhases.PHASE_ONE &&
-				userData?.role === userRole.PHOTO_JUNKIES &&
-				(
-					<SubmissionForm contestId={contestId} />
-				)} */}
 			{userData?.submissions[contestId] ? (
 				<p>You have already participated</p>
 			) : (
