@@ -22,6 +22,7 @@ import PhaseOneContests from "./views/contests/PhaseOneContests";
 import PhaseTwoContests from "./views/contests/PhaseTwoContests";
 import PhaseThreeContests from "./views/contests/PhaseThreeContests";
 import DetailsContest from "./views/contests/DetailsContest";
+import MyPhotos from "./views/users/MyPhotos";
 
 function App() {
 	const [user, loading, error] = useAuthState(auth);
@@ -159,6 +160,14 @@ function App() {
 						element={
 							<Authenticated user={appState.user}>
 								<Logout />
+							</Authenticated>
+						}
+					/>
+					<Route
+						path="/my-photos"
+						element={
+							<Authenticated user={appState.user}>
+								<MyPhotos />
 							</Authenticated>
 						}
 					/>

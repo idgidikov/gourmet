@@ -60,11 +60,12 @@ function DetailsContest() {
 					<p>{contest.category}</p>
 				</div>
 			</div>
-			{userData?.submissions[contestId] ? (
+			{/* {userData?.submissions[contestId] ? (
 				<p>You have already participated</p>
 			) : (
 				<SubmissionForm contestId={contestId} />
-			)}
+			)} */}
+			<SubmissionForm contestId={contestId} />
 			{contest.phaseStatus === contestPhases.PHASE_ONE &&
 				userData?.role === userRole.ORGANIZER && (
 					<SubmissionsByContest
@@ -72,6 +73,10 @@ function DetailsContest() {
 						phaseStatus={contest.phaseStatus}
 					/>
 				)}
+			<SubmissionsByContest
+				photos={photos}
+				phaseStatus={contest?.phaseStatus}
+			/>
 		</div>
 	);
 }

@@ -49,8 +49,8 @@ function ContestForm() {
 
 	const sendData = async (e) => {
 		e.preventDefault();
-
-		const imageRef = ref(storage, `covers/${v4()}`);
+		const id = v4();
+		const imageRef = ref(storage, `covers/${id}`);
 		const file = coverPhoto;
 		if (!titleValidator)
 			addToast("error", "Title must between 1 - 64 characters");
@@ -65,6 +65,7 @@ function ContestForm() {
 			try {
 				const result = await uploadBytes(imageRef, file);
 				const url = await getDownloadURL(result.ref);
+				const imagePath = "covers/" + id;
 				setCoverPhoto(url);
 
 				await createContest({
@@ -73,11 +74,13 @@ function ContestForm() {
 					startPhaseOne,
 					startPhaseTwo,
 					startPhaseThree,
+					imagePath,
 					url,
 					username,
 				});
 				showAllContests();
 			} catch (error) {
+				console.log(error);
 				addToast("error", error.message);
 			}
 		}
