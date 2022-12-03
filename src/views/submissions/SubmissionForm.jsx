@@ -11,7 +11,7 @@ import InputField from "../../components/submisions/SubmissionsInput";
 import Image from "../../components/submisions/SubmissionImage";
 import { useNavigate } from "react-router-dom";
 
-function SubmissionForm() {
+function SubmissionForm({ contestId }) {
 	const navigate = useNavigate();
 	const { addToast, userData, user } = useContext(AppContext);
 	const [title, setTitle] = useState("");
@@ -41,10 +41,6 @@ function SubmissionForm() {
 		}
 	}, [title]);
 
-	const showAllSubmissions = () => {
-		navigate("/allsubmissions");
-	};
-
 	const sendData = async (e) => {
 		e.preventDefault();
 		const imageRef = ref(storage, `submission/${v4()}`);
@@ -57,8 +53,8 @@ function SubmissionForm() {
 				const result = await uploadBytes(imageRef, file);
 				const url = await getDownloadURL(result.ref);
 				setCoverPhoto(url);
-				await createSubmission(title, description, url, username);
-				showAllSubmissions();
+				await createSubmission(title, description, url, contestId, username);
+				addToast("success", "Your submission was successfull!");
 			} catch (error) {
 				addToast("error", error.message);
 			}

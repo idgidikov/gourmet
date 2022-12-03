@@ -31,21 +31,18 @@ function SubMenuContests() {
 						tabIndex={0}
 						className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
 					>
-						{userData?.role === userRole.PHOTO_JUNKIES && (
-							<Link to="/up-coming-contests" className="btn">
-								Upcoming
-							</Link>
-						)}
-						{userData?.role === userRole.PHOTO_JUNKIES && (
-							<Link to="/open-contests" className="btn">
-								Open
-							</Link>
-						)}
-						{userData?.role !== userRole.PHOTO_JUNKIES && (
-							<Link to="/open-jury-contests" className="btn">
-								In review
-							</Link>
-						)}
+						<Link to="/up-coming-contests" className="btn">
+							Upcoming
+						</Link>
+
+						<Link to="/open-contests" className="btn">
+							Open
+						</Link>
+
+						<Link to="/open-jury-contests" className="btn">
+							In review
+						</Link>
+
 						<Link to="/closed-contests" className="btn">
 							Finished
 						</Link>
@@ -55,18 +52,14 @@ function SubMenuContests() {
 			<div className="navbar-center hidden lg:flex">
 				<ul className="menu menu-horizontal p-0">
 					<li className="mr-5">
-						{userData?.role === userRole.PHOTO_JUNKIES && (
-							<Link to="/up-coming-contests" className="btn">
-								Upcoming
-							</Link>
-						)}
+						<Link to="/up-coming-contests" className="btn">
+							Upcoming
+						</Link>
 					</li>
 					<li className="mr-5">
-						{userData?.role === userRole.PHOTO_JUNKIES && (
-							<Link to="/open-contests" className="btn">
-								Open
-							</Link>
-						)}
+						<Link to="/open-contests" className="btn">
+							Open
+						</Link>
 					</li>
 					<li className="mr-5">
 						<Link to="/open-jury-contests" className="btn">
@@ -81,9 +74,11 @@ function SubMenuContests() {
 				</ul>
 			</div>
 			<div className="navbar-end">
-				<Link to="/create-contest/">
-					<p className="btn btn-primary">Create Contest</p>{" "}
-				</Link>
+				{userData?.role === userRole.ORGANIZER && (
+					<Link to="/create-contest/">
+						<p className="btn btn-primary">Create Contest</p>
+					</Link>
+				)}
 			</div>
 		</div>
 	);

@@ -62,8 +62,10 @@ export const getContesById = async (contestId) => {
 	const snapshot = await get(ref(db, `contests/${contestId}`));
 
 	if (!snapshot.exists()) throw new Error("Contest doesn't exist!");
+	const result = setContestPhase(snapshot.val());
+
 	return {
-		...snapshot.val(),
+		...result,
 		contestId,
 	};
 };

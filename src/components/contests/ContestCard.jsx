@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import useCountdown from "./CountDown";
+import { userRole } from "../../common/enums/user-role.enum";
+import { AppContext } from "../../context/app.context";
+import { contestPhases } from "../../common/enums/contest.enum";
 
 function ContestCard({ contest }) {
+	const { userData } = useContext(AppContext);
 	const navigate = useNavigate();
 	const redirectToDetails = () => {
 		navigate(`/contest-details/${contest.id}`);
@@ -59,9 +63,19 @@ function ContestCard({ contest }) {
 						</div>
 					</div>
 					<div className="card-actions">
-						<button className="btn btn-primary" onClick={redirectToDetails}>
-							View
-						</button>
+						{(userData?.role === userRole.PHOTO_JUNKIES &&
+							contest?.phaseStatus === contestPhases.PHASE_ONE) ||
+						contest?.phaseStatus === contestPhases.PHASE_THREE ? (
+							<button className="btn btn-primary" onClick={redirectToDetails}>
+								View
+							</button>
+						) : null}
+
+						{userData?.role === userRole.ORGANIZER && (
+							<button className="btn btn-primary" onClick={redirectToDetails}>
+								View
+							</button>
+						)}
 					</div>
 				</div>
 			</div>
