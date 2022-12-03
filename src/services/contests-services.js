@@ -22,6 +22,7 @@ export const createContest = async ({
 	startPhaseOne,
 	startPhaseTwo,
 	startPhaseThree,
+	imagePath,
 	url,
 	username,
 }) => {
@@ -40,6 +41,7 @@ export const createContest = async ({
 
 	return update(ref(db), {
 		[`users/${username}/created-contests/${key}`]: true,
+		[`users/${username}/my-pictures/${key}`]: imagePath,
 	});
 };
 

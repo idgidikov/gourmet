@@ -47,7 +47,8 @@ function SubmissionForm() {
 
 	const sendData = async (e) => {
 		e.preventDefault();
-		const imageRef = ref(storage, `submission/${v4()}`);
+		const id = v4();
+		const imageRef = ref(storage, `submission/${id}`);
 		const file = coverPhoto;
 		if (!titleValidator)
 			addToast("error", "Title must between 2 - 30 characters");
@@ -56,8 +57,9 @@ function SubmissionForm() {
 			try {
 				const result = await uploadBytes(imageRef, file);
 				const url = await getDownloadURL(result.ref);
+				const imagePath = "submissions/" + id;
 				setCoverPhoto(url);
-				await createSubmission(title, description, url, username);
+				await createSubmission(title, description, url, imagePath, username);
 				showAllSubmissions();
 			} catch (error) {
 				addToast("error", error.message);

@@ -11,6 +11,7 @@ import {
 } from "firebase/database";
 import { db } from "../firebase/config";
 import { userRole } from "../common/enums/user-role.enum";
+import { getImage } from "../helpers/my-photos-helpers";
 
 export const getUser = async (username) => {
 	const snapshot = await get(ref(db, `users/${username}`));
@@ -59,4 +60,13 @@ export const createUser = async (
 	await set(ref(db, `users/${username}`), userData);
 
 	return { ...userData };
+};
+
+export const getMyPhotos = async (username) => {
+	const snapshot = await get(ref(db, `users/${username}/my-pictures`));
+	if (!snapshot.exists()) {
+		return [];
+	}
+	const urls = Object.values(snapshot.val());
+	return Promise.all(urls.map((e) => getImage(e)));
 };

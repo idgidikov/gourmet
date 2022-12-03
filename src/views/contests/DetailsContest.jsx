@@ -4,7 +4,7 @@ import { getContesById } from "../../services/contests-services";
 import { useContext } from "react";
 import { AppContext } from "../../context/app.context";
 import { useParams } from "react-router-dom";
-import SubmissionForm from "../submissions/SubmisionForm";
+import SubmissionForm from "../submissions/SubmissionForm";
 import SubmissionsByContest from "../submissions/SubmissionsByContest";
 import { getSubmissionsByContest } from "../../services/submission-services";
 import { userRole } from "../../common/enums/user-role.enum";
@@ -62,7 +62,10 @@ function DetailsContest() {
 				userData.role === userRole.PHOTO_JUNKIES && (
 					<SubmissionForm contestId={contestId} />
 				)}
-			<SubmissionsByContest photos={photos} phaseStatus={contest.phaseStatus} />
+			<SubmissionsByContest
+				photos={photos}
+				phaseStatus={contest?.phaseStatus}
+			/>
 		</div>
 	);
 }
