@@ -9,8 +9,12 @@ import {
 	orderByChild,
 	orderByKey,
 } from "firebase/database";
-import { db } from "../firebase/config";
+import { db, storage } from "../firebase/config";
 import { userRole } from "../common/enums/user-role.enum";
+import { getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
+import { ref as sRef } from "firebase/storage";
+import { async } from "@firebase/util";
+import { v4 } from "uuid";
 
 export const getUser = async (username) => {
 	const snapshot = await get(ref(db, `users/${username}`));
@@ -38,7 +42,7 @@ export const createUser = async (
 	email,
 	firstName,
 	lastName,
-	role = userRole.ORGANIZER
+	role = userRole.PHOTO_JUNKIES
 ) => {
 	const user = await getUser(username);
 
@@ -58,4 +62,32 @@ export const createUser = async (
 	await set(ref(db, `users/${username}`), userData);
 
 	return { ...userData };
+};
+
+export const updateProfilePic = async (url, userData) => {
+	await update(ref(db), {
+		[`users/${userData.username}/photoURL`]: url,
+	});
+};
+
+export const setLoadingProfPic = async (
+	loadingPic,
+	setPhotoLoad,
+	setImageRef
+) => {
+	const imageRef = sRef(storage, `loadingProfPics/${v4()}`);
+
+	const file = loadingPic;
+	try {
+		const result = await uploadBytes(imageRef, file);
+		const url = await getDownloadURL(result.ref);
+		setPhotoLoad(url);
+		setImageRef(imageRef);
+	} catch (err) {
+		console.log("error", err.message);
+	}
+};
+
+export const updateLoadPic = async (imageRef) => {
+	const result = await deleteObject(imageRef);
 };

@@ -164,8 +164,8 @@ function Signup() {
 		if (!form.password.valid) return addToast("error", "Invalid password");
 		if (!form.confirmPassword.valid)
 			return addToast("error", "Password does not match");
-		if (!form.name.valid) return addToast("error", "Invalid name");
-		if (!form.last.valid) return addToast("error", "Invalid last name");
+		if (!form.firstName.valid) return addToast("error", "Invalid name");
+		if (!form.lastName.valid) return addToast("error", "Invalid last name");
 		try {
 			const user = await getUser(form.username.value);
 
@@ -185,8 +185,8 @@ function Signup() {
 					credentials.user.uid,
 					form.username.value,
 					form.email.value,
-					form.name.value,
-					form.last.value
+					form.firstName.value,
+					form.lastName.value
 				);
 
 				setAppState({
@@ -206,6 +206,7 @@ function Signup() {
 				setAppState({
 					...appState,
 					user: {
+						...user,
 						email: credentials.user.email,
 						uid: credentials.user.uid,
 					},
@@ -263,7 +264,7 @@ function Signup() {
 						</div>{" "}
 						<div className="mb-4">
 							<input
-								value={form.name.value}
+								value={form.firstName.value}
 								onChange={(e) => UpdateFirstName(e.target.value)}
 								type="text"
 								className="form-control block w-full px-3 py-1.5 text-base font-normal
@@ -275,7 +276,7 @@ function Signup() {
 						</div>
 						<div className="mb-4">
 							<input
-								value={form.last.value}
+								value={form.lastName.value}
 								onChange={(e) => UpdateLastName(e.target.value)}
 								type="text"
 								className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding 

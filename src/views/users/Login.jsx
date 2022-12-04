@@ -92,7 +92,6 @@ function Login() {
 					<div className="flex flex-col py-2">
 						<label htmlFor="">Email</label>
 						<input
-							//input input-bordered i w-full max-w-xs
 							value={form.email.value}
 							onChange={(e) => updateEmail(e.target.value)}
 							className="border p-2 input input-primary "
