@@ -13,7 +13,6 @@ import { db, storage } from "../firebase/config";
 import { userRole } from "../common/enums/user-role.enum";
 import { getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
 import { ref as sRef } from "firebase/storage";
-import { async } from "@firebase/util";
 import { v4 } from "uuid";
 
 export const getUser = async (username) => {
