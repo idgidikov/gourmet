@@ -9,7 +9,8 @@ import SubMenuContests from "../../components/contests/SubMenuContests";
 
 function PhaseOneContests() {
 	const [contestsComing, setContestsComing] = useState([]);
-	const { user, addToast, userData } = useContext(AppContext);
+	const { addToast } = useContext(AppContext);
+
 	useEffect(() => {
 		getContests(contestPhases.PHASE_ONE)
 			.then((result) => {
@@ -23,7 +24,7 @@ function PhaseOneContests() {
 			<SubMenuContests />
 			<h1 className="title">Open Contests for yours photos</h1>
 			<div className="flex flex-wrap justify-around">
-				{contestsComing.map((c) => (
+				{contestsComing?.map((c) => (
 					<ContestCard key={c.id} contest={c} />
 				))}
 			</div>

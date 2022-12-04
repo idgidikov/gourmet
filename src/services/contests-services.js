@@ -22,6 +22,7 @@ export const createContest = async ({
 	startPhaseOne,
 	startPhaseTwo,
 	startPhaseThree,
+	imagePath,
 	url,
 	username,
 }) => {
@@ -40,21 +41,8 @@ export const createContest = async ({
 
 	return update(ref(db), {
 		[`users/${username}/created-contests/${key}`]: true,
+		[`users/${username}/my-pictures/${key}`]: imagePath,
 	});
-};
-
-export const getAllContests = async () => {
-	const result = await get(ref(db, "contests"));
-	if (!result.exists()) {
-		return [];
-	}
-
-	return Object.entries(result.val())
-		.map(([key, value]) => ({
-			...value,
-			id: key,
-		}))
-		.map(setContestPhase);
 };
 
 export const getContests = async (target) => {
@@ -70,4 +58,28 @@ export const getContests = async (target) => {
 		}))
 		.map(setContestPhase)
 		.filter((el) => el.phaseStatus === target);
+};
+
+export const getContesById = async (contestId) => {
+	const snapshot = await get(ref(db, `contests/${contestId}`));
+
+	if (!snapshot.exists()) throw new Error("Contest doesn't exist!");
+	const result = setContestPhase(snapshot.val());
+
+	return {
+		...result,
+		contestId,
+	};
+};
+
+export const getContestByUsername = async (username) => {
+	const snapshot = await get(ref(db, `users/${username}/submissions`));
+
+	if (!snapshot.exists()) {
+		return [];
+	}
+
+	const mySubmissions = Object.keys(snapshot.val());
+
+	return Promise.all(mySubmissions.map(getContesById));
 };

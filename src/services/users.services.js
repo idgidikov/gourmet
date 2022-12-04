@@ -14,6 +14,7 @@ import { userRole } from "../common/enums/user-role.enum";
 import { getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
 import { ref as sRef } from "firebase/storage";
 import { v4 } from "uuid";
+import { getImage } from "../helpers/my-photos-helpers";
 
 export const getUser = async (username) => {
 	const snapshot = await get(ref(db, `users/${username}`));
@@ -89,4 +90,12 @@ export const setLoadingProfPic = async (
 
 export const updateLoadPic = async (imageRef) => {
 	const result = await deleteObject(imageRef);
+};
+export const getMyPhotos = async (username) => {
+	const snapshot = await get(ref(db, `users/${username}/my-pictures`));
+	if (!snapshot.exists()) {
+		return [];
+	}
+	const urls = Object.values(snapshot.val());
+	return Promise.all(urls.map((e) => getImage(e)));
 };

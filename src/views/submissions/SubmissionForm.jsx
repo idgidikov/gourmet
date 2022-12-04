@@ -11,8 +11,7 @@ import InputField from "../../components/submisions/SubmissionsInput";
 import Image from "../../components/submisions/SubmissionImage";
 import { useNavigate } from "react-router-dom";
 
-function SubmissionForm() {
-	const navigate = useNavigate();
+function SubmissionForm({ contestId }) {
 	const { addToast, userData, user } = useContext(AppContext);
 	const [title, setTitle] = useState("");
 	const [titleValidator, setTitleValidator] = useState(false);
@@ -41,13 +40,10 @@ function SubmissionForm() {
 		}
 	}, [title]);
 
-	const showAllSubmissions = () => {
-		navigate("/allsubmissions");
-	};
-
 	const sendData = async (e) => {
 		e.preventDefault();
-		const imageRef = ref(storage, `submission/${v4()}`);
+		const id = v4();
+		const imageRef = ref(storage, `submission/${id}`);
 		const file = coverPhoto;
 		if (!titleValidator)
 			addToast("error", "Title must between 2 - 30 characters");
@@ -56,9 +52,17 @@ function SubmissionForm() {
 			try {
 				const result = await uploadBytes(imageRef, file);
 				const url = await getDownloadURL(result.ref);
+				const imagePath = "submissions/" + id;
 				setCoverPhoto(url);
-				await createSubmission(title, description, url, username);
-				showAllSubmissions();
+				await createSubmission(
+					title,
+					description,
+					url,
+					contestId,
+					imagePath,
+					username
+				);
+				addToast("success", "Your submission was successfull!");
 			} catch (error) {
 				addToast("error", error.message);
 			}

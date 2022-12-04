@@ -29,7 +29,7 @@ const Navbar = function () {
 						<Link to="/">Favorites</Link>
 					</li>
 					<li className="menu-item mr-5">
-						<Link to="/">My photos</Link>
+						<Link to="/my-photos">My photos</Link>
 					</li>
 				</ul>
 			</div>

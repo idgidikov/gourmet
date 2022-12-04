@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { contestPhases } from "../../common/enums/contest.enum";
 
-function SubmissionCard({ submission }) {
+function SubmissionCard({ submission, phaseStatus }) {
 	const navigate = useNavigate();
 
 	const showSubmission = () => {
@@ -20,9 +21,12 @@ function SubmissionCard({ submission }) {
 						{submission.description}
 					</h2>
 				</div>
-				<div className="btn btn-primary" onClick={showSubmission}>
-					click
-				</div>
+				{phaseStatus === contestPhases.PHASE_TWO &&
+					phaseStatus === contestPhases.PHASE_THREE && (
+						<div className="btn btn-primary" onClick={showSubmission}>
+							click
+						</div>
+					)}
 			</div>
 		</div>
 	);

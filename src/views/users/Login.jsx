@@ -3,8 +3,9 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AppContext } from "../../context/app.context";
 import { loginUser } from "../../services/auth.services";
+import { getUser } from "../../services/users.services";
+import UserValid from "../../common/enums/user-validation";
 
-import userValid from "../../common/enums/user-validation";
 function Login() {
 	const { addToast, setAppState, ...appState } = useContext(AppContext);
 	const navigate = useNavigate();
