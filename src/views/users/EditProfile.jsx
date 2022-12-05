@@ -4,11 +4,7 @@ import { useAuth, upload } from "../../services/auth.services";
 import { useNavigate } from "react-router-dom";
 import { defaultPicture } from "/src/common/constants";
 import { AppContext } from "../../context/app.context";
-import {
-	setLoadingProfPic,
-	updateLoadPic,
-	updateProfilePic,
-} from "../../services/users.services";
+import { updateProfilePic } from "../../services/users.services";
 
 function EditProfile() {
 	const { addToast, setAppState, ...appState } = useContext(AppContext);
@@ -18,13 +14,12 @@ function EditProfile() {
 	const [loading, setLoading] = useState(false);
 	const [photoURL, setPhotoUrl] = useState(defaultPicture);
 	const [photoLoad, setPhotoLoad] = useState(defaultPicture);
-	const [imageRef, setImageRef] = useState(null);
 	const navigate = useNavigate();
 	async function handleChange(e) {
 		if (e.target.files[0]) {
 			setPhoto(e.target.files[0]);
-
-			await setLoadingProfPic(e.target.files[0], setPhotoLoad, setImageRef);
+			let value = URL.createObjectURL(e.target.files[0]);
+			setPhotoLoad(value);
 		}
 	}
 
@@ -40,10 +35,8 @@ function EditProfile() {
 				photoURL,
 			},
 		}));
-		await updateLoadPic(imageRef);
 
 		setPhotoLoad(defaultPicture);
-		setImageRef(null);
 
 		addToast("success", "You have update profile picture!");
 
@@ -57,7 +50,7 @@ function EditProfile() {
 	}, [currentUser?.photoURL]);
 
 	return (
-		<div>
+		<div className="justify-around">
 			EditProfile
 			<form action="/profile">
 				<input
@@ -67,6 +60,7 @@ function EditProfile() {
 					onChange={handleChange}
 				/>
 				<br />
+				<br />
 				<button
 					disabled={loading || !photo}
 					className="btn btn-primary"
@@ -74,6 +68,7 @@ function EditProfile() {
 				>
 					Upload Photo
 				</button>
+				<br />
 				<div className="avatar">
 					<div className="avatar">
 						<div className="w-24 rounded-xl">

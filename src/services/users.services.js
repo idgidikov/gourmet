@@ -70,24 +70,6 @@ export const updateProfilePic = async (url, userData) => {
 	});
 };
 
-export const setLoadingProfPic = async (
-	loadingPic,
-	setPhotoLoad,
-	setImageRef
-) => {
-	const imageRef = sRef(storage, `loadingProfPics/${v4()}`);
-
-	const file = loadingPic;
-	try {
-		const result = await uploadBytes(imageRef, file);
-		const url = await getDownloadURL(result.ref);
-		setPhotoLoad(url);
-		setImageRef(imageRef);
-	} catch (err) {
-		console.log("error", err.message);
-	}
-};
-
 export const updateLoadPic = async (imageRef) => {
 	const result = await deleteObject(imageRef);
 };
