@@ -3,9 +3,6 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AppContext } from "../../context/app.context";
 import { loginUser } from "../../services/auth.services";
-import { getUser } from "../../services/users.services";
-import UserValid from "../../common/enums/user-validation";
-
 function Login() {
 	const { addToast, setAppState, ...appState } = useContext(AppContext);
 	const navigate = useNavigate();
@@ -89,7 +86,7 @@ function Login() {
 		<div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
 			<div className="bg-gray-500 flex flex-col justify-center">
 				<form className="max-w-[400px] w-full mx-auto bg-white-p-4" action="">
-					<h2 className="text-4xl font-bold text-center py-6">BRAND</h2>
+					<h2 className="text-4xl font-bold text-center py-6">25thFrame</h2>
 					<div className="flex flex-col py-2">
 						<label htmlFor="">Email</label>
 						<input
