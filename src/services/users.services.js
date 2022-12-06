@@ -15,7 +15,6 @@ import { getImage } from "../helpers/my-photos-helpers";
 
 export const getUser = async (username) => {
 	const snapshot = await get(ref(db, `users/${username}`));
-	//console.log(snapshot.val())
 
 	return snapshot.val();
 };
@@ -40,12 +39,18 @@ export const createUser = async (
 	email,
 	firstName,
 	lastName,
+	phone,
 	role = userRole.ORGANIZER
 ) => {
 	const user = await getUser(username);
 
 	if (user !== null)
 		throw new Error(`User with username ${username} already exists!`);
+
+	const userPhone = await getUserByPhone(phone);
+
+	if (userPhone !== null)
+		throw new Error(`Phone number ${phone} has already been registered!`);
 
 	const userData = {
 		uid,
@@ -54,6 +59,7 @@ export const createUser = async (
 		email,
 		firstName,
 		lastName,
+		phone,
 		registeredOn: Date.now(),
 	};
 
@@ -71,6 +77,13 @@ export const getMyPhotos = async (username) => {
 	return Promise.all(urls.map((e) => getImage(e)));
 };
 
+export const getUserByPhone = async (phone) => {
+	const snapshot = await get(
+		query(ref(db, "users"), orderByChild("phone"), equalTo(phone))
+	);
+
+	return snapshot.val();
+};
 export const getAllPhotoJunkies = async () => {
 	const snapshot = await get(ref(db, "users"));
 

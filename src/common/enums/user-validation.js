@@ -9,6 +9,7 @@ const UserValid = {
 	FIRST_NAME_MAX_LENGTH: 30,
 	LAST_NAME_MIN_LENGTH: 1,
 	LAST_NAME_MAX_LENGTH: 30,
+	PHONE_NUMBER_LENGTH: 10,
 };
 
 export default UserValid;
