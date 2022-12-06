@@ -49,6 +49,11 @@ export const createUser = async (
 	if (user !== null)
 		throw new Error(`User with username ${username} already exists!`);
 
+	const userPhone = await getUserByPhone(phone);
+
+	if (userPhone !== null)
+		throw new Error(`Phone number ${phone} has already been registered!`);
+
 	const userData = {
 		uid,
 		username,
@@ -56,6 +61,7 @@ export const createUser = async (
 		email,
 		firstName,
 		lastName,
+		phone,
 		registeredOn: Date.now(),
 	};
 
@@ -80,4 +86,26 @@ export const getMyPhotos = async (username) => {
 	}
 	const urls = Object.values(snapshot.val());
 	return Promise.all(urls.map((e) => getImage(e)));
+};
+
+export const getUserByPhone = async (phone) => {
+	const snapshot = await get(
+		query(ref(db, "users"), orderByChild("phone"), equalTo(phone))
+	);
+
+	return snapshot.val();
+};
+export const getAllPhotoJunkies = async () => {
+	const snapshot = await get(ref(db, "users"));
+
+	if (!snapshot.exists()) {
+		return [];
+	}
+
+	return Object.keys(snapshot.val())
+		.map((key) => ({
+			...snapshot.val()[key],
+			id: key,
+		}))
+		.filter((x) => x.role === userRole.PHOTO_JUNKIES);
 };

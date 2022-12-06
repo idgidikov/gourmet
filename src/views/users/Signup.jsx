@@ -3,7 +3,7 @@ import { useState } from "react";
 import { AppContext } from "../../context/app.context";
 import userValid from "../../common/enums/user-validation";
 import { useContext } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { createUser, getUser } from "../../services/users.services";
 import { registerUser, loginUser } from "../../services/auth.services";
 
@@ -44,6 +44,12 @@ function Signup() {
 			error: "",
 		},
 		lastName: {
+			value: "",
+			touched: false,
+			valid: false,
+			error: "",
+		},
+		phone: {
 			value: "",
 			touched: false,
 			valid: false,
@@ -127,13 +133,16 @@ function Signup() {
 				value,
 				touched: true,
 				valid:
-					value.length >= userValid.FIRST_NAME_MIN_LENGTH &&
-					value.length <= userValid.FIRST_NAME_MAX_LENGTH,
+					value.length >= UserValid.FIRST_NAME_MIN_LENGTH &&
+					value.length <= UserValid.FIRST_NAME_MAX_LENGTH &&
+					!/[^a-zA-Z]/.test(value),
 				error:
 					value.length < userValid.FIRST_NAME_MIN_LENGTH
 						? `Minimum name length:
-                ${userValid.FIRST_NAME_MIN_LENGTH} `
-						: `Maximum name length:${userValid.FIRST_NAME_MAX_LENGTH} `,
+                ${UserValid.FIRST_NAME_MIN_LENGTH} `
+						: /[^a-zA-Z]/.test(value)
+						? "Your name must contain only letters!"
+						: `Maximum name length:${UserValid.FIRST_NAME_MAX_LENGTH} `,
 			},
 		});
 	};
@@ -145,13 +154,31 @@ function Signup() {
 				value,
 				touched: true,
 				valid:
-					value.length >= userValid.LAST_NAME_MIN_LENGTH &&
-					value.length <= userValid.LAST_NAME_MAX_LENGTH,
+					value.length >= UserValid.LAST_NAME_MIN_LENGTH &&
+					value.length <= UserValid.LAST_NAME_MAX_LENGTH &&
+					!/[^a-zA-Z]/.test(value),
 				error:
 					value.length < userValid.LAST_NAME_MIN_LENGTH
 						? `Minimum  last name length:
-                ${userValid.LAST_NAME_MIN_LENGTH} `
-						: `Maximum last name length:${userValid.LAST_NAME_MAX_LENGTH} `,
+                ${UserValid.FIRST_LAST_NAME_MIN_LENGTH} `
+						: /[^a-zA-Z]/.test(value)
+						? "Your last name must contain only letters!"
+						: `Maximum last name length:${UserValid.FIRST_LAST_NAME_MAX_LENGTH} `,
+			},
+		});
+	};
+	const updatePhone = (value = "") => {
+		setForm({
+			...form,
+			phone: {
+				value,
+				touched: true,
+				valid:
+					value.length === UserValid.PHONE_NUMBER_LENGTH && /^\d+$/.test(value),
+				error:
+					value.length !== UserValid.PHONE_NUMBER_LENGTH
+						? `Phone number must contain ${UserValid.PHONE_NUMBER_LENGTH} symbols!`
+						: "Phone number must contain digits only 0-9!",
 			},
 		});
 	};
@@ -159,13 +186,14 @@ function Signup() {
 	const register = async (e) => {
 		e.preventDefault();
 
-		if (!form.username.valid) return addToast("error", "Invalid email");
-		if (!form.email.valid) return addToast("error", "Invalid email");
-		if (!form.password.valid) return addToast("error", "Invalid password");
+		if (!form.username.valid) return addToast("error", form.username);
+		if (!form.email.valid) return addToast("error", form.email.error);
+		if (!form.password.valid) return addToast("error", form.password.error);
 		if (!form.confirmPassword.valid)
-			return addToast("error", "Password does not match");
-		if (!form.firstName.valid) return addToast("error", "Invalid name");
-		if (!form.lastName.valid) return addToast("error", "Invalid last name");
+			return addToast("error", form.confirmPassword.error);
+		if (!form.name.valid) return addToast("error", form.name.error);
+		if (!form.last.valid) return addToast("error", form.last.error);
+		if (!form.phone.valid) return addToast("error", form.phone.error);
 		try {
 			const user = await getUser(form.username.value);
 
@@ -185,8 +213,9 @@ function Signup() {
 					credentials.user.uid,
 					form.username.value,
 					form.email.value,
-					form.firstName.value,
-					form.lastName.value
+					form.name.value,
+					form.last.value,
+					form.phone.value
 				);
 
 				setAppState({
@@ -213,6 +242,7 @@ function Signup() {
 				});
 
 				addToast("success", "You have been logged!");
+				addToast("success", "Please upload profile pic");
 
 				navigate("/");
 			} catch (error) {
@@ -233,7 +263,8 @@ function Signup() {
 			<div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
 				<div className="bg-gray-500 flex flex-col justify-center">
 					<form className="max-w-[400px] w-full mx-auto bg-white-p-4" action="">
-						<h2 className="text-4xl font-bold text-center py-6">BRAND</h2>
+						<h2 className="text-4xl font-bold text-center py-6">25thFrame</h2>
+
 						<p className="mb-4">Please login to your account</p>
 						<div className="mb-4">
 							<input
@@ -261,7 +292,7 @@ function Signup() {
 								id="email"
 								placeholder="Email"
 							/>
-						</div>{" "}
+						</div>
 						<div className="mb-4">
 							<input
 								value={form.firstName.value}
@@ -313,6 +344,19 @@ function Signup() {
 								placeholder="Repeat password"
 							/>
 						</div>
+						<div className="mb-4">
+							<input
+								value={form.phone.value}
+								onChange={(e) => updatePhone(e.target.value)}
+								type="text"
+								className="form-control block w-full px-3 py-1.5
+                                 text-base font-normal text-gray-700 bg-white
+                                  bg-clip-padding border border-solid border-gray-300
+                                   rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-violet-600 focus:outline-none"
+								id="phone"
+								placeholder="phone"
+							/>
+						</div>
 						<div className="text-center pt-1 mb-12 pb-1">
 							<button
 								className="inline-block px-6 py-2.5 text-white font-medium text-xs
@@ -339,7 +383,7 @@ function Signup() {
 								data-mdb-ripple="true"
 								data-mdb-ripple-color="light"
 							>
-								Log In
+								<Link to="/login">Log In</Link>
 							</button>
 						</div>
 					</form>
