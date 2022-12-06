@@ -6,9 +6,8 @@ import Home from "./views/Home";
 import ContestForm from "./views/contests/ContestForm";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase/config";
-import { useLocation, useNavigate } from "react-router-dom";
 import Signup from "./views/users/Signup";
-import { getUserById, userDataRealTime } from "./services/users.services";
+import { userDataRealTime } from "./services/users.services";
 import Navbar from "./components/Navbar";
 import Login from "./views/users/Login";
 import Logout from "./views/users/Logout";
@@ -26,9 +25,7 @@ import MyPhotos from "./views/users/MyPhotos";
 import UserLeaderboard from "./views/users/UserLeaderboard";
 
 function App() {
-	const [user, loading, error] = useAuthState(auth);
-	const location = useLocation();
-	const navigate = useNavigate();
+	const [user, loading] = useAuthState(auth);
 	const [appState, setAppState] = useState({
 		user: user ? { email: user?.email, uid: user?.uid } : null,
 		userData: null,
@@ -83,7 +80,7 @@ function App() {
 					<Route
 						path="/submission/:submissionId"
 						element={
-							<Authenticated user={appState.user}>
+							<Authenticated user={appState.user} loading={loading}>
 								<SubmissionDetails />
 							</Authenticated>
 						}
@@ -91,7 +88,7 @@ function App() {
 					<Route
 						path="/contest-submissions"
 						element={
-							<Authenticated user={appState.user}>
+							<Authenticated user={appState.user} loading={loading}>
 								<SubmissionsByContest />
 							</Authenticated>
 						}
@@ -100,7 +97,7 @@ function App() {
 					<Route
 						path="contest-details/:contestId"
 						element={
-							<Authenticated user={appState.user}>
+							<Authenticated user={appState.user} loading={loading}>
 								<DetailsContest />
 							</Authenticated>
 						}
@@ -108,7 +105,7 @@ function App() {
 					<Route
 						path="/up-coming-contests"
 						element={
-							<Authenticated user={appState.user}>
+							<Authenticated user={appState.user} loading={loading}>
 								<UpComingContests />
 							</Authenticated>
 						}
@@ -116,7 +113,7 @@ function App() {
 					<Route
 						path="/open-contests"
 						element={
-							<Authenticated user={appState.user}>
+							<Authenticated user={appState.user} loading={loading}>
 								<PhaseOneContests />
 							</Authenticated>
 						}
@@ -124,7 +121,7 @@ function App() {
 					<Route
 						path="/open-jury-contests"
 						element={
-							<Authenticated user={appState.user}>
+							<Authenticated user={appState.user} loading={loading}>
 								<PhaseTwoContests />
 							</Authenticated>
 						}
@@ -132,7 +129,7 @@ function App() {
 					<Route
 						path="/closed-contests"
 						element={
-							<Authenticated user={appState.user}>
+							<Authenticated user={appState.user} loading={loading}>
 								<PhaseThreeContests />
 							</Authenticated>
 						}
@@ -140,7 +137,7 @@ function App() {
 					<Route
 						path="/profile"
 						element={
-							<Authenticated user={appState.user}>
+							<Authenticated user={appState.user} loading={loading}>
 								<Profile />
 							</Authenticated>
 						}
@@ -148,7 +145,7 @@ function App() {
 					<Route
 						path="/edit-profile"
 						element={
-							<Authenticated user={appState.user}>
+							<Authenticated user={appState.user} loading={loading}>
 								<EditProfile />
 							</Authenticated>
 						}
@@ -157,7 +154,7 @@ function App() {
 					<Route
 						path="/logout"
 						element={
-							<Authenticated user={appState.user}>
+							<Authenticated user={appState.user} loading={loading}>
 								<Logout />
 							</Authenticated>
 						}
@@ -165,7 +162,7 @@ function App() {
 					<Route
 						path="/my-photos"
 						element={
-							<Authenticated user={appState.user}>
+							<Authenticated user={appState.user} loading={loading}>
 								<MyPhotos />
 							</Authenticated>
 						}
@@ -173,7 +170,7 @@ function App() {
 					<Route
 						path="/user-leaderboard"
 						element={
-							<Authenticated user={appState.user}>
+							<Authenticated user={appState.user} loading={loading}>
 								<UserLeaderboard />
 							</Authenticated>
 						}
