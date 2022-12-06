@@ -9,8 +9,11 @@ import {
 	orderByChild,
 	orderByKey,
 } from "firebase/database";
-import { db } from "../firebase/config";
+import { db, storage } from "../firebase/config";
 import { userRole } from "../common/enums/user-role.enum";
+import { getDownloadURL, uploadBytes, deleteObject } from "firebase/storage";
+import { ref as sRef } from "firebase/storage";
+import { v4 } from "uuid";
 import { getImage } from "../helpers/my-photos-helpers";
 
 export const getUser = async (username) => {
@@ -39,8 +42,7 @@ export const createUser = async (
 	email,
 	firstName,
 	lastName,
-	phone,
-	role = userRole.ORGANIZER
+	role = userRole.PHOTO_JUNKIES
 ) => {
 	const user = await getUser(username);
 
@@ -68,6 +70,15 @@ export const createUser = async (
 	return { ...userData };
 };
 
+export const updateProfilePic = async (url, userData) => {
+	await update(ref(db), {
+		[`users/${userData.username}/photoURL`]: url,
+	});
+};
+
+export const updateLoadPic = async (imageRef) => {
+	const result = await deleteObject(imageRef);
+};
 export const getMyPhotos = async (username) => {
 	const snapshot = await get(ref(db, `users/${username}/my-pictures`));
 	if (!snapshot.exists()) {

@@ -7,10 +7,8 @@ import { getUser } from "../../services/users.services";
 import UserValid from "../../common/enums/user-validation";
 
 function Login() {
-	//const [formRole, setFormRole] = useState('login')
 	const { addToast, setAppState, ...appState } = useContext(AppContext);
 	const navigate = useNavigate();
-	const location = useLocation();
 
 	const [form, setForm] = useState({
 		email: {
@@ -34,12 +32,12 @@ function Login() {
 				value,
 				touched: true,
 				valid:
-					value.length >= UserValid.EMAIL_MIN_LENGTH &&
-					value.length <= UserValid.EMAIL_MAX_LENGTH,
+					value.length >= userValid.EMAIL_MIN_LENGTH &&
+					value.length <= userValid.EMAIL_MAX_LENGTH,
 				error:
-					value.length < UserValid.EMAIL_MIN_LENGTH
-						? `Minimum email length: ${UserValid.EMAIL_MIN_LENGTH}`
-						: `Maximum email length: ${UserValid.EMAIL_MAX_LENGTH}`,
+					value.length < userValid.EMAIL_MIN_LENGTH
+						? `Minimum email length: ${userValid.EMAIL_MIN_LENGTH}`
+						: `Maximum email length: ${userValid.EMAIL_MAX_LENGTH}`,
 			},
 		});
 	};
@@ -51,12 +49,12 @@ function Login() {
 				value,
 				touched: true,
 				valid:
-					value.length >= UserValid.PASS_MIN_LENGTH &&
-					value.length <= UserValid.PASS_MAX_LENGTH,
+					value.length >= userValid.PASS_MIN_LENGTH &&
+					value.length <= userValid.PASS_MAX_LENGTH,
 				error:
-					value.length < UserValid.PASS_MIN_LENGTH
-						? `Minimum password length: ${UserValid.PASS_MIN_LENGTH}`
-						: `Maximum password length: ${UserValid.PASS_MAX_LENGTH}`,
+					value.length < userValid.PASS_MIN_LENGTH
+						? `Minimum password length: ${userValid.PASS_MIN_LENGTH}`
+						: `Maximum password length: ${userValid.PASS_MAX_LENGTH}`,
 			},
 		});
 	};
@@ -95,7 +93,6 @@ function Login() {
 					<div className="flex flex-col py-2">
 						<label htmlFor="">Email</label>
 						<input
-							//input input-bordered i w-full max-w-xs
 							value={form.email.value}
 							onChange={(e) => updateEmail(e.target.value)}
 							className="border p-2 input input-primary "

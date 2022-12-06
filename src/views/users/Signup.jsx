@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { AppContext } from "../../context/app.context";
-import UserValid from "../../common/enums/user-validation";
+import userValid from "../../common/enums/user-validation";
 import { useContext } from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { createUser, getUser } from "../../services/users.services";
@@ -37,13 +37,13 @@ function Signup() {
 			valid: false,
 			error: "",
 		},
-		name: {
+		firstName: {
 			value: "",
 			touched: false,
 			valid: false,
 			error: "",
 		},
-		last: {
+		lastName: {
 			value: "",
 			touched: false,
 			valid: false,
@@ -63,32 +63,30 @@ function Signup() {
 				value,
 				touched: true,
 				valid:
-					value.length >= UserValid.USER_MIN_LENGTH &&
-					value.length <= UserValid.USER_MAX_LENGTH,
+					value.length >= userValid.USERNAME_MIN_LENGTH &&
+					value.length <= userValid.USERNAME_MAX_LENGTH,
 				error:
-					value.length < UserValid.USER_MIN_LENGTH
+					value.length < userValid.USERNAME_MIN_LENGTH
 						? `Minimum username length:
-                 ${UserValid.USER_MIN_LENGTH}`
-						: `Maximum username length: ${UserValid.USER_MAX_LENGTH}`,
+                 ${userValid.USERNAME_MIN_LENGTH}`
+						: `Maximum username length: ${userValid.USERNAME_MAX_LENGTH}`,
 			},
 		});
 	};
 	const updateEmail = (value = "") => {
-		// username between 4 and 20
-
 		setForm({
 			...form,
 			email: {
 				value,
 				touched: true,
 				valid:
-					value.length >= UserValid.EMAIL_MIN_LENGTH &&
-					value.length <= UserValid.EMAIL_MAX_LENGTH,
+					value.length >= userValid.EMAIL_MIN_LENGTH &&
+					value.length <= userValid.EMAIL_MAX_LENGTH,
 				error:
-					value.length < UserValid.EMAIL_MIN_LENGTH
+					value.length < userValid.EMAIL_MIN_LENGTH
 						? `Minimum email length:
-                 ${UserValid.EMAIL_MIN_LENGTH}`
-						: `Maximum email length: ${UserValid.EMAIL_MAX_LENGTH}`,
+                 ${userValid.EMAIL_MIN_LENGTH}`
+						: `Maximum email length: ${userValid.EMAIL_MAX_LENGTH}`,
 			},
 		});
 	};
@@ -99,13 +97,13 @@ function Signup() {
 				value,
 				touched: true,
 				valid:
-					value.length >= UserValid.PASS_MIN_LENGTH &&
-					value.length <= UserValid.PASS_MAX_LENGTH,
+					value.length >= userValid.PASS_MIN_LENGTH &&
+					value.length <= userValid.PASS_MAX_LENGTH,
 				error:
-					value.length < UserValid.PASS_MIN_LENGTH
+					value.length < userValid.PASS_MIN_LENGTH
 						? `Minimum password length:
-                 ${UserValid.PASS_MIN_LENGTH}`
-						: `Maximum password length: ${UserValid.PASS_MAX_LENGTH}`,
+                 ${userValid.PASS_MIN_LENGTH}`
+						: `Maximum password length: ${userValid.PASS_MAX_LENGTH}`,
 			},
 		});
 	};
@@ -117,21 +115,21 @@ function Signup() {
 				value,
 				touched: true,
 				valid:
-					value.length >= UserValid.PASS_MIN_LENGTH &&
-					value.length <= value.length <= UserValid.PASS_MAX_LENGTH &&
+					value.length >= userValid.PASS_MIN_LENGTH &&
+					value.length <= value.length <= userValid.PASS_MAX_LENGTH &&
 					value === form.password.value,
 				error:
-					value.length < UserValid.PASS_MIN_LENGTH
+					value.length < userValid.PASS_MIN_LENGTH
 						? `Minimum password length:
-                 ${UserValid.PASS_MIN_LENGTH}`
-						: `Maximum password length: ${UserValid.PASS_MAX_LENGTH}`,
+                 ${userValid.PASS_MIN_LENGTH}`
+						: `Maximum password length: ${userValid.PASS_MAX_LENGTH}`,
 			},
 		});
 	};
-	const UpdateName = (value = "") => {
+	const UpdateFirstName = (value = "") => {
 		setForm({
 			...form,
-			name: {
+			firstName: {
 				value,
 				touched: true,
 				valid:
@@ -139,7 +137,7 @@ function Signup() {
 					value.length <= UserValid.FIRST_NAME_MAX_LENGTH &&
 					!/[^a-zA-Z]/.test(value),
 				error:
-					value.length < UserValid.FIRST_NAME_MIN_LENGTH
+					value.length < userValid.FIRST_NAME_MIN_LENGTH
 						? `Minimum name length:
                 ${UserValid.FIRST_NAME_MIN_LENGTH} `
 						: /[^a-zA-Z]/.test(value)
@@ -152,7 +150,7 @@ function Signup() {
 	const UpdateLastName = (value = "") => {
 		setForm({
 			...form,
-			last: {
+			lastName: {
 				value,
 				touched: true,
 				valid:
@@ -160,7 +158,7 @@ function Signup() {
 					value.length <= UserValid.LAST_NAME_MAX_LENGTH &&
 					!/[^a-zA-Z]/.test(value),
 				error:
-					value.length < UserValid.LAST_NAME_MIN_LENGTH
+					value.length < userValid.LAST_NAME_MIN_LENGTH
 						? `Minimum  last name length:
                 ${UserValid.FIRST_LAST_NAME_MIN_LENGTH} `
 						: /[^a-zA-Z]/.test(value)
@@ -237,6 +235,7 @@ function Signup() {
 				setAppState({
 					...appState,
 					user: {
+						...user,
 						email: credentials.user.email,
 						uid: credentials.user.uid,
 					},
@@ -296,8 +295,8 @@ function Signup() {
 						</div>
 						<div className="mb-4">
 							<input
-								value={form.name.value}
-								onChange={(e) => UpdateName(e.target.value)}
+								value={form.firstName.value}
+								onChange={(e) => UpdateFirstName(e.target.value)}
 								type="text"
 								className="form-control block w-full px-3 py-1.5 text-base font-normal
                                  text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300
@@ -308,7 +307,7 @@ function Signup() {
 						</div>
 						<div className="mb-4">
 							<input
-								value={form.last.value}
+								value={form.lastName.value}
 								onChange={(e) => UpdateLastName(e.target.value)}
 								type="text"
 								className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding 
@@ -388,14 +387,8 @@ function Signup() {
 							</button>
 						</div>
 					</form>
-					{/* </div>
-                                </div> */}
+
 					<div className="lg:w-6/12 flex items-center lg:rounded-r-lg rounded-b-lg lg:rounded-bl-none" />
-					{/* </div>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
 				</div>
 			</div>
 		</div>

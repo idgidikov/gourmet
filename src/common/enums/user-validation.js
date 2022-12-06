@@ -1,6 +1,6 @@
-const UserValid = {
-	USER_MIN_LENGTH: 3,
-	USER_MAX_LENGTH: 30,
+const userValid = {
+	USERNAME_MIN_LENGTH: 3,
+	USERNAME_MAX_LENGTH: 30,
 	PASS_MIN_LENGTH: 8,
 	PASS_MAX_LENGTH: 32,
 	EMAIL_MIN_LENGTH: 12,
@@ -12,4 +12,4 @@ const UserValid = {
 	PHONE_NUMBER_LENGTH: 10,
 };
 
-export default UserValid;
+export default userValid;
