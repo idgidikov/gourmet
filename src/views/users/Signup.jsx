@@ -3,14 +3,13 @@ import { useState } from "react";
 import { AppContext } from "../../context/app.context";
 import userValid from "../../common/enums/user-validation";
 import { useContext } from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { createUser, getUser } from "../../services/users.services";
 import { registerUser, loginUser } from "../../services/auth.services";
 
 function Signup() {
 	const { addToast, setAppState, ...appState } = useContext(AppContext);
 	const navigate = useNavigate();
-	const location = useLocation();
 
 	const [form, setForm] = useState({
 		username: {
@@ -56,6 +55,7 @@ function Signup() {
 			error: "",
 		},
 	});
+
 	const updateUsername = (value = "") => {
 		setForm({
 			...form,
@@ -126,44 +126,44 @@ function Signup() {
 			},
 		});
 	};
-	const UpdateFirstName = (value = "") => {
+	const updateFirstName = (value = "") => {
 		setForm({
 			...form,
 			firstName: {
 				value,
 				touched: true,
 				valid:
-					value.length >= UserValid.FIRST_NAME_MIN_LENGTH &&
-					value.length <= UserValid.FIRST_NAME_MAX_LENGTH &&
+					value.length >= userValid.FIRST_NAME_MIN_LENGTH &&
+					value.length <= userValid.FIRST_NAME_MAX_LENGTH &&
 					!/[^a-zA-Z]/.test(value),
 				error:
 					value.length < userValid.FIRST_NAME_MIN_LENGTH
 						? `Minimum name length:
-                ${UserValid.FIRST_NAME_MIN_LENGTH} `
+                ${userValid.FIRST_NAME_MIN_LENGTH} `
 						: /[^a-zA-Z]/.test(value)
 						? "Your name must contain only letters!"
-						: `Maximum name length:${UserValid.FIRST_NAME_MAX_LENGTH} `,
+						: `Maximum name length:${userValid.FIRST_NAME_MAX_LENGTH} `,
 			},
 		});
 	};
 
-	const UpdateLastName = (value = "") => {
+	const updateLastName = (value = "") => {
 		setForm({
 			...form,
 			lastName: {
 				value,
 				touched: true,
 				valid:
-					value.length >= UserValid.LAST_NAME_MIN_LENGTH &&
-					value.length <= UserValid.LAST_NAME_MAX_LENGTH &&
+					value.length >= userValid.LAST_NAME_MIN_LENGTH &&
+					value.length <= userValid.LAST_NAME_MAX_LENGTH &&
 					!/[^a-zA-Z]/.test(value),
 				error:
 					value.length < userValid.LAST_NAME_MIN_LENGTH
 						? `Minimum  last name length:
-                ${UserValid.FIRST_LAST_NAME_MIN_LENGTH} `
+                ${userValid.LAST_NAME_MIN_LENGTH} `
 						: /[^a-zA-Z]/.test(value)
 						? "Your last name must contain only letters!"
-						: `Maximum last name length:${UserValid.FIRST_LAST_NAME_MAX_LENGTH} `,
+						: `Maximum last name length:${userValid.LAST_NAME_MAX_LENGTH} `,
 			},
 		});
 	};
@@ -174,10 +174,10 @@ function Signup() {
 				value,
 				touched: true,
 				valid:
-					value.length === UserValid.PHONE_NUMBER_LENGTH && /^\d+$/.test(value),
+					value.length === userValid.PHONE_NUMBER_LENGTH && /^\d+$/.test(value),
 				error:
-					value.length !== UserValid.PHONE_NUMBER_LENGTH
-						? `Phone number must contain ${UserValid.PHONE_NUMBER_LENGTH} symbols!`
+					value.length !== userValid.PHONE_NUMBER_LENGTH
+						? `Phone number must contain ${userValid.PHONE_NUMBER_LENGTH} symbols!`
 						: "Phone number must contain digits only 0-9!",
 			},
 		});
@@ -186,13 +186,18 @@ function Signup() {
 	const register = async (e) => {
 		e.preventDefault();
 
-		if (!form.username.valid) return addToast("error", form.username);
-		if (!form.email.valid) return addToast("error", form.email.error);
-		if (!form.password.valid) return addToast("error", form.password.error);
+		if (!form.username.valid)
+			return addToast("error", "Invalid username! " + form.username.error);
+		if (!form.email.valid)
+			return addToast("error", "Invalid email! " + form.email.error);
+		if (!form.password.valid)
+			return addToast("error", "Invalid password !" + form.password.error);
 		if (!form.confirmPassword.valid)
-			return addToast("error", form.confirmPassword.error);
-		if (!form.name.valid) return addToast("error", form.name.error);
-		if (!form.last.valid) return addToast("error", form.last.error);
+			return addToast("error", "Password does not match");
+		if (!form.firstName.valid)
+			return addToast("error", "Invalid first name! " + form.firstName.error);
+		if (!form.lastName.valid)
+			return addToast("error", "Invalid last name! " + form.lastName.error);
 		if (!form.phone.valid) return addToast("error", form.phone.error);
 		try {
 			const user = await getUser(form.username.value);
@@ -213,8 +218,8 @@ function Signup() {
 					credentials.user.uid,
 					form.username.value,
 					form.email.value,
-					form.name.value,
-					form.last.value,
+					form.firstName.value,
+					form.lastName.value,
 					form.phone.value
 				);
 
@@ -243,7 +248,6 @@ function Signup() {
 
 				addToast("success", "You have been logged!");
 				addToast("success", "Please upload profile pic");
-
 				navigate("/");
 			} catch (error) {
 				addToast("error", "Something went wrong");
@@ -296,7 +300,7 @@ function Signup() {
 						<div className="mb-4">
 							<input
 								value={form.firstName.value}
-								onChange={(e) => UpdateFirstName(e.target.value)}
+								onChange={(e) => updateFirstName(e.target.value)}
 								type="text"
 								className="form-control block w-full px-3 py-1.5 text-base font-normal
                                  text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300
@@ -308,7 +312,7 @@ function Signup() {
 						<div className="mb-4">
 							<input
 								value={form.lastName.value}
-								onChange={(e) => UpdateLastName(e.target.value)}
+								onChange={(e) => updateLastName(e.target.value)}
 								type="text"
 								className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding 
                                 border border-solid border-gray-300 rounded transition ease-in-out m-0
@@ -354,7 +358,7 @@ function Signup() {
                                   bg-clip-padding border border-solid border-gray-300
                                    rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-violet-600 focus:outline-none"
 								id="phone"
-								placeholder="phone"
+								placeholder="Phone number"
 							/>
 						</div>
 						<div className="text-center pt-1 mb-12 pb-1">
