@@ -46,6 +46,12 @@ function SubMenuContests() {
 						<Link to="/closed-contests" className="btn">
 							Finished
 						</Link>
+
+						{userData?.role === userRole.ORGANIZER && (
+							<Link to="/user-leaderboard" className="btn">
+								Leaderboard
+							</Link>
+						)}
 					</ul>
 				</div>
 			</div>
@@ -70,6 +76,13 @@ function SubMenuContests() {
 						<Link to="/closed-contests" className="btn">
 							Finished
 						</Link>
+					</li>
+					<li className="mr-5">
+						{userData?.role === userRole.ORGANIZER && (
+							<Link to="/user-leaderboard" className="btn">
+								Leaderboard
+							</Link>
+						)}
 					</li>
 				</ul>
 			</div>

@@ -9,8 +9,10 @@ function ProfileCard({ userData, userRole, setUserRole }) {
 		<div className="card card-side bg-base-100 shadow-xl ">
 			<figure>
 				<img
+					max-width="150px"
+					max-height="150px"
 					className="w-72"
-					src={userData?.profile ? userData.profile : defaultPicture}
+					src={userData?.photoURL ? userData?.photoURL : defaultPicture}
 					alt=""
 				/>
 			</figure>

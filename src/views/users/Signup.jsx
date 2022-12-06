@@ -1,21 +1,15 @@
 import React from "react";
 import { useState } from "react";
 import { AppContext } from "../../context/app.context";
-import UserValid from "../../common/enums/user-validation";
+import userValid from "../../common/enums/user-validation";
 import { useContext } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import {
-	createUser,
-	getUser,
-	userDataRealTime,
-} from "../../services/users.services";
+import { useNavigate, Link } from "react-router-dom";
+import { createUser, getUser } from "../../services/users.services";
 import { registerUser, loginUser } from "../../services/auth.services";
 
 function Signup() {
-	//const [formRole, setFormRole] = useState('login')
-	const { addToast, ...appState } = useContext(AppContext);
+	const { addToast, setAppState, ...appState } = useContext(AppContext);
 	const navigate = useNavigate();
-	const location = useLocation();
 
 	const [form, setForm] = useState({
 		username: {
@@ -42,54 +36,57 @@ function Signup() {
 			valid: false,
 			error: "",
 		},
-		name: {
+		firstName: {
 			value: "",
 			touched: false,
 			valid: false,
 			error: "",
 		},
-		last: {
+		lastName: {
+			value: "",
+			touched: false,
+			valid: false,
+			error: "",
+		},
+		phone: {
 			value: "",
 			touched: false,
 			valid: false,
 			error: "",
 		},
 	});
-	const updateUsername = (value = "") => {
-		// username between 4 and 20
 
+	const updateUsername = (value = "") => {
 		setForm({
 			...form,
 			username: {
 				value,
 				touched: true,
 				valid:
-					value.length >= UserValid.USER_MIN_LENGTH &&
-					value.length <= UserValid.USER_MAX_LENGTH,
+					value.length >= userValid.USERNAME_MIN_LENGTH &&
+					value.length <= userValid.USERNAME_MAX_LENGTH,
 				error:
-					value.length < UserValid.USER_MIN_LENGTH
+					value.length < userValid.USERNAME_MIN_LENGTH
 						? `Minimum username length:
-                 ${UserValid.USER_MIN_LENGTH}`
-						: `Maximum username length: ${UserValid.USER_MAX_LENGTH}`,
+                 ${userValid.USERNAME_MIN_LENGTH}`
+						: `Maximum username length: ${userValid.USERNAME_MAX_LENGTH}`,
 			},
 		});
 	};
 	const updateEmail = (value = "") => {
-		// username between 4 and 20
-
 		setForm({
 			...form,
 			email: {
 				value,
 				touched: true,
 				valid:
-					value.length >= UserValid.EMAIL_MIN_LENGTH &&
-					value.length <= UserValid.EMAIL_MAX_LENGTH,
+					value.length >= userValid.EMAIL_MIN_LENGTH &&
+					value.length <= userValid.EMAIL_MAX_LENGTH,
 				error:
-					value.length < UserValid.EMAIL_MIN_LENGTH
+					value.length < userValid.EMAIL_MIN_LENGTH
 						? `Minimum email length:
-                 ${UserValid.EMAIL_MIN_LENGTH}`
-						: `Maximum email length: ${UserValid.EMAIL_MAX_LENGTH}`,
+                 ${userValid.EMAIL_MIN_LENGTH}`
+						: `Maximum email length: ${userValid.EMAIL_MAX_LENGTH}`,
 			},
 		});
 	};
@@ -100,13 +97,13 @@ function Signup() {
 				value,
 				touched: true,
 				valid:
-					value.length >= UserValid.PASS_MIN_LENGTH &&
-					value.length <= UserValid.PASS_MAX_LENGTH,
+					value.length >= userValid.PASS_MIN_LENGTH &&
+					value.length <= userValid.PASS_MAX_LENGTH,
 				error:
-					value.length < UserValid.PASS_MIN_LENGTH
+					value.length < userValid.PASS_MIN_LENGTH
 						? `Minimum password length:
-                 ${UserValid.PASS_MIN_LENGTH}`
-						: `Maximum password length: ${UserValid.PASS_MAX_LENGTH}`,
+                 ${userValid.PASS_MIN_LENGTH}`
+						: `Maximum password length: ${userValid.PASS_MAX_LENGTH}`,
 			},
 		});
 	};
@@ -118,49 +115,70 @@ function Signup() {
 				value,
 				touched: true,
 				valid:
-					value.length >= UserValid.PASS_MIN_LENGTH &&
-					value.length <= value.length <= UserValid.PASS_MAX_LENGTH &&
+					value.length >= userValid.PASS_MIN_LENGTH &&
+					value.length <= value.length <= userValid.PASS_MAX_LENGTH &&
 					value === form.password.value,
 				error:
-					value.length < UserValid.PASS_MIN_LENGTH
+					value.length < userValid.PASS_MIN_LENGTH
 						? `Minimum password length:
-                 ${UserValid.PASS_MIN_LENGTH}`
-						: `Maximum password length: ${UserValid.PASS_MAX_LENGTH}`,
+                 ${userValid.PASS_MIN_LENGTH}`
+						: `Maximum password length: ${userValid.PASS_MAX_LENGTH}`,
 			},
 		});
 	};
-	const UpdateName = (value = "") => {
+	const updateFirstName = (value = "") => {
 		setForm({
 			...form,
-			name: {
+			firstName: {
 				value,
 				touched: true,
 				valid:
-					value.length >= UserValid.FIRST_NAME_MIN_LENGTH &&
-					value.length <= UserValid.FIRST_NAME_MAX_LENGTH,
+					value.length >= userValid.FIRST_NAME_MIN_LENGTH &&
+					value.length <= userValid.FIRST_NAME_MAX_LENGTH &&
+					!/[^a-zA-Z]/.test(value),
 				error:
-					value.length < UserValid.FIRST_NAME_MIN_LENGTH
+					value.length < userValid.FIRST_NAME_MIN_LENGTH
 						? `Minimum name length:
-                ${UserValid.FIRST_NAME_MIN_LENGTH} `
-						: `Maximum name length:${UserValid.FIRST_NAME_MAX_LENGTH} `,
+                ${userValid.FIRST_NAME_MIN_LENGTH} `
+						: /[^a-zA-Z]/.test(value)
+						? "Your name must contain only letters!"
+						: `Maximum name length:${userValid.FIRST_NAME_MAX_LENGTH} `,
 			},
 		});
 	};
 
-	const UpdateLastName = (value = "") => {
+	const updateLastName = (value = "") => {
 		setForm({
 			...form,
-			last: {
+			lastName: {
 				value,
 				touched: true,
 				valid:
-					value.length >= UserValid.LAST_NAME_MIN_LENGTH &&
-					value.length <= UserValid.LAST_NAME_MAX_LENGTH,
+					value.length >= userValid.LAST_NAME_MIN_LENGTH &&
+					value.length <= userValid.LAST_NAME_MAX_LENGTH &&
+					!/[^a-zA-Z]/.test(value),
 				error:
-					value.length < UserValid.LAST_NAME_MIN_LENGTH
+					value.length < userValid.LAST_NAME_MIN_LENGTH
 						? `Minimum  last name length:
-                ${UserValid.FIRST_LAST_NAME_MIN_LENGTH} `
-						: `Maximum last name length:${UserValid.FIRST_LAST_NAME_MAX_LENGTH} `,
+                ${userValid.LAST_NAME_MIN_LENGTH} `
+						: /[^a-zA-Z]/.test(value)
+						? "Your last name must contain only letters!"
+						: `Maximum last name length:${userValid.LAST_NAME_MAX_LENGTH} `,
+			},
+		});
+	};
+	const updatePhone = (value = "") => {
+		setForm({
+			...form,
+			phone: {
+				value,
+				touched: true,
+				valid:
+					value.length === userValid.PHONE_NUMBER_LENGTH && /^\d+$/.test(value),
+				error:
+					value.length !== userValid.PHONE_NUMBER_LENGTH
+						? `Phone number must contain ${userValid.PHONE_NUMBER_LENGTH} symbols!`
+						: "Phone number must contain digits only 0-9!",
 			},
 		});
 	};
@@ -168,13 +186,19 @@ function Signup() {
 	const register = async (e) => {
 		e.preventDefault();
 
-		if (!form.username.valid) return addToast("error", "Invalid email");
-		if (!form.email.valid) return addToast("error", "Invalid email");
-		if (!form.password.valid) return addToast("error", "Invalid password");
+		if (!form.username.valid)
+			return addToast("error", "Invalid username! " + form.username.error);
+		if (!form.email.valid)
+			return addToast("error", "Invalid email! " + form.email.error);
+		if (!form.password.valid)
+			return addToast("error", "Invalid password !" + form.password.error);
 		if (!form.confirmPassword.valid)
 			return addToast("error", "Password does not match");
-		if (!form.name.valid) return addToast("error", "Invalid name");
-		if (!form.last.valid) return addToast("error", "Invalid last name");
+		if (!form.firstName.valid)
+			return addToast("error", "Invalid first name! " + form.firstName.error);
+		if (!form.lastName.valid)
+			return addToast("error", "Invalid last name! " + form.lastName.error);
+		if (!form.phone.valid) return addToast("error", form.phone.error);
 		try {
 			const user = await getUser(form.username.value);
 
@@ -194,13 +218,10 @@ function Signup() {
 					credentials.user.uid,
 					form.username.value,
 					form.email.value,
-					form.name.value,
-					form.last.value
+					form.firstName.value,
+					form.lastName.value,
+					form.phone.value
 				);
-				// const user = {
-				// 	email: credentials.user.email,
-				// 	uid: credentials.user.uid,
-				// }
 
 				setAppState({
 					...appState,
@@ -216,13 +237,14 @@ function Signup() {
 				setAppState({
 					...appState,
 					user: {
+						...user,
 						email: credentials.user.email,
 						uid: credentials.user.uid,
 					},
 				});
 
 				addToast("success", "You have been logged!");
-
+				addToast("success", "Please upload profile pic");
 				navigate("/");
 			} catch (error) {
 				addToast("error", "Something went wrong");
@@ -242,7 +264,8 @@ function Signup() {
 			<div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
 				<div className="bg-gray-500 flex flex-col justify-center">
 					<form className="max-w-[400px] w-full mx-auto bg-white-p-4" action="">
-						<h2 className="text-4xl font-bold text-center py-6">BRAND</h2>
+						<h2 className="text-4xl font-bold text-center py-6">25thFrame</h2>
+
 						<p className="mb-4">Please login to your account</p>
 						<div className="mb-4">
 							<input
@@ -270,11 +293,11 @@ function Signup() {
 								id="email"
 								placeholder="Email"
 							/>
-						</div>{" "}
+						</div>
 						<div className="mb-4">
 							<input
-								value={form.name.value}
-								onChange={(e) => UpdateName(e.target.value)}
+								value={form.firstName.value}
+								onChange={(e) => updateFirstName(e.target.value)}
 								type="text"
 								className="form-control block w-full px-3 py-1.5 text-base font-normal
                                  text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300
@@ -285,8 +308,8 @@ function Signup() {
 						</div>
 						<div className="mb-4">
 							<input
-								value={form.last.value}
-								onChange={(e) => UpdateLastName(e.target.value)}
+								value={form.lastName.value}
+								onChange={(e) => updateLastName(e.target.value)}
 								type="text"
 								className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding 
                                 border border-solid border-gray-300 rounded transition ease-in-out m-0
@@ -322,6 +345,19 @@ function Signup() {
 								placeholder="Repeat password"
 							/>
 						</div>
+						<div className="mb-4">
+							<input
+								value={form.phone.value}
+								onChange={(e) => updatePhone(e.target.value)}
+								type="text"
+								className="form-control block w-full px-3 py-1.5
+                                 text-base font-normal text-gray-700 bg-white
+                                  bg-clip-padding border border-solid border-gray-300
+                                   rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-violet-600 focus:outline-none"
+								id="phone"
+								placeholder="Phone number"
+							/>
+						</div>
 						<div className="text-center pt-1 mb-12 pb-1">
 							<button
 								className="inline-block px-6 py-2.5 text-white font-medium text-xs
@@ -348,18 +384,12 @@ function Signup() {
 								data-mdb-ripple="true"
 								data-mdb-ripple-color="light"
 							>
-								Log In
+								<Link to="/login">Log In</Link>
 							</button>
 						</div>
 					</form>
-					{/* </div>
-                                </div> */}
+
 					<div className="lg:w-6/12 flex items-center lg:rounded-r-lg rounded-b-lg lg:rounded-bl-none" />
-					{/* </div>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
 				</div>
 			</div>
 		</div>

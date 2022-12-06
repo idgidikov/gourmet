@@ -72,9 +72,11 @@ function DetailsContest() {
 					<img src={mySubmissions.url} />
 				</div>
 			)}
-			{!mySubmissions && userData.role == userRole.PHOTO_JUNKIES && (
-				<SubmissionForm contestId={contest.id} />
-			)}
+			{!mySubmissions &&
+				userData.role == userRole.PHOTO_JUNKIES &&
+				contest.phaseStatus !== contestPhases.PHASE_THREE && (
+					<SubmissionForm contestId={contest.id} />
+				)}
 
 			{contest.phaseStatus === contestPhases.PHASE_ONE &&
 				userData?.role === userRole.ORGANIZER && (
