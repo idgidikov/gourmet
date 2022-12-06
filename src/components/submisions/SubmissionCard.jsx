@@ -1,9 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { contestPhases } from "../../common/enums/contest.enum";
+import { useContext } from "react";
+import { AppContext } from "../../context/app.context";
+import { userRole } from "../../common/enums/user-role.enum";
+
+
 
 function SubmissionCard({ submission, phaseStatus }) {
 	const navigate = useNavigate();
+	const { addToast, ...appState } = useContext(AppContext);
+	const { userData } = appState;
 
 	const showSubmission = () => {
 		navigate(`/submission/${submission.id}`);
@@ -22,7 +29,7 @@ function SubmissionCard({ submission, phaseStatus }) {
 					</h2>
 				</div>
 				{phaseStatus === contestPhases.PHASE_TWO &&
-					userData.role === userRole.ORGANIZER && (
+					userData?.role === userRole.ORGANIZER && (
 						<div className="btn btn-primary" onClick={showSubmission}>
 							click
 						</div>
