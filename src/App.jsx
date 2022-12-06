@@ -23,6 +23,7 @@ import PhaseTwoContests from "./views/contests/PhaseTwoContests";
 import PhaseThreeContests from "./views/contests/PhaseThreeContests";
 import DetailsContest from "./views/contests/DetailsContest";
 import MyPhotos from "./views/users/MyPhotos";
+import UserLeaderboard from "./views/users/UserLeaderboard";
 
 function App() {
 	const [user, loading, error] = useAuthState(auth);
@@ -168,6 +169,14 @@ function App() {
 						element={
 							<Authenticated user={appState.user}>
 								<MyPhotos />
+							</Authenticated>
+						}
+					/>
+					<Route
+						path="/user-leaderboard"
+						element={
+							<Authenticated user={appState.user}>
+								<UserLeaderboard />
 							</Authenticated>
 						}
 					/>

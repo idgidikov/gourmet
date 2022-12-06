@@ -70,3 +70,18 @@ export const getMyPhotos = async (username) => {
 	const urls = Object.values(snapshot.val());
 	return Promise.all(urls.map((e) => getImage(e)));
 };
+
+export const getAllPhotoJunkies = async () => {
+	const snapshot = await get(ref(db, "users"));
+
+	if (!snapshot.exists()) {
+		return [];
+	}
+
+	return Object.keys(snapshot.val())
+		.map((key) => ({
+			...snapshot.val()[key],
+			id: key,
+		}))
+		.filter((x) => x.role === userRole.PHOTO_JUNKIES);
+};
