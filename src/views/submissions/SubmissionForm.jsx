@@ -12,6 +12,7 @@ import Image from "../../components/submisions/SubmissionImage";
 import { useNavigate } from "react-router-dom";
 
 function SubmissionForm({ contestId }) {
+	const navigate = useNavigate();
 	const { addToast, userData, user } = useContext(AppContext);
 	const [title, setTitle] = useState("");
 	const [titleValidator, setTitleValidator] = useState(false);
@@ -62,6 +63,7 @@ function SubmissionForm({ contestId }) {
 					imagePath,
 					username
 				);
+				navigate("/open-contests");
 				addToast("success", "Your submission was successfull!");
 			} catch (error) {
 				addToast("error", error.message);
@@ -96,9 +98,32 @@ function SubmissionForm({ contestId }) {
 							placeholder="Your story"
 							className="textarea textarea-primary w-full max-w-xs text-white"
 						/>
-						<button className="btn btn-primary mt-14" onClick={sendData}>
+
+						<label htmlFor="my-modal-5" className="btn">
 							Submit
-						</button>
+						</label>
+						<input type="checkbox" id="my-modal-5" className="modal-toggle" />
+						<div className="modal">
+							<div className="modal-box w-11/12 max-w-5xl">
+								<p className="py-4">
+									After you make your submission, you are not going to be able
+									to edit it ! <br />
+									Do you want to continue ?
+								</p>
+								<div className="modal-action">
+									<label
+										htmlFor="my-modal-5"
+										className="btn"
+										onClick={sendData}
+									>
+										Yes
+									</label>
+									<label htmlFor="my-modal-5" className="btn">
+										no
+									</label>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
