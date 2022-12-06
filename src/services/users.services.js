@@ -5,12 +5,13 @@ import {
 	update,
 	query,
 	equalTo,
+	onValue,
 	orderByChild,
 } from "firebase/database";
 import { db } from "../firebase/config";
 import { userRole } from "../common/enums/user-role.enum";
 import { getImage } from "../helpers/my-photos-helpers";
-
+import { getSubmissionById } from "./submission-services";
 export const getUser = async (username) => {
 	const snapshot = await get(ref(db, `users/${username}`));
 
@@ -79,6 +80,41 @@ export const getMyPhotos = async (username) => {
 	}
 	const urls = Object.values(snapshot.val());
 	return Promise.all(urls.map((e) => getImage(e)));
+};
+
+export const userDataRealTime = (appState, setAppState, addToast, user) => {
+	const id = user.uid;
+	return onValue(
+		query(ref(db, "users"), orderByChild("uid"), equalTo(id)),
+		() => {
+			getUserById(id)
+				.then((userData) => {
+					setAppState({ ...appState, userData });
+				})
+				.catch((error) => addToast("error", error.message));
+		}
+	);
+};
+
+export const getMySubmission = async (contestsId, username) => {
+	const snapshotOne = await get(ref(db, `users/${username}/submissions`));
+	const snapshotTwo = await get(ref(db, `contests/${contestsId}/submissions`));
+	const valueOne = snapshotOne.val();
+	const valueTwo = snapshotTwo.val();
+
+	if (valueOne !== null && valueTwo !== null) {
+		const keyOne = Object.keys(valueOne);
+		const keyTwo = Object.keys(valueTwo);
+
+		const match = keyOne.filter((el) =>
+			keyTwo.find((element) => el == element)
+		);
+
+		const snapshot = await get(ref(db, `submissions/${match}`));
+		const result = snapshot.val();
+
+		return result;
+	}
 };
 
 export const getUserByPhone = async (phone) => {

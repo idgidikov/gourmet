@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { userRole } from "../../common/enums/user-role.enum";
 
 function SubMenuContests() {
-	const { addToast, setAppState, ...appState } = useContext(AppContext);
+	const { addToast, ...appState } = useContext(AppContext);
 	const { userData } = appState;
 	return (
 		<div className="navbar bg-base-100">

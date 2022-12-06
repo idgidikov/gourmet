@@ -10,6 +10,7 @@ import { AppContext } from "../../context/app.context";
 import InputField from "../../components/submisions/SubmissionsInput";
 import Image from "../../components/submisions/SubmissionImage";
 import { useNavigate } from "react-router-dom";
+import { getMySubmission } from "../../services/users.services";
 
 function SubmissionForm({ contestId }) {
 	const navigate = useNavigate();
@@ -22,6 +23,9 @@ function SubmissionForm({ contestId }) {
 	const [descriptionValidator, setDescriptionValidator] = useState(false);
 	const username = userData?.username;
 
+	const showOpenContests = () => {
+		navigate("/open-contests/");
+	};
 	useEffect(() => {
 		if (
 			title.length > validation.MIN_LENGTH_TITLE &&
@@ -39,7 +43,7 @@ function SubmissionForm({ contestId }) {
 		} else {
 			setDescriptionValidator(false);
 		}
-	}, [title]);
+	}, [title, description]);
 
 	const sendData = async (e) => {
 		e.preventDefault();
@@ -54,17 +58,18 @@ function SubmissionForm({ contestId }) {
 				const result = await uploadBytes(imageRef, file);
 				const url = await getDownloadURL(result.ref);
 				const imagePath = "submissions/" + id;
+				const contestIdVal = contestId;
 				setCoverPhoto(url);
-				await createSubmission(
+				const submission = await createSubmission(
 					title,
 					description,
 					url,
-					contestId,
 					imagePath,
+					contestIdVal,
 					username
 				);
-				navigate("/open-contests");
-				addToast("success", "Your submission was successfull!");
+				showOpenContests();
+				addToast("success", "Your submission was successful!");
 			} catch (error) {
 				addToast("error", error.message);
 			}

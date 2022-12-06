@@ -8,7 +8,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase/config";
 import { useLocation, useNavigate } from "react-router-dom";
 import Signup from "./views/users/Signup";
-import { getUserById } from "./services/users.services";
+import { getUserById, userDataRealTime } from "./services/users.services";
 import Navbar from "./components/Navbar";
 import Login from "./views/users/Login";
 import Logout from "./views/users/Logout";
@@ -36,20 +36,18 @@ function App() {
 	const [toasts, setToasts] = useState([]);
 
 	useEffect(() => {
-		setAppState({
-			...appState,
-			user: user ? { email: user.email, uid: user.uid } : null,
-		});
-		if (location.state?.from?.pathname) {
-			navigate(location.state.from.pathname);
+		if (user !== null) {
+			setAppState({
+				...appState,
+				user: user ? { email: user.email, uid: user.uid } : null,
+			});
+			return userDataRealTime(appState, setAppState, addToast, user);
 		}
 	}, [user]);
 
 	useEffect(() => {
-		if (appState.user !== null) {
-			getUserById(appState.user?.uid)
-				.then((userData) => setAppState({ ...appState, userData }))
-				.catch((e) => addToast("error", e.message));
+		if (!loading) {
+			return userDataRealTime(appState, setAppState, addToast, user);
 		}
 	}, [appState.user]);
 
@@ -68,7 +66,7 @@ function App() {
 	};
 
 	return (
-		<AppContext.Provider value={{ ...appState, setAppState, addToast }}>
+		<AppContext.Provider value={{ ...appState, setAppState, user, addToast }}>
 			<div className="App">
 				<Navbar />
 				<Routes>
@@ -76,7 +74,7 @@ function App() {
 					<Route
 						path="/create-contest"
 						element={
-							<Authenticated user={appState.user}>
+							<Authenticated user={appState.user} loading={loading}>
 								<ContestForm />
 							</Authenticated>
 						}

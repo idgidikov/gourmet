@@ -8,10 +8,12 @@ import SubmissionForm from "../submissions/SubmissionForm";
 import SubmissionsByContest from "../submissions/SubmissionsByContest";
 import { getSubmissionsByContest } from "../../services/submission-services";
 import { userRole } from "../../common/enums/user-role.enum";
+import { getMySubmission } from "../../services/users.services";
 import { contestPhases } from "../../common/enums/contest.enum";
+import SubMenuContests from "../../components/contests/SubMenuContests";
 
 function DetailsContest() {
-	const { addToast, setAppState, ...appState } = useContext(AppContext);
+	const { addToast, ...appState } = useContext(AppContext);
 	const { userData } = appState;
 	const { contestId } = useParams();
 	const [contest, setContest] = useState({
@@ -25,6 +27,7 @@ function DetailsContest() {
 		url: "",
 	});
 	const [photos, setPhotos] = useState([]);
+	const [mySubmissions, setMySubmissions] = useState();
 
 	useEffect(() => {
 		getContesById(contestId)
@@ -35,22 +38,24 @@ function DetailsContest() {
 					category: result.category,
 					url: result.url,
 					phaseStatus: result.phaseStatus,
+					submissions: result.submissions,
 					id: contestId,
 				}));
 			})
 			.catch((e) => addToast("error", e.message));
-	}, [contestId]);
-
-	useEffect(() => {
 		getSubmissionsByContest(contestId)
-			.then((result) => setPhotos(result))
+			.then((result) => {
+				setPhotos(result);
+			})
+			.catch((e) => addToast("error", e.message));
+		getMySubmission(contestId, userData.username)
+			.then((result) => setMySubmissions(result))
 			.catch((e) => addToast("error", e.message));
 	}, [contestId]);
 
-	console.log(userData);
-
 	return (
 		<div>
+			<SubMenuContests />
 			<div className="card lg:card-side bg-base-100 shadow-xl">
 				<figure>
 					<img src={contest.url} className="h-[350px]" alt="Album" />
@@ -60,12 +65,19 @@ function DetailsContest() {
 					<p>{contest.category}</p>
 				</div>
 			</div>
-			{/* {userData?.submissions[contestId] ? (
-				<p>You have already participated</p>
-			) : (
-				<SubmissionForm contestId={contestId} />
-			)} */}
-			<SubmissionForm contestId={contestId} />
+
+			{mySubmissions && userData.role === userRole.PHOTO_JUNKIES && (
+				<div>
+					<p>{mySubmissions.title}</p>
+					<img src={mySubmissions.url} />
+				</div>
+			)}
+			{!mySubmissions &&
+				userData.role == userRole.PHOTO_JUNKIES &&
+				contest.phaseStatus !== contestPhases.PHASE_THREE && (
+					<SubmissionForm contestId={contest.id} />
+				)}
+
 			{contest.phaseStatus === contestPhases.PHASE_ONE &&
 				userData?.role === userRole.ORGANIZER && (
 					<SubmissionsByContest
@@ -73,10 +85,6 @@ function DetailsContest() {
 						phaseStatus={contest.phaseStatus}
 					/>
 				)}
-			<SubmissionsByContest
-				photos={photos}
-				phaseStatus={contest?.phaseStatus}
-			/>
 		</div>
 	);
 }

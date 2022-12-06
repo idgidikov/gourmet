@@ -75,6 +75,7 @@ function Login() {
 					uid: credentials.user.uid,
 				},
 			});
+
 			addToast("success", "You have been logged!");
 			navigate("/");
 		} catch (error) {

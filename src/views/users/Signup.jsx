@@ -232,10 +232,7 @@ function Signup() {
 			}
 
 			try {
-				const credentials = await loginUser(
-					form.email.value,
-					form.password.value
-				);
+				await loginUser(form.email.value, form.password.value);
 
 				setAppState({
 					...appState,

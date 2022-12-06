@@ -80,7 +80,6 @@ function ContestForm() {
 				});
 				showAllContests();
 			} catch (error) {
-				console.log(error);
 				addToast("error", error.message);
 			}
 		}
