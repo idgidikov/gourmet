@@ -1,8 +1,10 @@
 import React from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AppContext } from "../../context/app.context";
 import { loginUser } from "../../services/auth.services";
+import userValid from "../../common/enums/user-validation";
+
 function Login() {
 	const { addToast, setAppState, ...appState } = useContext(AppContext);
 	const navigate = useNavigate();
