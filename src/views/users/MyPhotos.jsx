@@ -7,7 +7,7 @@ import PhotoCard from "../../components/users/PhotoCard";
 
 function MyPhotos() {
 	const [photos, setPhotos] = useState([]);
-	const { addToast, setAppState, ...appState } = useContext(AppContext);
+	const { addToast, ...appState } = useContext(AppContext);
 	const { userData } = appState;
 
 	useEffect(() => {

@@ -20,9 +20,10 @@ export const createSubmission = async (
 	const { key } = await push(ref(db, "submissions"), submissionObj);
 
 	return update(ref(db), {
-		[`users/${username}/submissions/${contestId}`]: `${key}`,
-		[`contests/${contestId}/submissions/${key}`]: true,
+		[`users/${username}/submissions/${key}`]: true,
+		[`contests/${submissionObj.contestId}/submissions/${key}`]: submissionObj,
 		[`users/${username}/my-pictures/${key}`]: imagePath,
+		key,
 	});
 };
 
@@ -42,7 +43,6 @@ export const getSubmissionsByContest = async (contestId) => {
 	if (!snapshot.exists()) {
 		return [];
 	}
-
 	const submissions = Object.keys(snapshot.val()).map(getSubmissionById);
 	return Promise.all(submissions);
 };

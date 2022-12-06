@@ -6,10 +6,12 @@ import { useContext } from "react";
 import { AppContext } from "../../context/app.context";
 import { contestPhases } from "../../common/enums/contest.enum";
 import SubMenuContests from "../../components/contests/SubMenuContests";
+import { useLocation } from "react-router-dom";
 
 function PhaseOneContests() {
 	const [contestsComing, setContestsComing] = useState([]);
 	const { addToast } = useContext(AppContext);
+	const location = useLocation();
 
 	useEffect(() => {
 		getContests(contestPhases.PHASE_ONE)

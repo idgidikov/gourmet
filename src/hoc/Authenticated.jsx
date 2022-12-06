@@ -1,9 +1,10 @@
 import { Navigate, useLocation } from "react-router-dom";
 
-function Authenticated({ children, user }) {
+function Authenticated({ children, user, loading }) {
 	const location = useLocation();
 
-	if (!user) return <Navigate to="/login" state={{ from: location }} />;
+	if (!loading && !user)
+		return <Navigate to="/login" state={{ from: location }} />;
 
 	return children;
 }

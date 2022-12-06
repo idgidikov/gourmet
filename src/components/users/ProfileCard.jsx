@@ -1,10 +1,10 @@
 import React from "react";
 import { defaultPicture } from "/src/common/constants";
 import { Link } from "react-router-dom";
-function ProfileCard({ userData, userRole, setUserRole }) {
-	if (userData?.role == 1) setUserRole("Organizer");
-	if (userData?.role == 3) setUserRole("Admin");
+import { useContext } from "react";
+import { AppContext } from "../../context/app.context";
 
+function ProfileCard({ userData, userRole, setUserRole }) {
 	return (
 		<div className="card card-side bg-base-100 shadow-xl ">
 			<figure>
@@ -28,7 +28,7 @@ function ProfileCard({ userData, userRole, setUserRole }) {
 					{userData?.lastName}
 				</p>
 				<p>
-					<span className="badge badge-accent">Role:</span> {userRole}
+					<span className="badge badge-accent">Role:</span> {userData?.role}
 				</p>
 
 				{/* <p>{email}</p> */}

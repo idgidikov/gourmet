@@ -9,7 +9,7 @@ import { useLocation } from "react-router-dom";
 
 const Navbar = function () {
 	const [search, setSearch] = useSearchParams();
-	const { addToast, setAppState, user, userData } = useContext(AppContext);
+	const { user, userData } = useContext(AppContext);
 	const location = useLocation();
 
 	return (

@@ -4,10 +4,10 @@ import { useContext, useState, useEffect } from "react";
 import { AppContext } from "../../context/app.context";
 
 function Profile() {
-	const { addToast, setAppState, ...appState } = useContext(AppContext);
+	const { addToast, ...appState } = useContext(AppContext);
 
 	const { userData } = appState;
-	const [userRole, setUserRole] = useState("Photo junkie");
+	// const [userRole, setUserRole] = useState("Photo junkie");
 
 	//console.log(appState)
 	//console.log(userData)
@@ -16,8 +16,8 @@ function Profile() {
 			Profile
 			<ProfileCard
 				userData={userData}
-				userRole={userRole}
-				setUserRole={setUserRole}
+				// userRole={userRole}
+				// setUserRole={setUserRole}
 			/>
 		</div>
 	);

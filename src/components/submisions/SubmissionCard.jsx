@@ -22,11 +22,16 @@ function SubmissionCard({ submission, phaseStatus }) {
 					</h2>
 				</div>
 				{phaseStatus === contestPhases.PHASE_TWO &&
-					phaseStatus === contestPhases.PHASE_THREE && (
+					userData.role === userRole.ORGANIZER && (
 						<div className="btn btn-primary" onClick={showSubmission}>
 							click
 						</div>
 					)}
+				{phaseStatus === contestPhases.PHASE_THREE && (
+					<div className="btn btn-primary" onClick={showSubmission}>
+						click
+					</div>
+				)}
 			</div>
 		</div>
 	);

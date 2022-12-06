@@ -4,12 +4,16 @@ import { AppContext } from "../../context/app.context";
 import UserValid from "../../common/enums/user-validation";
 import { useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { createUser, getUser } from "../../services/users.services";
+import {
+	createUser,
+	getUser,
+	userDataRealTime,
+} from "../../services/users.services";
 import { registerUser, loginUser } from "../../services/auth.services";
 
 function Signup() {
 	//const [formRole, setFormRole] = useState('login')
-	const { addToast, setAppState, ...appState } = useContext(AppContext);
+	const { addToast, ...appState } = useContext(AppContext);
 	const navigate = useNavigate();
 	const location = useLocation();
 
@@ -193,6 +197,10 @@ function Signup() {
 					form.name.value,
 					form.last.value
 				);
+				// const user = {
+				// 	email: credentials.user.email,
+				// 	uid: credentials.user.uid,
+				// }
 
 				setAppState({
 					...appState,
@@ -203,10 +211,7 @@ function Signup() {
 			}
 
 			try {
-				const credentials = await loginUser(
-					form.email.value,
-					form.password.value
-				);
+				await loginUser(form.email.value, form.password.value);
 
 				setAppState({
 					...appState,
