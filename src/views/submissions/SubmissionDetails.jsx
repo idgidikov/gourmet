@@ -2,12 +2,18 @@ import React from "react";
 import { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Rating from "../../components/rating/Rating";
+import SubmissionReview from "../../components/submisions/SubmissionReview";
 import { AppContext } from "../../context/app.context";
 import { getSubmissionById } from "../../services/submission-services";
 
 function SubmissionDetails() {
 	const { addToast, userData } = useContext(AppContext);
 	const { submissionId } = useParams();
+	const [review, setReview] = useState("");
+	const [score , setScore] = useState(1)
+	const [data , setData] = useState({
+		review,score
+	})
 
 	const [submission, setSubmission] = useState({
 		submission: null,
@@ -68,6 +74,7 @@ function SubmissionDetails() {
 					</div>
 				</div>
 				<Rating />
+				<SubmissionReview review = {review} setReview = {setReview} setData = {setData} setScore = {setScore}/>
 			</div>
 
 			<div className="comments ml-24">
