@@ -4,6 +4,7 @@ function Rating() {
 	return (
 		<div className="rating ">
 			<input
+				vote="1"
 				type="radio"
 				name="rating-2"
 				className="mask mask-star-2 bg-orange-400"
@@ -29,27 +30,27 @@ function Rating() {
 				name="rating-2"
 				className="mask mask-star-2 bg-orange-400"
 			/>
-				<input
+			<input
 				type="radio"
 				name="rating-2"
 				className="mask mask-star-2 bg-orange-400"
 			/>
-				<input
+			<input
 				type="radio"
 				name="rating-2"
 				className="mask mask-star-2 bg-orange-400"
 			/>
-				<input
+			<input
 				type="radio"
 				name="rating-2"
 				className="mask mask-star-2 bg-orange-400"
 			/>
-				<input
+			<input
 				type="radio"
 				name="rating-2"
 				className="mask mask-star-2 bg-orange-400"
 			/>
-				<input
+			<input
 				type="radio"
 				name="rating-2"
 				className="mask mask-star-2 bg-orange-400"

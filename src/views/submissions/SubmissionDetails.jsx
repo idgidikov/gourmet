@@ -4,17 +4,16 @@ import { useParams } from "react-router-dom";
 import Rating from "../../components/rating/Rating";
 import SubmissionReview from "../../components/submisions/SubmissionReview";
 import { AppContext } from "../../context/app.context";
-import { getSubmissionById } from "../../services/submission-services";
+import {
+	getSubmissionById,
+	updateSubmission,
+} from "../../services/submission-services";
 
 function SubmissionDetails() {
 	const { addToast, userData } = useContext(AppContext);
 	const { submissionId } = useParams();
-	const [review, setReview] = useState("");
-	const [score , setScore] = useState(1)
-	const [data , setData] = useState({
-		review,score
-	})
 
+	//console.log(userData)
 	const [submission, setSubmission] = useState({
 		submission: null,
 		username: "",
@@ -39,11 +38,19 @@ function SubmissionDetails() {
 			.catch((e) => addToast("error", e.message));
 	}, [submissionId]);
 
+	// useEffect(()=>{
+	// 	getSubmissionById(submissionId)
+	// 	.then((sub)=>
+	// 	updateSubmission(sub,review,userData.username)
+	// 	);
+
+	// },[data])
+
 	return (
 		<section className="">
 			<div className="container px-6 py-10 mx-auto">
 				<h1 className="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">
-					{submission.title}
+					{submission?.title}
 				</h1>
 
 				<div className="mt-8 lg:-mx-6 lg:flex lg:items-center">
@@ -55,7 +62,7 @@ function SubmissionDetails() {
 
 					<div className="mt-6 lg:w-1/2 lg:mt-0 lg:mx-6 ">
 						<p className="block mt-4 text-2xl font-semibold text-gray-800 dark:text-white md:text-3xl">
-							{submission.description}
+							{submission?.description}
 						</p>
 
 						<div className="flex items-center mt-6">
@@ -67,14 +74,14 @@ function SubmissionDetails() {
 
 							<div className="mx-4">
 								<h1 className="text-sm text-gray-700 dark:text-gray-200">
-									{submission.username}
+									{submission?.username}
 								</h1>
 							</div>
 						</div>
 					</div>
 				</div>
 				<Rating />
-				<SubmissionReview review = {review} setReview = {setReview} setData = {setData} setScore = {setScore}/>
+				<SubmissionReview userData={userData} id={submissionId} />
 			</div>
 
 			<div className="comments ml-24">

@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 import { ref, push, get, update } from "firebase/database";
 import { db } from "../firebase/config";
 
@@ -45,4 +46,22 @@ export const getSubmissionsByContest = async (contestId) => {
 	}
 	const submissions = Object.keys(snapshot.val()).map(getSubmissionById);
 	return Promise.all(submissions);
+};
+
+export const updateSubmission = async (submissionObj, review, username) => {
+	const body = {
+		...submissionObj,
+		votes: {
+			username: review,
+		},
+	};
+
+	await update(ref(db, `submissions/${submissionObj.id}`), body);
+	await update(
+		ref(
+			db,
+			`contests/${submissionObj.contestId}/submissions/${submissionObj.id}`
+		),
+		body
+	);
 };
