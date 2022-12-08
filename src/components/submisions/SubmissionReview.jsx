@@ -4,30 +4,33 @@ import {
 	getSubmissionById,
 	updateSubmission,
 } from "../../services/submission-services";
+import Rating from "../../components/rating/Rating";
+import { useNavigate } from "react-router-dom";
+
 function SubmissionReview({ userData, id }) {
-	const [review, setReview] = useState("");
-	const [vote, setVote] = useState(1);
-	const [data, setData] = useState({
-		review: "",
-		vote: "",
+	const [review, setReview] = useState({
+		comment: "",
+		vote: 0,
 	});
+	const navigate = useNavigate();
 	function handleOnChange(e) {
-		setReview(e.target.value);
+		setReview((prev) => ({
+			...prev,
+			comment: e.target.value,
+		}));
 	}
 	async function handleOnClick() {
-		setData((prev) => ({
-			...prev,
-			review,
-		}));
 		const res = await getSubmissionById(id);
-		await updateSubmission(res, data, userData.username);
+		await updateSubmission(res, review, userData.username);
+		navigate(`/contest-details/${res.contestId}`);
 	}
 
 	return (
 		<div className="card w-96 bg-neutral text-neutral-content">
+			<Rating setReview={setReview} />
 			<div className="card-body">
 				<textarea
-					value={review}
+					value={review.comment}
 					className="textarea textarea-primary"
 					placeholder="Write your review"
 					onChange={handleOnChange}

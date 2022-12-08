@@ -1,13 +1,9 @@
 import React from "react";
 import { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Rating from "../../components/rating/Rating";
 import SubmissionReview from "../../components/submisions/SubmissionReview";
 import { AppContext } from "../../context/app.context";
-import {
-	getSubmissionById,
-	updateSubmission,
-} from "../../services/submission-services";
+import { getSubmissionById } from "../../services/submission-services";
 
 function SubmissionDetails() {
 	const { addToast, userData } = useContext(AppContext);
@@ -21,6 +17,7 @@ function SubmissionDetails() {
 		description: "",
 		url: "",
 		id: "",
+		votes: null,
 	});
 
 	useEffect(() => {
@@ -33,18 +30,11 @@ function SubmissionDetails() {
 					description: sub.description,
 					url: sub.url,
 					id: submissionId,
+					votes: sub.votes || null,
 				}));
 			})
 			.catch((e) => addToast("error", e.message));
 	}, [submissionId]);
-
-	// useEffect(()=>{
-	// 	getSubmissionById(submissionId)
-	// 	.then((sub)=>
-	// 	updateSubmission(sub,review,userData.username)
-	// 	);
-
-	// },[data])
 
 	return (
 		<section className="">
@@ -80,8 +70,10 @@ function SubmissionDetails() {
 						</div>
 					</div>
 				</div>
-				<Rating />
-				<SubmissionReview userData={userData} id={submissionId} />
+
+				{submission.votes ? null : (
+					<SubmissionReview userData={userData} id={submissionId} />
+				)}
 			</div>
 
 			<div className="comments ml-24">

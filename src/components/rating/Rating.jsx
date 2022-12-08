@@ -1,59 +1,23 @@
 import React from "react";
+import { useState } from "react";
+import ReactStars from "react-rating-stars-component";
+function Rating({ setReview }) {
+	const stars = Array.from({ length: 10 });
+	const [rating, setRating] = useState(0);
 
-function Rating() {
+	const ratingChanged = (newRating) => {
+		setReview((prev) => ({
+			...prev,
+			vote: +newRating,
+		}));
+	};
 	return (
 		<div className="rating ">
-			<input
-				vote="1"
-				type="radio"
-				name="rating-2"
-				className="mask mask-star-2 bg-orange-400"
-			/>
-			<input
-				type="radio"
-				name="rating-2"
-				className="mask mask-star-2 bg-orange-400"
-				//checked
-			/>
-			<input
-				type="radio"
-				name="rating-2"
-				className="mask mask-star-2 bg-orange-400"
-			/>
-			<input
-				type="radio"
-				name="rating-2"
-				className="mask mask-star-2 bg-orange-400"
-			/>
-			<input
-				type="radio"
-				name="rating-2"
-				className="mask mask-star-2 bg-orange-400"
-			/>
-			<input
-				type="radio"
-				name="rating-2"
-				className="mask mask-star-2 bg-orange-400"
-			/>
-			<input
-				type="radio"
-				name="rating-2"
-				className="mask mask-star-2 bg-orange-400"
-			/>
-			<input
-				type="radio"
-				name="rating-2"
-				className="mask mask-star-2 bg-orange-400"
-			/>
-			<input
-				type="radio"
-				name="rating-2"
-				className="mask mask-star-2 bg-orange-400"
-			/>
-			<input
-				type="radio"
-				name="rating-2"
-				className="mask mask-star-2 bg-orange-400"
+			<ReactStars
+				count={10}
+				onChange={ratingChanged}
+				size={24}
+				activeColor="#ffd700"
 			/>
 		</div>
 	);

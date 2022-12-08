@@ -1,7 +1,6 @@
-import { async } from "@firebase/util";
 import { ref, push, get, update } from "firebase/database";
 import { db } from "../firebase/config";
-
+import { initialScore } from "../common/constants";
 export const createSubmission = async (
 	title,
 	description,
@@ -16,6 +15,7 @@ export const createSubmission = async (
 		url,
 		contestId,
 		username,
+		score: initialScore,
 		addedOn: Date.now(),
 	};
 	const { key } = await push(ref(db, "submissions"), submissionObj);
@@ -49,19 +49,26 @@ export const getSubmissionsByContest = async (contestId) => {
 };
 
 export const updateSubmission = async (submissionObj, review, username) => {
-	const body = {
-		...submissionObj,
-		votes: {
-			username: review,
-		},
-	};
-
-	await update(ref(db, `submissions/${submissionObj.id}`), body);
-	await update(
-		ref(
-			db,
-			`contests/${submissionObj.contestId}/submissions/${submissionObj.id}`
-		),
-		body
+	const currentScore = await get(
+		ref(db, `submissions/${submissionObj.id}/score`)
 	);
+	const result = +currentScore.val();
+
+	await update(ref(db), {
+		[`submissions/${submissionObj.id}/votes/${username}`]: review,
+		[`contests/${submissionObj.contestId}/submissions/${submissionObj.id}/votes/${username}`]:
+			review,
+		[`contests/${submissionObj.contestId}/submissions/${submissionObj.id}/score`]:
+			result + +review.vote,
+		[`submissions/${submissionObj.id}/score`]: result + +review.vote,
+	});
+};
+
+export const getAllVotes = async (submissionID) => {
+	const snapshot = await get(ref(db, `submissions/${submissionID}/votes`));
+	console.log(snapshot.val());
+	if (!snapshot.exists()) {
+		return [];
+	}
+	return snapshot.val();
 };
