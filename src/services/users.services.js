@@ -138,3 +138,18 @@ export const getAllPhotoJunkies = async () => {
 		}))
 		.filter((x) => x.role === userRole.PHOTO_JUNKIES);
 };
+
+export const getJuryUsers = async () => {
+	const snapshot = await get(ref(db, "users"));
+
+	if (!snapshot.exists()) {
+		return [];
+	}
+
+	return Object.keys(snapshot.val())
+		.map((key) => ({
+			...snapshot.val()[key],
+			id: key,
+		}))
+		.filter((x) => x.role === userRole.ORGANIZER);
+};
