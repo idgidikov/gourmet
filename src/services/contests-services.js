@@ -73,7 +73,7 @@ export const getContesById = async (contestId) => {
 };
 
 export const getContestByUsername = async (username) => {
-	const snapshot = await get(ref(db, `users/${username}/submissions`));
+	const snapshot = await get(ref(db, `users/${username}/created-contests`));
 
 	if (!snapshot.exists()) {
 		return [];
@@ -82,4 +82,21 @@ export const getContestByUsername = async (username) => {
 	const mySubmissions = Object.keys(snapshot.val());
 
 	return Promise.all(mySubmissions.map(getContesById));
+};
+
+export const addJuryToContest = async (username, contestId) => {
+	const snapshot = await get(ref(db, `contests/${contestId}/jury/${username}`));
+	if (!snapshot.exists()) {
+		await update(ref(db), {
+			[`contests/${contestId}/jury/${username}`]: true,
+			[`users/${username}/jury/${contestId}`]: true,
+		});
+		return true;
+	} else {
+		await update(ref(db), {
+			[`contests/${contestId}/jury/${username}`]: null,
+			[`users/${username}/jury/${contestId}`]: null,
+		});
+		return false;
+	}
 };

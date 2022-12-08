@@ -5,8 +5,6 @@ import { useContext } from "react";
 import { AppContext } from "../../context/app.context";
 import { userRole } from "../../common/enums/user-role.enum";
 
-
-
 function SubmissionCard({ submission, phaseStatus }) {
 	const navigate = useNavigate();
 	const { addToast, ...appState } = useContext(AppContext);
