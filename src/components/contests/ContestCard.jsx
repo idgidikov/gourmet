@@ -22,6 +22,9 @@ function ContestCard({ contest }) {
 	const minutes = Math.floor(timeLeft / 60000) % 60;
 	const seconds = Math.floor(timeLeft / 1000) % 60;
 
+	// const jury = contest?.jury
+	// const juryMembers = Object.keys(jury)
+
 	return (
 		<div>
 			<div className="card w-56 bg-base-100 shadow-xl">
