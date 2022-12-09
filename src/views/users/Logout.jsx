@@ -14,7 +14,7 @@ function Logout() {
 	};
 
 	return (
-		<div className="items align-center">
+		<div className="flex items-center justify-center">
 			<div className="card w-96 bg-primary text-primary-content">
 				<div className="card-body">
 					<h2 className="card-title">You are about to Logout</h2>

@@ -56,16 +56,16 @@ function DetailsContest() {
 	return (
 		<div>
 			<SubMenuContests />
-			<div className="card lg:card-side bg-base-100 shadow-xl">
-				<figure>
-					<img src={contest.url} className="h-[350px]" alt="Album" />
-				</figure>
-				<div className="card-body">
-					<h2 className="card-title">{contest.title}</h2>
-					<p>{contest.category}</p>
+				<div className="flex items-center justify-center">
+					<img className="w-full lg:mx-6 lg:w-1/2 rounded-xl h-72 lg:h-96" src={contest.url} alt="Cover-contest" />
 				</div>
-			</div>
-
+					<div className="flex items-center justify-center">
+						<h2 className="text-3xl">Title: {contest.title}</h2>
+					</div>
+					<div className="flex items-center justify-center">
+						<p className="text-xl">Category: {contest.category}</p>
+					</div>
+				
 			{mySubmissions && userData?.role === userRole.PHOTO_JUNKIES && (
 				<div>
 					<p>{mySubmissions.title}</p>

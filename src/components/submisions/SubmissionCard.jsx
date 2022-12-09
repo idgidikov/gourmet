@@ -16,25 +16,27 @@ function SubmissionCard({ submission, phaseStatus }) {
 
 	return (
 		<div>
-			<div className="card w-96 bg-base-100 shadow-xl">
+			<div className="card w-96 bg-base-300 shadow-xl mb-8 mr-5">
 				<figure>
-					<img src={submission.url} alt="photo" />
+					<img className="object-cover h-48 w-96" src={submission.url} alt="photo" />
 				</figure>
 				<div className="card-body">
 					<h2 className="card-title">
-						{submission.title} <br />
-						{submission.description}
+						Title: {submission.title} <br />
 					</h2>
+					<p>
+						Category: {submission.description}
+					</p>
 				</div>
 				{phaseStatus === contestPhases.PHASE_TWO &&
 					userData?.role === userRole.ORGANIZER && (
 						<div className="btn btn-primary" onClick={showSubmission}>
-							click
+							View
 						</div>
 					)}
 				{phaseStatus === contestPhases.PHASE_THREE && (
 					<div className="btn btn-primary" onClick={showSubmission}>
-						click
+						View
 					</div>
 				)}
 			</div>

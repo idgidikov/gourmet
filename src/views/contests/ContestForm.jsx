@@ -88,18 +88,17 @@ function ContestForm() {
 	return (
 		<div className="contest-form">
 			<h1 className="title">Create new contest</h1>
+			<div className="flex items-center justify-center">
+				<img src={
+						imageUrl !== "" ? imageUrl : "https://placeimg.com/400/400/arch"
+					}
+					className="w-full lg:mx-6 lg:w-1/2 rounded-xl h-72 lg:h-96"
+					alt="Cover-contest" />
+			</div>
 			<div className="flex flex-wrap justify-around">
 				<div className="card lg:card-side bg-base-100 shadow-xl">
-					<figure>
-						<img
-							src={
-								imageUrl !== "" ? imageUrl : "https://placeimg.com/400/400/arch"
-							}
-							className="h-[350px]"
-							alt="Album"
-						/>
-					</figure>
 					<div className="card-body">
+						<h2><span className="badge badge-accent">Contest Info</span></h2>
 						<label className="label">Title of you contest: </label>
 						<input
 							className="input input-bordered border-white w-full max-w-full mb-6"
@@ -124,6 +123,11 @@ function ContestForm() {
 						<label className="label">
 							Choose start and end date for participants{" "}
 						</label>
+					</div>
+				</div>
+				<div className="card lg:card-side bg-base-100 shadow-xl">
+					<div className="card-body">
+						<h2><span className="badge badge-accent">Contest schedule</span></h2>
 						<CustomDate
 							startPhaseOne={startPhaseOne}
 							setStartPhaseOne={setStartPhaseOne}
@@ -131,15 +135,17 @@ function ContestForm() {
 							setStartPhaseTwo={setStartPhaseTwo}
 						/>
 						<br />
-						{startPhaseOne !== null ? (
-							<p>Open at: {startPhaseOne.toLocaleString()}</p>
-						) : (
-							<p>Open at: </p>
+						{startPhaseOne !== null && (
+							<p><span className="badge badge-accent">Open at:</span> {startPhaseOne.toLocaleString()}</p>
 						)}
-						{startPhaseTwo !== null ? (
-							<p>Close at: {startPhaseTwo.toLocaleString()}</p>
-						) : (
-							<p>Close at: </p>
+						{startPhaseOne === null && (
+							<p><span className="badge badge-accent">Open at:</span> </p>
+						)}
+						{startPhaseTwo !== null && (
+							<p><span className="badge badge-accent">Close at:</span> {startPhaseTwo.toLocaleString()}</p>
+						)}
+						{startPhaseTwo === null && (
+							<p><span className="badge badge-accent">Close at:</span> </p>
 						)}
 						<br />
 						<label className="label">Choose end time for jury voting</label>
@@ -149,10 +155,11 @@ function ContestForm() {
 							setStartPhaseThree={setStartPhaseThree}
 						/>
 						<br />
-						{startPhaseThree !== null ? (
-							<p>End voting at: {startPhaseThree.toLocaleString()}</p>
-						) : (
-							<p>Choose period for voting</p>
+						{startPhaseThree !== null && (
+							<p><span className="badge badge-accent">End voting at:</span> {startPhaseThree.toLocaleString()}</p>
+						)}
+						{startPhaseThree === null &&(
+							<p><span className="badge badge-accent">Choose period for voting</span></p>
 						)}
 						<button className="btn btn-primary mt-14" onClick={sendData}>
 							Publish

@@ -17,8 +17,8 @@ function MyContests() {
 	}, [userData?.username]);
 
 	return (
-		<div className="overflow-x-auto w-full">
-			<table className="table w-full">
+		<div className="flex items-center justify-center">
+			<table className="table w-62 h-12">
 				<thead>
 					<tr>
 						<th>

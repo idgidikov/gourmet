@@ -50,42 +50,46 @@ function EditProfile() {
 	}, [currentUser?.photoURL]);
 
 	return (
-		<div className="justify-around">
-			EditProfile
-			<form action="/profile">
-				<input
-					type="file"
-					accept="image/*"
-					className="file-input file-input-bordered file-input-primary w-full max-w-xs"
-					onChange={handleChange}
-				/>
-				<br />
-				<br />
-				<button
-					disabled={loading || !photo}
-					className="btn btn-primary"
-					onClick={handleClick}
-				>
-					Upload Photo
-				</button>
-				<br />
-				<div className="avatar">
-					<div className="avatar">
-						<div className="w-24 rounded-xl">
-							<img src={photoLoad} />
+		<div>
+			<h1 className="title">EditProfile</h1>
+			<div className="flex items-center justify-center">
+				<div className="card w-96 bg-base-100 shadow-xl">
+					<form action="/profile">
+						<input
+							type="file"
+							accept="image/*"
+							className="file-input file-input-bordered file-input-primary w-full max-w-xs"
+							onChange={handleChange}
+						/>
+						<br />
+						<br />
+						<button
+							disabled={loading || !photo}
+							className="btn btn-primary"
+							onClick={handleClick}
+						>
+							Upload Photo
+						</button>
+						<br />
+						<div className="avatar">
+							<div className="avatar">
+								<div className="w-24 rounded-xl">
+									<img src={photoLoad} />
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-				<br />
-				<br />
+						<br />
+						<br />
 
-				<div className="avatar">
-					<h1>Current photo:</h1>
-					<div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-						<img src={userData?.photoURL ? userData.photoURL : photoURL} />
-					</div>
+						<div className="avatar">
+							<h1>Current photo:</h1>
+							<div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+								<img src={userData?.photoURL ? userData.photoURL : photoURL} />
+							</div>
+						</div>
+					</form>
 				</div>
-			</form>
+			</div>
 		</div>
 	);
 }
