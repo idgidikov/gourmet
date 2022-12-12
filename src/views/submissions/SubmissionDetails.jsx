@@ -4,12 +4,18 @@ import { useParams } from "react-router-dom";
 import SubmissionReview from "../../components/submisions/SubmissionReview";
 import { AppContext } from "../../context/app.context";
 import { getSubmissionById } from "../../services/submission-services";
+import SubmissionVotes from "./SubmissionVotes";
+import VoteCard from "../../components/submisions/VoteCard";
+import { useLocation } from "react-router-dom";
+import { contestPhases } from "../../common/enums/contest.enum";
 
 function SubmissionDetails() {
 	const { addToast, userData } = useContext(AppContext);
 	const { submissionId } = useParams();
+	const location = useLocation();
+	const contestPhase = location.state.phaseStatus;
+	console.log(location.state.phaseStatus);
 
-	//console.log(userData)
 	const [submission, setSubmission] = useState({
 		submission: null,
 		username: "",
@@ -23,8 +29,8 @@ function SubmissionDetails() {
 	useEffect(() => {
 		getSubmissionById(submissionId)
 			.then((sub) => {
-				setSubmission((state) => ({
-					...state,
+				setSubmission((submission) => ({
+					...submission,
 					username: sub.username,
 					title: sub.title,
 					description: sub.description,
@@ -35,6 +41,15 @@ function SubmissionDetails() {
 			})
 			.catch((e) => addToast("error", e.message));
 	}, [submissionId]);
+
+	const votes = submission?.votes
+		? Object.entries(submission?.votes).map(([key, value]) => ({
+				...value,
+				id: key,
+		  }))
+		: [];
+
+	const myVote = votes.find((el) => el.id === userData.username);
 
 	return (
 		<section className="">
@@ -71,14 +86,20 @@ function SubmissionDetails() {
 					</div>
 				</div>
 
-				{submission.votes ? null : (
+				{contestPhase == contestPhases.PHASE_TWO && !myVote && (
 					<SubmissionReview userData={userData} id={submissionId} />
+				)}
+				{contestPhase == contestPhases.PHASE_TWO && myVote && (
+					<VoteCard vote={myVote} />
 				)}
 			</div>
 
 			<div className="comments ml-24">
 				<p>Reviews will be here </p>
 			</div>
+			{contestPhase == contestPhases.PHASE_THREE && (
+				<SubmissionVotes submissionId={submission.id} />
+			)}
 		</section>
 	);
 }

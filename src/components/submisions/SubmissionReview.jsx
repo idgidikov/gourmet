@@ -11,6 +11,7 @@ function SubmissionReview({ userData, id }) {
 	const [review, setReview] = useState({
 		comment: "",
 		vote: 0,
+		username: userData?.username,
 	});
 	const navigate = useNavigate();
 	function handleOnChange(e) {
@@ -21,7 +22,7 @@ function SubmissionReview({ userData, id }) {
 	}
 	async function handleOnClick() {
 		const res = await getSubmissionById(id);
-		await updateSubmission(res, review, userData.username);
+		await updateSubmission(res, review, userData?.username);
 		navigate(`/contest-details/${res.contestId}`);
 	}
 

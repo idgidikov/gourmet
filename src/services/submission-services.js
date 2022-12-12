@@ -70,5 +70,8 @@ export const getAllVotes = async (submissionID) => {
 	if (!snapshot.exists()) {
 		return [];
 	}
-	return snapshot.val();
+	return Object.keys(snapshot.val()).map((key) => ({
+		...snapshot.val()[key],
+		id: key,
+	}));
 };

@@ -9,12 +9,16 @@ function MyContests() {
 	const { addToast, ...appState } = useContext(AppContext);
 	const { userData } = appState;
 	const [myContests, setMyContests] = useState([]);
-
+	console.log(myContests);
 	useEffect(() => {
 		getContestByUsername(userData?.username)
-			.then((result) => setMyContests(result))
+			.then((result) => {
+				console.log(result);
+				setMyContests(result);
+			})
+
 			.catch((error) => addToast("error", error.message));
-	}, [userData?.username]);
+	}, [userData.username]);
 
 	return (
 		<div className="flex items-center justify-center">

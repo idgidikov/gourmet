@@ -80,7 +80,6 @@ export const getContestByUsername = async (username) => {
 	}
 
 	const mySubmissions = Object.keys(snapshot.val());
-
 	return Promise.all(mySubmissions.map(getContesById));
 };
 

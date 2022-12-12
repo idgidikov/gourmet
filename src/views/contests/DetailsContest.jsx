@@ -11,10 +11,14 @@ import { userRole } from "../../common/enums/user-role.enum";
 import { getMySubmission } from "../../services/users.services";
 import { contestPhases } from "../../common/enums/contest.enum";
 import SubMenuContests from "../../components/contests/SubMenuContests";
+import SubmissionCard from "../../components/submisions/SubmissionCard";
+import { useLocation } from "react-router-dom";
 
 function DetailsContest() {
 	const { addToast, ...appState } = useContext(AppContext);
 	const { userData } = appState;
+	const location = useLocation();
+	console.log(location);
 	const { contestId } = useParams();
 	const [contest, setContest] = useState({
 		title: "",
@@ -23,11 +27,27 @@ function DetailsContest() {
 		startPhaseTwo: "",
 		startPhaseThree: "",
 		phaseStatus: 0,
+		submissions: {},
 		id: "",
 		url: "",
 	});
-	const [photos, setPhotos] = useState([]);
+	const submission = contest?.submissions
+		? Object.entries(contest?.submissions).map(([key, value]) => ({
+				...value,
+				id: key,
+		  }))
+		: [];
+
 	const [mySubmissions, setMySubmissions] = useState();
+
+	const juryList = userData?.jury
+		? Object.entries(userData?.jury).map(([key, value]) => ({
+				...value,
+				id: key,
+		  }))
+		: [];
+
+	const jury = juryList.includes(contestId);
 
 	useEffect(() => {
 		getContesById(contestId)
@@ -43,12 +63,8 @@ function DetailsContest() {
 				}));
 			})
 			.catch((e) => addToast("error", e.message));
-		getSubmissionsByContest(contestId)
-			.then((result) => {
-				setPhotos(result);
-			})
-			.catch((e) => addToast("error", e.message));
-		getMySubmission(contestId, userData.username)
+
+		getMySubmission(contestId, userData?.username)
 			.then((result) => setMySubmissions(result))
 			.catch((e) => addToast("error", e.message));
 	}, [contestId]);
@@ -56,42 +72,62 @@ function DetailsContest() {
 	return (
 		<div>
 			<SubMenuContests />
-				<div className="flex items-center justify-center">
-					<img className="w-full lg:mx-6 lg:w-1/2 rounded-xl h-72 lg:h-96" src={contest.url} alt="Cover-contest" />
-				</div>
+			<div className="flex items-center justify-center">
+				<img
+					className="w-full lg:mx-6 lg:w-1/2 rounded-xl h-72 lg:h-96"
+					src={contest.url}
+					alt="Cover-contest"
+				/>
+			</div>
+			<div className="flex items-center justify-center">
+				<h2 className="text-3xl">Title: {contest.title}</h2>
+			</div>
+			<div className="flex items-center justify-center">
+				<p className="text-xl">Category: {contest.category}</p>
+			</div>
+			<div className="flex items-center justify-center">
+				<p className="text-xl">{contest.author}</p>
+			</div>
+
+			{mySubmissions &&
+				userData?.role === userRole.PHOTO_JUNKIES &&
+				contest.phaseStatus === contestPhases.PHASE_ONE && (
 					<div className="flex items-center justify-center">
-						<h2 className="text-3xl">Title: {contest.title}</h2>
+						<SubmissionCard
+							submission={mySubmissions}
+							phaseStatus={contest.phaseStatus}
+						/>
 					</div>
-					<div className="flex items-center justify-center">
-						<p className="text-xl">Category: {contest.category}</p>
-					</div>
-				
-			{mySubmissions && userData?.role === userRole.PHOTO_JUNKIES && (
-				<div>
-					<p>{mySubmissions.title}</p>
-					<img src={mySubmissions.url} />
-				</div>
-			)}
+				)}
 			{!mySubmissions &&
 				userData?.role == userRole.PHOTO_JUNKIES &&
-				contest.phaseStatus !== contestPhases.PHASE_THREE && (
+				contest.phaseStatus === contestPhases.PHASE_ONE && (
 					<SubmissionForm contestId={contest.id} />
 				)}
 
 			{contest.phaseStatus === contestPhases.PHASE_ONE &&
 				userData?.role === userRole.ORGANIZER && (
 					<SubmissionsByContest
-						photos={photos}
+						jury={jury}
+						photos={submission}
 						phaseStatus={contest.phaseStatus}
 					/>
 				)}
 			{contest.phaseStatus === contestPhases.PHASE_TWO &&
 				userData?.role === userRole.ORGANIZER && (
 					<SubmissionsByContest
-						photos={photos}
+						jury={jury}
+						photos={submission}
 						phaseStatus={contest.phaseStatus}
 					/>
 				)}
+			{contest.phaseStatus === contestPhases.PHASE_THREE && (
+				<SubmissionsByContest
+					jury={jury}
+					photos={submission}
+					phaseStatus={contest.phaseStatus}
+				/>
+			)}
 		</div>
 	);
 }

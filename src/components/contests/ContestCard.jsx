@@ -22,17 +22,18 @@ function ContestCard({ contest }) {
 	const minutes = Math.floor(timeLeft / 60000) % 60;
 	const seconds = Math.floor(timeLeft / 1000) % 60;
 
-
 	return (
 		<div>
 			<div className="card w-56 bg-base-300 shadow-xl mb-8 mr-5">
 				<figure>
-					<img className="object-cover h-48 w-96" src={contest.url} alt="Shoes" />
+					<img
+						className="object-cover h-48 w-96"
+						src={contest.url}
+						alt="Shoes"
+					/>
 				</figure>
 				<div className="card-body">
-					<h2 className="card-title">
-						Title: {contest.title}
-					</h2>
+					<h2 className="card-title">Title: {contest.title}</h2>
 					<p>Category: {contest.category}</p>
 					<div className="card-actions justify-end">
 						<div className="flex gap-3">

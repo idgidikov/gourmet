@@ -25,18 +25,15 @@ const Navbar = function () {
 					<li className="menu-item mr-5">
 						<Link to="/up-coming-contests">Dashboard</Link>
 					</li>
-					<li className="menu-item mr-5">
-						<Link to="/">Favorites</Link>
-					</li>
-					<li className="menu-item mr-5">
-						<Link to="/my-photos">My photos</Link>
-					</li>
 				</ul>
 			</div>
 
 			<div className="flex-none gap-2">
 				{user === null ? (
-					<Link to="/login">Login</Link>
+					<>
+						<Link to="/login">Login</Link>
+						<Link to="/sign-up">Register</Link>
+					</>
 				) : (
 					<div className="dropdown dropdown-end">
 						<label tabIndex={0} className="btn btn-ghost btn-circle avatar">

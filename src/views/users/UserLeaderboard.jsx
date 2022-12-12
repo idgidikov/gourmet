@@ -17,7 +17,7 @@ function UserLeaderboard() {
 	return (
 		<div>
 			<SubMenuContests />
-			<br/>
+			<br />
 			<div className="flex justify-center overflow-x-auto w-full">
 				<table className="table">
 					<thead>

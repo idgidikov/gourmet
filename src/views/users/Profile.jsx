@@ -13,12 +13,8 @@ function Profile() {
 	return (
 		<div>
 			<h1 className="title">Profile</h1>
-			<ProfileCard
-				userData={userData}
-			/>
-			{userData?.role === userRole.ORGANIZER &&
-				<MyContests />
-			}
+			<ProfileCard userData={userData} />
+			{userData?.role === userRole.ORGANIZER && <MyContests />}
 		</div>
 	);
 }

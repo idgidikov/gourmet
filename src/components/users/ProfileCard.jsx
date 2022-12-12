@@ -34,17 +34,17 @@ function ProfileCard({ userData }) {
 					</p>
 
 					<div className="card-actions justify-end">
-						{userData?.role === userRole.ORGANIZER && 
+						{userData?.role === userRole.ORGANIZER && (
 							<>
 								<Link to="/create-contest" className="btn btn-primary">
 									Create contest
 								</Link>
-								<Link to="/" className="btn btn-primary">
+								<Link to="/open-jury-contests" className="btn btn-primary">
 									Open for voting
 								</Link>
 							</>
-						}
-						{userData?.role === userRole.PHOTO_JUNKIES &&(
+						)}
+						{userData?.role === userRole.PHOTO_JUNKIES && (
 							<Link to="/open-contests" className="btn btn-primary">
 								Open contests
 							</Link>
@@ -56,7 +56,7 @@ function ProfileCard({ userData }) {
 					</div>
 				</div>
 			</div>
-		</div>					
+		</div>
 	);
 }
 
