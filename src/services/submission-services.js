@@ -66,7 +66,7 @@ export const updateSubmission = async (submissionObj, review, username) => {
 
 export const getAllVotes = async (submissionID) => {
 	const snapshot = await get(ref(db, `submissions/${submissionID}/votes`));
-	console.log(snapshot.val());
+
 	if (!snapshot.exists()) {
 		return [];
 	}

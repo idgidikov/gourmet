@@ -12,12 +12,11 @@ function SubmissionVotes({ submissionId }) {
 			.catch((error) => addToast("error", error.message));
 	}, [submissionId]);
 
-	console.log(allVotes);
 	return (
 		<div>
 			<div className="card w-96 bg-neutral text-neutral-content">
 				<div className="card-body items-center text-center">
-					<h2 className="card-title">Jury Votes!</h2>
+					<h2 className="card-title text-indigo-200">Reviews</h2> <br />
 					{allVotes?.map((el, index) => (
 						<VoteCard key={index} vote={el} />
 					))}

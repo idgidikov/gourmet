@@ -14,7 +14,6 @@ function SubmissionCard({ submission, phaseStatus, jury }) {
 		navigate(`/submission/${submission.id}`, { state: { phaseStatus } });
 	};
 
-	console.log(jury);
 	return (
 		<div>
 			<div className="card w-96 bg-base-300 shadow-xl mb-8 mr-5">
@@ -26,9 +25,14 @@ function SubmissionCard({ submission, phaseStatus, jury }) {
 					/>
 				</figure>
 				<div className="card-body">
-					<h2 className="card-title">
-						Title: {submission.title} <br />
+					<h2 className="card-title text-indigo-200">
+						{submission.title} <br />
 					</h2>
+					{phaseStatus === contestPhases.PHASE_THREE && (
+						<span className="badge badge-accent">
+							Score: {submission.score}
+						</span>
+					)}
 				</div>
 				{phaseStatus === contestPhases.PHASE_TWO &&
 					userData?.role === userRole.ORGANIZER &&

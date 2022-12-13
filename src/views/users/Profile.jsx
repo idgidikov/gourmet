@@ -7,7 +7,6 @@ import { userRole } from "../../common/enums/user-role.enum";
 
 function Profile() {
 	const { addToast, ...appState } = useContext(AppContext);
-
 	const { userData } = appState;
 
 	return (

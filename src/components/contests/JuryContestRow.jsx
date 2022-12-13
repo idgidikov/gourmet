@@ -22,7 +22,6 @@ function JuryContestRow({ object, contestId }) {
 		getUser(username).then((result) => {
 			setAddAssJury(Object.keys(result.jury).includes(contestId));
 		});
-		//.catch((e) => addToast("error", e.message))
 	}, [contestId]);
 	console.log(addAsJury);
 	return (

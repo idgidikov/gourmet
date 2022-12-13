@@ -11,7 +11,7 @@ import {
 import { db } from "../firebase/config";
 import { userRole } from "../common/enums/user-role.enum";
 import { getImage } from "../helpers/my-photos-helpers";
-import { getSubmissionById } from "./submission-services";
+
 export const getUser = async (username) => {
 	const snapshot = await get(ref(db, `users/${username}`));
 

@@ -68,7 +68,7 @@ function Signup() {
 				error:
 					value.length < userValid.USERNAME_MIN_LENGTH
 						? `Minimum username length:
-                 ${userValid.USERNAME_MIN_LENGTH}`
+                ${userValid.USERNAME_MIN_LENGTH}`
 						: `Maximum username length: ${userValid.USERNAME_MAX_LENGTH}`,
 			},
 		});
@@ -85,7 +85,7 @@ function Signup() {
 				error:
 					value.length < userValid.EMAIL_MIN_LENGTH
 						? `Minimum email length:
-                 ${userValid.EMAIL_MIN_LENGTH}`
+                ${userValid.EMAIL_MIN_LENGTH}`
 						: `Maximum email length: ${userValid.EMAIL_MAX_LENGTH}`,
 			},
 		});
@@ -102,7 +102,7 @@ function Signup() {
 				error:
 					value.length < userValid.PASS_MIN_LENGTH
 						? `Minimum password length:
-                 ${userValid.PASS_MIN_LENGTH}`
+                ${userValid.PASS_MIN_LENGTH}`
 						: `Maximum password length: ${userValid.PASS_MAX_LENGTH}`,
 			},
 		});
@@ -121,7 +121,7 @@ function Signup() {
 				error:
 					value.length < userValid.PASS_MIN_LENGTH
 						? `Minimum password length:
-                 ${userValid.PASS_MIN_LENGTH}`
+                ${userValid.PASS_MIN_LENGTH}`
 						: `Maximum password length: ${userValid.PASS_MAX_LENGTH}`,
 			},
 		});
