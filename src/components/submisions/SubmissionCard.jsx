@@ -14,6 +14,7 @@ function SubmissionCard({ submission, phaseStatus, jury }) {
 		navigate(`/submission/${submission.id}`, { state: { phaseStatus } });
 	};
 
+	console.log(jury);
 	return (
 		<div>
 			<div className="card w-96 bg-base-300 shadow-xl mb-8 mr-5">

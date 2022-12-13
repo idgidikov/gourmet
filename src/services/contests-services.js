@@ -86,6 +86,8 @@ export const getContestByUsername = async (username) => {
 export const addJuryToContest = async (username, contestId) => {
 	const snapshot = await get(ref(db, `contests/${contestId}/jury/${username}`));
 	if (!snapshot.exists()) {
+		// await push(ref(db, `contests/${contestId}/jury/${username}`), true)
+		// await push(ref(db, `users/${username}/jury/${contestId}`), true)
 		await update(ref(db), {
 			[`contests/${contestId}/jury/${username}`]: true,
 			[`users/${username}/jury/${contestId}`]: true,

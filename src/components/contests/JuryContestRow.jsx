@@ -23,8 +23,8 @@ function JuryContestRow({ object, contestId }) {
 			setAddAssJury(Object.keys(result.jury).includes(contestId));
 		});
 		//.catch((e) => addToast("error", e.message))
-	}, []);
-
+	}, [contestId]);
+	console.log(addAsJury);
 	return (
 		<tr>
 			<th />

@@ -30,7 +30,9 @@ function ProfileCard({ userData }) {
 						{userData?.lastName}
 					</p>
 					<p>
-						<span className="badge badge-accent">Role:</span> {userData?.role}
+						<span className="badge badge-accent">Role:</span>
+						{userData?.role === userRole.ORGANIZER && " Organizer"}
+						{userData?.role === userRole.PHOTO_JUNKIES && " Photographer"}
 					</p>
 
 					<div className="card-actions justify-end">

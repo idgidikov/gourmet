@@ -17,7 +17,6 @@ function MyContestRow({ contest, objects }) {
 			<td>
 				{contest?.title}
 				<br />
-				{/* <span className="badge badge-ghost badge-sm">register on:{date}</span> */}
 			</td>
 			<td>{contest?.category}</td>
 			<td>

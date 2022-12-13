@@ -93,10 +93,6 @@ function SubmissionDetails() {
 					<VoteCard vote={myVote} />
 				)}
 			</div>
-
-			<div className="comments ml-24">
-				<p>Reviews will be here </p>
-			</div>
 			{contestPhase == contestPhases.PHASE_THREE && (
 				<SubmissionVotes submissionId={submission.id} />
 			)}

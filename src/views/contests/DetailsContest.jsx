@@ -18,7 +18,6 @@ function DetailsContest() {
 	const { addToast, ...appState } = useContext(AppContext);
 	const { userData } = appState;
 	const location = useLocation();
-	console.log(location);
 	const { contestId } = useParams();
 	const [contest, setContest] = useState({
 		title: "",
@@ -40,15 +39,10 @@ function DetailsContest() {
 
 	const [mySubmissions, setMySubmissions] = useState();
 
-	const juryList = userData?.jury
-		? Object.entries(userData?.jury).map(([key, value]) => ({
-				...value,
-				id: key,
-		  }))
-		: [];
+	const juryList = userData?.jury ? Object.keys(userData?.jury) : [];
 
 	const jury = juryList.includes(contestId);
-
+	console.log(userData.jury);
 	useEffect(() => {
 		getContesById(contestId)
 			.then((result) => {
