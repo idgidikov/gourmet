@@ -69,7 +69,7 @@ export const createUser = async (
 
 export const updateProfilePic = async (url, userData) => {
 	await update(ref(db), {
-		[`users/${userData.username}/photoURL`]: url,
+		[`users/${userData?.username}/photoURL`]: url,
 	});
 };
 

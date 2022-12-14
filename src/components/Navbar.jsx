@@ -2,15 +2,10 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../context/app.context";
-import { useSearchParams } from "react-router-dom";
-
 import { defaultPicture } from "../common/constants";
-import { useLocation } from "react-router-dom";
 
 const Navbar = function () {
-	const [search, setSearch] = useSearchParams();
 	const { user, userData } = useContext(AppContext);
-	const location = useLocation();
 
 	return (
 		<div className="navbar bg-base-100 ">

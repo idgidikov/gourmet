@@ -21,9 +21,8 @@ function PhotoJunkieCard({ users }) {
 				</div>
 			</td>
 			<td>
-				<span className="badge badge-ghost badge-sm">Photo Junkie</span>
+				<span className="badge badge-accent badge-sm">Photo Junkie</span>
 			</td>
-			<td>25</td>
 			<th>
 				<span className="text">
 					{new Date(users?.registeredOn).toLocaleDateString()}
