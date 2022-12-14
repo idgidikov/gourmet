@@ -23,6 +23,7 @@ import PhaseThreeContests from "./views/contests/PhaseThreeContests";
 import DetailsContest from "./views/contests/DetailsContest";
 import MyPhotos from "./views/users/MyPhotos";
 import UserLeaderboard from "./views/users/UserLeaderboard";
+import JuryContestsTable from "./components/contests/JuryContestsTable";
 
 function App() {
 	const [user, loading] = useAuthState(auth);
@@ -73,6 +74,14 @@ function App() {
 						element={
 							<Authenticated user={appState.user} loading={loading}>
 								<ContestForm />
+							</Authenticated>
+						}
+					/>
+					<Route
+						path="/contest-jury"
+						element={
+							<Authenticated user={appState.user} loading={loading}>
+								<JuryContestsTable />
 							</Authenticated>
 						}
 					/>
