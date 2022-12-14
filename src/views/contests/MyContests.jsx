@@ -9,11 +9,10 @@ function MyContests() {
 	const { addToast, ...appState } = useContext(AppContext);
 	const { userData } = appState;
 	const [myContests, setMyContests] = useState([]);
-	console.log(myContests);
+
 	useEffect(() => {
 		getContestByUsername(userData?.username)
 			.then((result) => {
-				console.log(result);
 				setMyContests(result);
 			})
 

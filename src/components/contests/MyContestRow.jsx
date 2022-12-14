@@ -1,8 +1,14 @@
 import React from "react";
 import { contestPhases } from "../../common/enums/contest.enum";
-import Popup from "./Popup";
+import { useNavigate } from "react-router-dom";
 
-function MyContestRow({ contest, objects }) {
+
+function MyContestRow({ contest }) {
+	const navigate = useNavigate();
+	const showJury = () => {
+		navigate("/contest-jury", { state: { contest } });
+	};
+	
 	return (
 		<tr>
 			<td>
@@ -28,7 +34,9 @@ function MyContestRow({ contest, objects }) {
 
 			<th>
 				{contest?.phaseStatus === contestPhases.PHASE_ONE && (
-					<Popup objects={objects} contestId={contest.contestId} />
+					<div className="btn btn-primary" onClick={showJury}>
+						Invite Jury
+					</div>
 				)}
 			</th>
 		</tr>

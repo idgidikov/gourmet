@@ -24,7 +24,6 @@ function JuryContestRow({ object, contestId }) {
 		});
 		//.catch((e) => addToast("error", e.message))
 	}, [contestId]);
-	console.log(addAsJury);
 	return (
 		<tr>
 			<th />

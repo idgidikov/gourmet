@@ -14,7 +14,6 @@ function SubmissionDetails() {
 	const { submissionId } = useParams();
 	const location = useLocation();
 	const contestPhase = location.state.phaseStatus;
-	console.log(location.state.phaseStatus);
 
 	const [submission, setSubmission] = useState({
 		submission: null,

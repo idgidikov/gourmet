@@ -42,7 +42,7 @@ function DetailsContest() {
 	const juryList = userData?.jury ? Object.keys(userData?.jury) : [];
 
 	const jury = juryList.includes(contestId);
-	console.log(userData.jury);
+
 	useEffect(() => {
 		getContesById(contestId)
 			.then((result) => {
