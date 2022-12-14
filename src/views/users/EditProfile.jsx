@@ -20,6 +20,7 @@ function EditProfile() {
 			setPhoto(e.target.files[0]);
 			let value = URL.createObjectURL(e.target.files[0]);
 			setPhotoLoad(value);
+			setPhotoUrl(value);
 		}
 	}
 
