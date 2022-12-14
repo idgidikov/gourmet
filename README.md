@@ -46,32 +46,11 @@ npm run dev
 
 ### 5. Features
 
-- Home page
-
-![Home 1](../photos-contest/src//common/images/Screenshot%202022-12-14%20173149.png)
-
-- Register
-
-![Register](../photos-contest/src/common/images/Screenshot%202022-12-14%20173321.png)
-
-- Login
-
-![Login](../photos-contest/src/common/images/Screenshot3.png)
-
-#### Private
-
-- Dashboard to view contests
-
-![Contests](../photos-contest/src/common/images/Screenshot4.png)
-
-- Detailed submission view
-
-![Detailed-submission](../photos-contest/src/common/images/Screenshot6.png)
-
-- View all submissions by ranking in a contest
-
-![Submissions](../photos-contest/src/common/images/Screenshot5.png)
-
-- User Leaderboard
-
-![user-leaderboard](../photos-contest/src/common/images/Screenshot7.png)
+- Authentication
+- User profile management
+- Create contests
+- Submit photo in open contest
+- Add jury to contest
+- View winners when contest has finished
+- User roles (Organizer and Photo Junkies)
+- The app is mobile friendly
