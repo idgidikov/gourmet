@@ -1,6 +1,7 @@
 import { ref, push, get, update } from "firebase/database";
 import { db } from "../firebase/config";
 import { initialScore } from "../common/constants";
+import { async } from "@firebase/util";
 export const createSubmission = async (
 	title,
 	description,
@@ -74,4 +75,19 @@ export const getAllVotes = async (submissionID) => {
 		...snapshot.val()[key],
 		id: key,
 	}));
+};
+
+export const getAllSubmissions = async () => {
+	const snapshot = await get(ref(db, "submissions"));
+
+	if (!snapshot.exists()) {
+		return [];
+	}
+
+	return Object.keys(snapshot.val())
+		.map((key) => ({
+			...snapshot.val()[key],
+			id: key,
+		}))
+		.slice(0, 8);
 };

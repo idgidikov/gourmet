@@ -30,10 +30,16 @@ const Navbar = function () {
 
 			<div className="flex-none gap-2">
 				{user === null ? (
-					<>
-						<Link to="/login">Login</Link>
-						<Link to="/sign-up">Register</Link>
-					</>
+					<ul className="menu menu-horizontal p-0">
+						<li>
+							{" "}
+							<Link to="/login">Login</Link>{" "}
+						</li>
+						<li>
+							{" "}
+							<Link to="/sign-up">Register</Link>{" "}
+						</li>
+					</ul>
 				) : (
 					<div className="dropdown dropdown-end">
 						<label tabIndex={0} className="btn btn-ghost btn-circle avatar">
