@@ -12,7 +12,7 @@ function Rating({ setReview }) {
 		}));
 	};
 	return (
-		<div className="rating ">
+		<div className="rating">
 			<ReactStars
 				count={10}
 				onChange={ratingChanged}

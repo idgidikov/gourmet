@@ -36,32 +36,34 @@ function ContestCard({ contest }) {
 					<h2 className="card-title">Title: {contest.title}</h2>
 					<p>Category: {contest.category}</p>
 					<div className="card-actions justify-end">
-						<div className="flex gap-3">
-							<div>
-								<span className="countdown font-mono text-2xl">
-									<span style={{ "--value": days }} />
-								</span>
-								days
+						{contest.phaseStatus !== contestPhases.PHASE_THREE && (
+							<div className="flex gap-3">
+								<div>
+									<span className="countdown font-mono text-2xl">
+										<span style={{ "--value": days }} />
+									</span>
+									days
+								</div>
+								<div>
+									<span className="countdown font-mono text-2xl">
+										<span style={{ "--value": hours }} />
+									</span>
+									hours
+								</div>
+								<div>
+									<span className="countdown font-mono text-2xl">
+										<span style={{ "--value": minutes }} />
+									</span>
+									min
+								</div>
+								<div>
+									<span className="countdown font-mono text-2xl">
+										<span style={{ "--value": seconds }} />
+									</span>
+									sec
+								</div>
 							</div>
-							<div>
-								<span className="countdown font-mono text-2xl">
-									<span style={{ "--value": hours }} />
-								</span>
-								hours
-							</div>
-							<div>
-								<span className="countdown font-mono text-2xl">
-									<span style={{ "--value": minutes }} />
-								</span>
-								min
-							</div>
-							<div>
-								<span className="countdown font-mono text-2xl">
-									<span style={{ "--value": seconds }} />
-								</span>
-								sec
-							</div>
-						</div>
+						)}
 					</div>
 					<div className="card-actions">
 						{(userData?.role === userRole.PHOTO_JUNKIES &&
@@ -72,11 +74,12 @@ function ContestCard({ contest }) {
 							</button>
 						) : null}
 
-						{userData?.role === userRole.ORGANIZER && (
-							<button className="btn btn-primary" onClick={redirectToDetails}>
-								View
-							</button>
-						)}
+						{userData?.role === userRole.ORGANIZER &&
+							contest?.phaseStatus !== contestPhases.PHASE_THREE && (
+								<button className="btn btn-primary" onClick={redirectToDetails}>
+									View
+								</button>
+							)}
 					</div>
 				</div>
 			</div>

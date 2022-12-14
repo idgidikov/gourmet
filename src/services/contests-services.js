@@ -1,18 +1,5 @@
-import {
-	ref,
-	push,
-	get,
-	set,
-	update,
-	remove,
-	query,
-	equalTo,
-	orderByChild,
-	orderByKey,
-	limitToFirst,
-	startAt,
-} from "firebase/database";
-import { db, storage } from "../firebase/config";
+import { ref, push, get, update } from "firebase/database";
+import { db } from "../firebase/config";
 import { setContestPhase } from "../helpers/contests-helpers";
 
 // https://codetheweb.blog/javascript-dates-and-times/

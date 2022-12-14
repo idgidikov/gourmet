@@ -6,18 +6,15 @@ import { AppContext } from "../../context/app.context";
 import { useParams } from "react-router-dom";
 import SubmissionForm from "../submissions/SubmissionForm";
 import SubmissionsByContest from "../submissions/SubmissionsByContest";
-import { getSubmissionsByContest } from "../../services/submission-services";
 import { userRole } from "../../common/enums/user-role.enum";
 import { getMySubmission } from "../../services/users.services";
 import { contestPhases } from "../../common/enums/contest.enum";
 import SubMenuContests from "../../components/contests/SubMenuContests";
 import SubmissionCard from "../../components/submisions/SubmissionCard";
-import { useLocation } from "react-router-dom";
 
 function DetailsContest() {
 	const { addToast, ...appState } = useContext(AppContext);
 	const { userData } = appState;
-	const location = useLocation();
 	const { contestId } = useParams();
 	const [contest, setContest] = useState({
 		title: "",
@@ -38,9 +35,7 @@ function DetailsContest() {
 		: [];
 
 	const [mySubmissions, setMySubmissions] = useState();
-
 	const juryList = userData?.jury ? Object.keys(userData?.jury) : [];
-
 	const jury = juryList.includes(contestId);
 
 	useEffect(() => {
@@ -74,10 +69,10 @@ function DetailsContest() {
 				/>
 			</div>
 			<div className="flex items-center justify-center">
-				<h2 className="text-3xl">Title: {contest.title}</h2>
+				<h2 className="text-3xl text-indigo-200">Title: {contest.title}</h2>
 			</div>
 			<div className="flex items-center justify-center">
-				<p className="text-xl">Category: {contest.category}</p>
+				<p className="text-xl text-indigo-200">Category: {contest.category}</p>
 			</div>
 			<div className="flex items-center justify-center">
 				<p className="text-xl">{contest.author}</p>

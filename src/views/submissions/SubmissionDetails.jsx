@@ -52,11 +52,28 @@ function SubmissionDetails() {
 
 	return (
 		<section className="">
-			<div className="container px-6 py-10 mx-auto">
-				<h1 className="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">
+			<div className="container px-6 py-10 mx-auto text-indigo-200">
+				Author
+				<div className="flex items-center mt-6">
+					<img
+						className="object-cover object-center w-10 h-10 rounded-full"
+						src="https://i.pinimg.com/236x/18/b9/ff/18b9ffb2a8a791d50213a9d595c4dd52.jpg"
+						alt="photo"
+					/>
+					<div className="mx-4">
+						<h1 className="text-lg text-white">{submission?.username}</h1>
+					</div>
+				</div>
+				<br />
+				Title
+				<p className="text-3xl font-semibold text-gray-800 capitalize lg:text-3xl dark:text-white">
 					{submission?.title}
-				</h1>
-
+				</p>
+				<br />
+				Description
+				<div className="text-lg font-semibold text-gray-800 capitalize lg:text-2xl dark:text-white">
+					{submission?.description}
+				</div>
 				<div className="mt-8 lg:-mx-6 lg:flex lg:items-center">
 					<img
 						className="object-cover w-full lg:mx-6 lg:w-1/2 rounded-xl h-72 lg:h-96"
@@ -65,36 +82,20 @@ function SubmissionDetails() {
 					/>
 
 					<div className="mt-6 lg:w-1/2 lg:mt-0 lg:mx-6 ">
-						<p className="block mt-4 text-2xl font-semibold text-gray-800 dark:text-white md:text-3xl">
-							{submission?.description}
-						</p>
-
-						<div className="flex items-center mt-6">
-							<img
-								className="object-cover object-center w-10 h-10 rounded-full"
-								src="https://i.pinimg.com/236x/18/b9/ff/18b9ffb2a8a791d50213a9d595c4dd52.jpg"
-								alt="photo"
-							/>
-
-							<div className="mx-4">
-								<h1 className="text-sm text-gray-700 dark:text-gray-200">
-									{submission?.username}
-								</h1>
-							</div>
+						<div className="block mt-4 text-2xl font-semibold text-gray-800 dark:text-white md:text-3xl">
+							{contestPhase == contestPhases.PHASE_TWO && !myVote && (
+								<SubmissionReview userData={userData} id={submissionId} />
+							)}
+							{contestPhase == contestPhases.PHASE_TWO && myVote && (
+								<VoteCard vote={myVote} />
+							)}
+							{contestPhase == contestPhases.PHASE_THREE && (
+								<SubmissionVotes submissionId={submission.id} />
+							)}
 						</div>
 					</div>
 				</div>
-
-				{contestPhase == contestPhases.PHASE_TWO && !myVote && (
-					<SubmissionReview userData={userData} id={submissionId} />
-				)}
-				{contestPhase == contestPhases.PHASE_TWO && myVote && (
-					<VoteCard vote={myVote} />
-				)}
 			</div>
-			{contestPhase == contestPhases.PHASE_THREE && (
-				<SubmissionVotes submissionId={submission.id} />
-			)}
 		</section>
 	);
 }
