@@ -24,7 +24,6 @@ function UserLeaderboard() {
 						<tr>
 							<th>Name</th>
 							<th>Rank</th>
-							<th>Points</th>
 							<th>Member Since</th>
 						</tr>
 					</thead>
@@ -35,7 +34,6 @@ function UserLeaderboard() {
 					</tbody>
 					<tfoot>
 						<tr>
-							<th />
 							<th />
 							<th />
 							<th />
