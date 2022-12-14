@@ -89,5 +89,5 @@ export const getAllSubmissions = async () => {
 			...snapshot.val()[key],
 			id: key,
 		}))
-		.slice(0, 8);
+		.slice(0, 9);
 };

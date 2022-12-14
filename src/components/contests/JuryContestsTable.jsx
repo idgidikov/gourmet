@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 import JuryContestRow from "./JuryContestRow";
 import { getJuryUsers } from "../../services/users.services";
 import { useLocation } from "react-router-dom";
@@ -9,14 +9,13 @@ function JuryContestsTable() {
 	const [jury, setJury] = useState([]);
 	const location = useLocation();
 	const contestId = location.state.contest.contestId;
-	const contest = location.state.contest
+	const contest = location.state.contest;
 
 	const navigate = useNavigate();
 
 	const backToMyContests = () => {
 		navigate("/profile");
 	};
-
 
 	useEffect(() => {
 		getJuryUsers()
@@ -50,7 +49,9 @@ function JuryContestsTable() {
 				</table>
 			</div>
 			<div className="flex items-center justify-center">
-				<button className="btn btn-primary" onClick={backToMyContests}>Back to my contests</button>
+				<button className="btn btn-primary" onClick={backToMyContests}>
+					Back to my contests
+				</button>
 			</div>
 		</div>
 	);

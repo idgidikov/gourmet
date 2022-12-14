@@ -10,6 +10,10 @@ import { AppContext } from "../../context/app.context";
 import InputField from "../../components/submisions/SubmissionsInput";
 import Image from "../../components/submisions/SubmissionImage";
 import { useNavigate } from "react-router-dom";
+import ReactQuill from "react-quill";
+import { modules, formats } from "../../react-quill/react-quill.config";
+
+import "react-quill/dist/quill.snow.css";
 
 function SubmissionForm({ contestId }) {
 	const navigate = useNavigate();
@@ -95,14 +99,22 @@ function SubmissionForm({ contestId }) {
 							onChange={(e) => setTitle(e.target.value)}
 							type="text"
 						/>
-						<textarea
+						{/* <textarea
 							value={description}
 							onChange={(e) => setDescription(e.target.value)}
 							type="text"
 							placeholder="Your story"
 							className="textarea textarea-primary w-full max-w-xs text-white"
+						/> */}
+						<ReactQuill
+							theme="snow"
+							value={description}
+							onChange={setDescription}
 						/>
-
+						<br />
+						<br />
+						<br />
+						<br />
 						<label htmlFor="my-modal-5" className="btn">
 							Submit
 						</label>

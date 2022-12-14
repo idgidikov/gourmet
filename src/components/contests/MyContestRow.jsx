@@ -2,13 +2,12 @@ import React from "react";
 import { contestPhases } from "../../common/enums/contest.enum";
 import { useNavigate } from "react-router-dom";
 
-
 function MyContestRow({ contest }) {
 	const navigate = useNavigate();
 	const showJury = () => {
 		navigate("/contest-jury", { state: { contest } });
 	};
-	
+
 	return (
 		<tr>
 			<td>
