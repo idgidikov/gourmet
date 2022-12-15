@@ -16,7 +16,7 @@ This is a student project, part of the final assignment of the Telerik Academy A
 - Ivan Gidikov
 - Plamen Avramov
 
-### 4. Core Front-end Technologies
+### 4. Core Technologies
 
 - React
 - JavaScript
