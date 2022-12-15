@@ -77,22 +77,22 @@ function DetailsContest() {
 			<div className="flex items-center justify-center">
 				<p className="text-xl">{contest.author}</p>
 			</div>
-
+			{!mySubmissions &&
+				userData?.role == userRole.PHOTO_JUNKIES &&
+				contest?.phaseStatus === contestPhases.PHASE_ONE && (
+					<SubmissionForm contestId={contest?.id} />
+				)}
 			{mySubmissions &&
 				userData?.role === userRole.PHOTO_JUNKIES &&
-				contest.phaseStatus === contestPhases.PHASE_ONE && (
+				contest?.phaseStatus === contestPhases.PHASE_ONE && (
 					<div className="flex items-center justify-center">
 						<SubmissionCard
 							submission={mySubmissions}
-							phaseStatus={contest.phaseStatus}
+							phaseStatus={contest?.phaseStatus}
 						/>
 					</div>
 				)}
-			{!mySubmissions &&
-				userData?.role == userRole.PHOTO_JUNKIES &&
-				contest.phaseStatus === contestPhases.PHASE_ONE && (
-					<SubmissionForm contestId={contest.id} />
-				)}
+			
 
 			{contest.phaseStatus === contestPhases.PHASE_ONE &&
 				userData?.role === userRole.ORGANIZER && (

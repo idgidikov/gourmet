@@ -38,7 +38,7 @@ function Home() {
 		getImage("static/25thFrame.jpg").then((res) => setMainImage(res));
 		getImage("static/Pic.jpg").then((res) => setEvgeniImage(res));
 		getImage("static/avramov.jpg").then((res) => setAvramovImage(res));
-		getImage("static/avramov.jpg").then((res) => setIvanImage(res));
+		getImage("static/ivan.png").then((res) => setIvanImage(res));
 		usersCount().then((res) => setUsersNum(res));
 		contestsCount().then((res) => setContestNum(res));
 		submissionsCount().then((res) => setSubmissionsNum(res));
@@ -95,37 +95,37 @@ function Home() {
 						/>
 					</figure>
 					<div className="card-body items-center text-center">
+						<h2 className="card-title">Evgeni</h2>
+						<div className="card-actions">
+							<button className="btn btn-primary">Contacts</button>
+						</div>
+					</div>
+				</div>
+				<div className="card w-96 bg-base-100 shadow-xl ml-4">
+					<figure className="px-10 pt-10">
+						<img
+							src={avramovImage}
+							alt="Shoes"
+							className=" h-96 w-62 rounded-xl "
+						/>
+					</figure>
+					<div className="card-body items-center text-center">
+						<h2 className="card-title">Plamen</h2>
+						<div className="card-actions">
+							<button className="btn btn-primary">Contacts</button>
+						</div>
+					</div>
+				</div>
+				<div className="card w-96 bg-base-100 shadow-xl ml-4">
+					<figure className="px-10 pt-10">
+						<img
+							src={ivanImage}
+							alt="Shoes"
+							className=" h-96 w-62 rounded-xl "
+						/>
+					</figure>
+					<div className="card-body items-center text-center">
 						<h2 className="card-title">Ivan</h2>
-						<div className="card-actions">
-							<button className="btn btn-primary">Contacts</button>
-						</div>
-					</div>
-				</div>
-				<div className="card w-96 bg-base-100 shadow-xl ml-4">
-					<figure className="px-10 pt-10">
-						<img
-							src={avramovImage}
-							alt="Shoes"
-							className=" h-96 w-62 rounded-xl "
-						/>
-					</figure>
-					<div className="card-body items-center text-center">
-						<h2 className="card-title">Evgeni</h2>
-						<div className="card-actions">
-							<button className="btn btn-primary">Contacts</button>
-						</div>
-					</div>
-				</div>
-				<div className="card w-96 bg-base-100 shadow-xl ml-4">
-					<figure className="px-10 pt-10">
-						<img
-							src={avramovImage}
-							alt="Shoes"
-							className=" h-96 w-62 rounded-xl "
-						/>
-					</figure>
-					<div className="card-body items-center text-center">
-						<h2 className="card-title">Evgeni</h2>
 						<div className="card-actions">
 							<button className="btn btn-primary">Contacts</button>
 						</div>
